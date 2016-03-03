@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Title</title>
+    <title>NYU OS 202 Lecture Slides</title>
     <meta charset="utf-8">
     <style>
       @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
@@ -32,6 +32,9 @@ supervisor mode is called a microkernel.
 In the early 90s this was popular. Digital Unix (subsequently called True64)
 and Windows NT/2000/XP/Vista/7/8 are examples. Digital Unix was based on Mach,
 a research OS from Carnegie Mellon university. Lately, the growing popularity
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
 of Linux has called into question the belief that all new operating systems
 will be microkernel based.
 
@@ -48,16 +51,19 @@ back when the OS does an RTI (return from interrupt).
 While in supervisor mode, the OS naturally includes procedure calls and
 returns.
 
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
 Modern monolithic systems, such as Windows and Linux, are not completely
 monolithic in that during execution, they can load code modules as needed.
 This load on demand capability is mainly used for device drivers.
 
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
-
 We can structure the system better than above might suggest, which brings us
 to ...
 
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
 ![layers](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/layers.png)
 
 
@@ -73,12 +79,12 @@ operator was the user.
 
 The actual layers were
 
-  1. The operator process
-  2. User programs
-  3. I/O mgt
 
 _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 ---
+  1. The operator process
+  2. User programs
+  3. I/O mgt
   4. Operator console--process communication
   5. Memory and drum management
 
@@ -86,6 +92,9 @@ The layering was done by convention, i.e. there was no enforcement by hardware
 and the entire OS is linked together as one program. This is true of many
 modern OS systems as well (e.g., linux).
 
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
 The MULTICS system was layered in a more formal manner. The hardware provided
 several protection layers and the OS used them. That is, arbitrary code could
 not jump into or access data in a more protected layer.
@@ -100,10 +109,10 @@ as small as possible and to have most of the operating system functionality
 provided by separate processes. The _microkernel_ provides just enough to
 implement processes.
 
-![microkernel](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/microkernel.
 
 _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 ---
+![microkernel](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/microkernel.
 png)
 
 This does have advantages. For example an error in the file server cannot
@@ -113,13 +122,13 @@ them easier to track down. Also an error in the ethernet driver can corrupt or
 stop network communication, but it _cannot_ crash the system as a whole.
 
 But the microkernel approach does mean that when a (real) user process makes a
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
 system call there are more processes switches. These are not free.
 
 Related to microkernels is the idea of putting the mechanism in the kernel,
 but not the policy. For example, the kernel would know how to select the
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 highest priority process and run it, but some external process would assign
 the priorities. In this way changing the priority scheme could become a
 relatively minor event compared to the situation in monolithic systems where
@@ -127,18 +136,21 @@ the entire kernel must be relinked and rebooted.
 
 #### Microkernels Not So Different In Practice
 
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+
 Dennis Ritchie, the inventor of the C programming language and co-inventor,
 with Ken Thompson, of Unix was interviewed in February 2003\. The following is
 from that interview.
 
 What's your opinion on microkernels vs. monolithic?
 
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 > They're not all that different when you actually use them. Micro kernels
 tend to be pretty large these days, monolithic kernels with loadable device
 drivers are taking up more of the advantages claimed for microkernels.
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
 
 I should note, however, that Tanenbaum's Minix microkernel (excluding the
 processes) _is_ quite small, about 13,000 lines.
@@ -169,12 +181,12 @@ on each machine.
 Today with plentiful memory, each machine would have all the different
 servers. So the only reason an OS-internal message would go to another
 computer is if the originating process wished to communicate with a specific
-process on that computer (for example needed to access a remote disk).
-
-Distributed systems are becoming increasingly important for application
 
 _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 ---
+process on that computer (for example needed to access a remote disk).
+
+Distributed systems are becoming increasingly important for application
 programs. Perhaps the program needs data found only on certain machine (no one
 machine has all the data). For example, think of (legal, of course) file
 sharing programs.  
@@ -182,6 +194,9 @@ sharing programs.
 Distributed systems are also used to reduce the time required by an
 application. You do this by dividing the program into pieces, which are run
 concurrently on separate computers.
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
 
 **Homework:** The client-server model is popular in distributed systems. Can it also be used in single-computer system?
 
@@ -209,12 +224,12 @@ RAID) to Conversational Monitor System.
 
   * Each App/CMS runs on a _virtual_ 370.
   * CMS is a _single user_ OS.
-  * A system call in an App (application) traps to the corresponding CMS.
-  * CMS believes it is running on the actual hardware so issues I/O instructions but ...
-  * ... I/O instructions in CMS trap to VM/370.
 
 _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 ---
+  * A system call in an App (application) traps to the corresponding CMS.
+  * CMS believes it is running on the actual hardware so issues I/O instructions but ...
+  * ... I/O instructions in CMS trap to VM/370.
   * This idea is still used but the guest OS is now normally a full-featured operating system rather than a simple system like CMS. For example, the newest IBM systems can run multiple instances of linux as well as multiple instances of traditional IBM Operating Systems on a single hardware platform.
 
 #### Virtual Machines Redicovered
@@ -222,6 +237,9 @@ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.
 Recently, virtual machine technology has moved to machines (notably x86) that
 are not fully virtualizable. Recall that when CMS executed a privileged
 instruction, the hardware trapped to the real operating system. On x86,
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
 privileged instructions are _ignored_ when executed in user mode, so running
 the guest OS in user mode won't work. Bye bye (traditional) hypervisor. But a
 new style emerged where the hypervisor runs, not on the hardware, but on the
@@ -229,12 +247,12 @@ host operating system. See the text for a sketch of how this (and another idea
 paravirtualization) works. An important research advance was Disco from
 Stanford University that led to the successful commercial product VMware.
 
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
-
 ##### Sanity Restored
 
 Both AMD and Intel have extended the x86 architecture to better support
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
 virtualization. The newest processors produced today (2008) by both companies
 now support an additional (higher) privilege mode for the VMM. The guest OS
 now runs in the old privileged mode (for which it was designed) and the
@@ -244,10 +262,10 @@ monitor the usage of hardware resources by the guest operating system(s).
 #### The Java Virtual Machine
 
 The idea is that a new (rather simple) computer architecture called the Java
+Virtual Machine (JVM) was invented but not built (in hardware). Instead,
 
 _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 ---
-Virtual Machine (JVM) was invented but not built (in hardware). Instead,
 interpreters for this architecture are implemented in software on many
 different hardware platforms. Each interpreter is also called a JVM. The java
 compiler transforms java into instructions for this new architecture, which
@@ -258,6 +276,9 @@ performance.
 
 Of course java can also be compiled to native code for a particular hardware
 architecture and other languages can be compiled into instructions for a
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
 software-implemented virtual machine (e.g., pascal with its p-code).
 
 
@@ -366,12 +387,12 @@ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.
 ![multiprogramming](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/multipr
 ogramming.png)
 
-Even though in actuality there are many processes running at once, the OS
-gives each process the _illusion_ that it is running alone.
-
 
 _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 ---
+Even though in actuality there are many processes running at once, the OS
+gives each process the _illusion_ that it is running alone.
+
 #### Virtual Time
 
 Virtual time is the time used by just this processes. Virtual time progresses
@@ -380,18 +401,21 @@ virtual time is typically incremented a little during the systems calls used
 for process switching; so if there are other processes, overhead virtual time
 occurs.)
 
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+
 #### Virtual Memory
 
 Virtual memory is the memory as viewed by the process. Each process typically
 believes it has a contiguous chunk of memory starting at location zero. Of
 course this can't be true of all processes (or they would be using the same
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 memory) and in modern systems it is actually true of no processes (the memory
 assigned to a single process is not contiguous and does not include location
 zero).  
   
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
 Think of the individual modules that are input to the linker. Each numbers its
 addresses from zero; the linker eventually translates these relative addresses
 into absolute addresses. That is the linker provides to the assembler a
@@ -401,10 +425,10 @@ Virtual time and virtual memory are examples of abstractions provided by the
 operating system to the user processes so that the latter experiences a more
 pleasant virtual machine than actually exists.
 
+**Remark**: Please note that the problem numbers are from the fourth edition. They are not the same problems in older editions.
 
 _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 ---
-**Remark**: Please note that the problem numbers are from the fourth edition. They are not the same problems in older editions.
 
 
 _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
@@ -419,12 +443,12 @@ creating a process.
   3. A user request to create a new process.
   4. Initiation of a batch job.
 
-But looked at internally, from the system's viewpoint, the second method
-dominates. Indeed, in early versions of Unix only one process (called _init_)
-is created at system initialization; all the others are created by the
 
 _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 ---
+But looked at internally, from the system's viewpoint, the second method
+dominates. Indeed, in early versions of Unix only one process (called _init_)
+is created at system initialization; all the others are created by the
 `fork()` system call.
 
 **Question**: Why have init? That is why not have all processes created via method 2?  
@@ -432,19 +456,22 @@ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.
 
 #### Definition of Daemon
 
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
 Many systems have daemon process lurking around to perform tasks when they are
 needed. I was pretty sure the terminology was related to mythology, but didn't
 have a reference until a student  found The {Searchable} Jargon Lexicon at
 http://developer.syndetic.org/query_jargon.pl?term=demon
 
 > daemon: /day'mn/ or /dee'mn/ n. [from the mythological meaning, later
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 rationalized as the acronym `Disk And Execution MONitor'] A program that is
 not invoked explicitly, but lies dormant waiting for some condition(s) to
 occur. The idea is that the perpetrator of the condition need not be aware
 that a daemon is lurking (though often a program will commit an action only
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
 because it knows that it will implicitly invoke a daemon). For example, under
 ITS (a very early OS), writing a file on the LPT spooler's directory would
 invoke the spooling daemon, which would then print the file. The advantage is
@@ -454,10 +481,10 @@ their implicit requests and let the daemon decide what to do with them.
 Daemons are usually spawned automatically by the system, and may either live
 forever or be regenerated at intervals. Daemon and demon are often used
 interchangeably, but seem to have distinct connotations. The term `daemon' was
+introduced to computing by CTSS people (who pronounced it /dee'mon/) and used
 
 _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 ---
-introduced to computing by CTSS people (who pronounced it /dee'mon/) and used
 it to refer to what ITS called a dragon; the prototype was a program called
 DAEMON that automatically made tape backups of the file system. Although the
 meaning and the pronunciation have drifted, we think this glossary reflects
@@ -468,11 +495,11 @@ of a much larger entry. The wikipedia also has entries for other uses of
 daemon.
 
 > In Unix and other computer multitasking operating systems, a daemon is a
-computer program that runs in the background, rather than under the direct
-control of a user; they are usually instantiated as processes. Typically
 
 _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 ---
+computer program that runs in the background, rather than under the direct
+control of a user; they are usually instantiated as processes. Typically
 daemons have names that end with the letter "d"; for example, syslogd is the
 daemon which handles the system log.
 
@@ -489,15 +516,18 @@ Again from the outside there appear to be several termination mechanism.
   4. Killed by another process (involuntary).
 
 And again, internally the situation is simpler. In Unix terminology, there are
-two system calls _kill()_ and _exit()_ that are used. kill() (poorly named in
-my view) sends a signal to another process. For many types of signals, if the
-signal is not caught (via the signal() or sigaction() system call) the process
 
 _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 ---
+two system calls _kill()_ and _exit()_ that are used. kill() (poorly named in
+my view) sends a signal to another process. For many types of signals, if the
+signal is not caught (via the signal() or sigaction() system call) the process
 is terminated. There is also an uncatchable signal. The exit() system call is
 used for self termination and can indicate success or failure.
 
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
 ![process-hier](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/process-
 hier.png)
 
@@ -514,12 +544,12 @@ processes.
   * A process tree results. The root of the tree is a special process created by the OS during startup.
   * A process can _choose_ to wait for children to terminate. For example, if C issued a wait() system call mentioning G, C would block until G finished.
 
-Old or primitive operating system like MS-DOS are not fully multiprogrammed,
-so when one process starts another, the first process is _automatically_
-blocked and waits until the second is finished. This implies that the process
 
 _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 ---
+Old or primitive operating system like MS-DOS are not fully multiprogrammed,
+so when one process starts another, the first process is _automatically_
+blocked and waits until the second is finished. This implies that the process
 tree degenerates into a line.
 
 
@@ -530,12 +560,12 @@ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.
 The diagram on the right contains much information. I often include it on
 exams.
 
-![process-states](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/process-
-states.png)
-
 
 _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 ---
+![process-states](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/process-
+states.png)
+
 Consider a running process P that issues an I/O request.
 
   * The process blocks.
@@ -543,6 +573,9 @@ Consider a running process P that issues an I/O request.
   * P is unblocked, i.e. is moved from blocked to ready
   * At some later time the operating system scheduler looks for a ready job to run and picks P.
 
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
 A preemptive scheduler has the dotted line preempt;  
 A non-preemptive scheduler doesn't.
 
@@ -550,25 +583,25 @@ The number of processes changes only for two arcs: create and terminate.
 
 Suspend and resume are medium term scheduling.
 
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
-
   * Done on a longer time scale.
   * Involves memory management as well. As a result we study it later.
   * Sometimes called two level scheduling.
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
 ![fig-2-3](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/fig-2-3.png)
 
 As mentioned previously, one can organize an OS around the scheduler.
 
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
   * Write a minimal kernel (a micro-kernel) consisting of the scheduler, interrupt handlers, and IPC (interprocess communication).
   * The rest of the OS consists of kernel processes (e.g. memory, filesystem) that act as servers for the user processes (which of course act as clients).
   * The system processes also act as clients of other system processes.
   * The above is called the client-server model and is one Tanenbaum likes. His Minix operating system works this way.
   * Indeed, there was reason to believe that the client-server model would dominate OS design. But that hasn't happened.
   * Such an OS is sometimes called _server based_.
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
   * Systems like traditional Unix or Linux are then called _self-service_ since the user process serves itself. That is, the user process switches to kernel mode (via the TRAP instruction) and performs the system call itself without transferring control to another process.
 
 
@@ -584,12 +617,12 @@ Characteristics of the process table.
 
   * One entry per process.
   * The central data structure for process management.
-  * A process state transition (e.g., moving from blocked to ready) is reflected by a change in the value of one or more fields in the process control block.
-  * We have converted an active entity (a process) into a data structure (a process control block). Finkel calls this the _level principle_ an active entity becomes a data structure when looked at from a lower level.
-  * The process control block contains a great deal of information about the process. For example, 
 
 _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 ---
+  * A process state transition (e.g., moving from blocked to ready) is reflected by a change in the value of one or more fields in the process control block.
+  * We have converted an active entity (a process) into a data structure (a process control block). Finkel calls this the _level principle_ an active entity becomes a data structure when looked at from a lower level.
+  * The process control block contains a great deal of information about the process. For example, 
     * Saved value of registers including the program counter (i.e., the address of the next instruction) when the process not running.
     * Stack pointer.
     * CPU time used.
@@ -597,15 +630,15 @@ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.
     * Process id of parent (PPID).
     * User id (uid.
     * Group id (gid).
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
     * Pointer to text segment (memory for the instructions).
     * Pointer to data segment.
     * Pointer to stack segment.
     * UMASK (default permissions for new files).
     * Current working directory.
     * Many others.
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 
 </textarea>
     <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js">

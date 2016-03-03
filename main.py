@@ -18,13 +18,21 @@ def main():
 	w = open('tmp', 'w')
 	w.write(md)
 	w.close
-	lecture_no = divideToLectures('tmp')
+	lecture = divideToLectures('tmp')
+	lecture_no = lecture[0]
+	lecture_titles = lecture[1]
 	index_html = open('index.html', 'w')
 	printHeadings(index_html)
 	index_html.write('## Lecture Notes for OS202\n\n')
-	index_html.write('\n_Contents generated from: ' + ALLAN_NOTES_LINK + '_\n\n')
+	# index_html.write('\n_Contents generated from: ' + ALLAN_NOTES_LINK + '_\n\n')
+	line = 0
 	for i in range(lecture_no):
+		if (line >= 16) :
+			newPage(index_html)
+			line = 0
 		index_html.write('[lecture-%d](lecture-%d.html)\n' % (i, i))
+		index_html.write(lecture_titles[i] + '\n\n')
+		line += 2
 	printEndings(index_html)
 
 def divideToLectures(md):
@@ -35,6 +43,8 @@ def divideToLectures(md):
 	printHeadings(f)
 	lines = 0
 	consec_empty_lines = 0
+	lecture_titles = []
+	lecture_title = ""
 	for l in rlines:
 		#l = str(l)
 		# if there are 3 consecutive empty lines then new slide
@@ -42,12 +52,15 @@ def divideToLectures(md):
 			consec_empty_lines += 1
 			if consec_empty_lines == 2:
 				newPage(f)
+				consec_empty_lines = 0
 			continue
 
 		if l.startswith("Start Lecture #"):
 			printEndings(f)
 			f.close()
 			lecture_no += 1
+			lecture_titles.append(lecture_title)
+			lecture_title = ""
 			f = open('lecture-%d.html' % lecture_no, 'w')
 			printHeadings(f)
 			lines = 0
@@ -56,7 +69,11 @@ def divideToLectures(md):
 			lines += 5
 
 		sp = l.split()
-		if lines >= 13 or (len(sp) > 0 and sp[0] in SLIDE_STARTER):
+		if l.startswith("# "):
+			lecture_title += l[2:] + "\t"
+		
+		if lines >= 10 or (len(sp) > 0 and sp[0] in SLIDE_STARTER):
+			
 			newPage(f)
 			lines = 0
 
@@ -64,7 +81,7 @@ def divideToLectures(md):
 		lines += 1
 	printEndings(f)
 	f.close()
-	return lecture_no
+	return [lecture_no, lecture_titles]
 
 def newPage(f):
 	f.write("\n_Contents generated from: " + ALLAN_NOTES_LINK + "_\n")
