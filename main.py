@@ -27,7 +27,7 @@ def main():
 	# index_html.write('\n_Contents generated from: ' + ALLAN_NOTES_LINK + '_\n\n')
 	line = 0
 	for i in range(lecture_no):
-		if (line >= 16) :
+		if (line >= 18) :
 			newPage(index_html)
 			line = 0
 		index_html.write('[lecture-%d](lecture-%d.html)\n' % (i, i))
