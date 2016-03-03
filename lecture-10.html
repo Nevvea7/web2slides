@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">Start Lecture #10
+
+#### Counting (or Generalized) Semaphores
+
+To solve other coordination problems we want to extend binary semaphores.
+
+  * With binary semaphores, two consecutive Vs do not permit two subsequent Ps to succeed (the gate cannot be doubly opened).
+  * We might want to limit the number of processes in the section to 3 or 4, not always just 1.
+
+Both of these (related) shortcomings can be overcome by not restricting
+ourselves to a _binary_ variable, but instead define a **generalized** or
+**counting** semaphore.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+  * A counting semaphore S takes on non-negative integer values.
+  * Two operations are supported.
+  * P(S) is 
+    
+              while (S==0) {}
+          S--
+        
+
+where finding S>0 and decrementing S is _atomic_
+
+  * That is, wait until the gate is open (positive), then atomically run through and partially close the gate.
+  * Another way to describe this atomicity is to say that it is not possible for the decrement to occur when S=0 and it is also not possible for two processes executing P(S) simultaneously to both see the same value of S unless a V(S) is also simultaneous.
+  * V(S) is simply     S++
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+
+Counting semaphores can solve what I call the _semi-critical-section problem_,
+where you permit up to k processes in the section. When k=1 we have the
+original critical-section problem.
+
+    
+    
+      initially S=k
+    
+      loop forever
+         P(S)
+         SCS   -- semi-critical-section
+         V(S)
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+         NCS
+    
+
+#### Solving the Producer-Consumer Problem Using Semaphores
+
+Recall that my definition of semaphore differs from Tanenbaum's; hence it is
+not surprising that my solution to various coordination problems also differ
+from his.
+
+##### The Problem Statement
+
+Unlike the previous problems of mutual exclusion where all processes are the
+same, the producer-consumer problem has two classes of processes
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+
+  * Producers, which produce items and insert them into a buffer.
+  * Consumers, which remove items from the buffer and consume them.
+
+**Question**: What happens if a producer encounters a full buffer?  
+**Answer**: It waits for the buffer to become non-full.
+
+**Question**: What if a consumer encounters an empty buffer?  
+**Answer**: It waits for the buffer to become non-empty.
+
+The producer-consumer problem is also called the **bounded buffer** problem,
+which is another example of active entities being replaced by a data structure
+when viewed at a lower level (Finkel's level principle).
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+
+##### A Solution
+
+Let k be the size of the buffer (the number of slots). Let e be a counting
+semaphore (representing the number of empty slots), and let f be a counting
+semaphore (representing the number of full slots).
+
+    
+    
+    Initially e=k, f=0 (counting semaphores)
+              b=open (binary semaphore)
+     
+    Producer                      Consumer
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+     
+    loop forever                  loop forever
+       produce-item                  P(f)
+       P(e)                          P(b); take item from buf; V(b)
+       P(b); add item to buf; V(b)   V(e)
+       V(f)                          consume-item
+    
+
+We assume the buffer itself is only serially accessible. That is, only one
+operation can be done at a time. This explains the P(b) V(b) around buffer
+operations.
+
+I use ; and put three statements on one line to suggest that a buffer
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+insertion or removal is viewed as one atomic operation. Of course this writing
+style is only a convention, the enforcement of atomicity is done by the P/V.
+
+The P(e), V(f) motif is used to force bounded alternation. If k=1 it gives
+strict alternation.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+### 2.3.6 Mutexes
+
+**Remark:** Whereas we use the term semaphore to mean binary semaphore and explicitly say generalized or counting semaphore for the positive integer version, Tanenbaum uses semaphore for the positive integer solution and mutex for the binary version. Also, as indicated above, for Tanenbaum semaphore/mutex implies a blocking primitive; whereas I use binary/counting semaphore for both busy-waiting and blocking implementations. Finally, remember that in this course our **only** solutions are busy-waiting.
+
+My Terminology
+
+Busy waitblock/switch
+
+critical
+
+(binary) semaphore
+
+(binary) semaphore
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+
+semi-critical
+
+counting semaphore
+
+counting semaphore
+
+Tanenbaum's Terminology
+
+Busy waitblock/switch
+
+critical
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+enter/leave region
+
+mutex
+
+semi-critical
+
+no name
+
+semaphore
+
+#### Mutexes in Pthreads
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+### 2.3.7 Monitors
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+### 2.3.8 Message Passing
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+### 2.3.9 Barriers
+
+You can find some information on barriers in my [ lecture notes
+](/~gottlieb/courses/1997-98-spring/os/class-notes.html) for a follow-on
+course (see in particular lecture number 16).
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+## 2.5 Classical IPC Problems
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+### 2.5.0 The Producer-Consumer (or Bounded Buffer) Problem
+
+We did this previously.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+### 2.5.1 The Dining Philosophers Problem
+
+A classic problem from Dijkstra concerning philosophers each of whose life
+consists of  
+loop forever
+
+  * Think
+  * Get hungry
+  * Eat
+
+Eating consists of the following
+
+  * Up to 5 philosophers sitting at a round table.
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+  * Each philosopher has a plate of spaghetti.
+  * There is a fork between each two philosophers.
+  * Need two forks to eat.
+
+What algorithm do you use for access to the shared resource (the forks)?
+
+  * The obvious solution (pick up right; pick up left) deadlocks.
+  * Big lock around everything serializes.
+  * Good code in the book.
+
+The purpose of mentioning the Dining Philosophers problem without giving the
+solution is to give a feel of what coordination problems are like. The book
+gives others as well. The solutions would be covered in a sequel course. If
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+you are interested look, for example
+[here](/~gottlieb/courses/1997-98-spring/os/class-notes.html).
+
+**Homework:** 51 and 55 (these have short answers but are not easy).
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+### 2.5.2 The Readers and Writers Problem
+
+As in the producer-consumer problem we have two classes of processes.
+
+  * Readers, which can work concurrently.
+  * Writers, which need exclusive access.
+
+The problem is to
+
+  1. prevent 2 writers from running concurrently.
+  2. prevent a reader and a writer from running concurrently.
+  3. permit readers to be concurrent when no writer is active.
+  4. (perhaps) insure fairness (e.g., freedom from starvation).
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+
+Variants
+
+  * Writer-priority readers/writers.
+  * Reader-priority readers/writers.
+
+Solutions to the readers-writers problem are quite useful in multiprocessor
+operating systems and database systems. The easy way out is to treat all
+processes as writers in which case the problem reduces to mutual exclusion (P
+and V). The disadvantage of the easy way out is that you give up reader
+concurrency. Again for more information see the web page referenced above.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+## 2.5A Critical Sections versus Database Transactions
+
+Critical Sections have a form of atomicity, in some ways similar to
+transactions. But there is a key difference: With critical sections you have
+certain blocks of code, say A, B, and C, that are mutually exclusive (i.e.,
+are atomic with respect to each other) and other blocks, say D and E, that are
+mutually exclusive; but blocks from different critical sections, say A and D,
+are _not_ mutually exclusive.
+
+The day after giving this lecture in 2006-07-spring, I found a modern
+reference to the same question. The quote below is from Subtleties of
+Transactional Memory Atomicity Semantics by Blundell, Lewis, and Martin in
+_Computer Architecture Letters_ (volume 5, number 2, July-Dec. 2006, pp.
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+65-66). As mentioned above, busy-waiting (binary) semaphores are often called
+locks (or spin locks).
+
+> ... conversion (of a critical section to a transaction) broadens the scope
+of atomicity, thus changing the program's semantics: a critical section that
+was previously atomic only with respect to other critical sections guarded by
+the same lock is now atomic with respect to _all_ other critical sections.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+## 2.5B: Summary of 2.3 and 2.5
+
+We began with a subtle bug (wrong answer for x++ and x--) and used it to
+motivate the **Critical Section Problem** for which we provided a (software)
+solution.
+
+We then defined **(binary) Semaphores** and showed that a Semaphore easily
+solves the critical section problem and doesn't require knowledge of how many
+processes are competing for the critical section. We gave an implementation
+using **Test-and-Set**.
+
+We then gave an operational definition of Semaphore (which is _not_ an
+implementation) and morphed this definition to obtain a **Counting (or
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+Generalized) Semaphore**, for which we gave **NO** implementation. I asserted
+that a counting semaphore can be implemented using 2 binary semaphores and
+gave a reference.
+
+We defined the **Producer-Consumer (or Bounded Buffer) Problem** and showed
+that it can be solved using counting semaphores (and binary semaphores, which
+are a special case).
+
+Finally we briefly discussed some classical problems, but did not give (full)
+solutions.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+## 2.6 Research on Processes and Threads
+
+Skipped.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+## 2.7 Summary
+
+Skipped, but you should read.
+
+**Remark**: Chapter 2 homework solutions are on the web site. Password will be given again in class.
+
+**Remark**: Midterm coming up. Could be next class but I think that is too soon. This is a big class for me to grade by the deadline so it must be the 22nd (next thursday).
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+# Chapter 6 Deadlocks
+
+![gridlock](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/gridlock-crop-
+shrink.png)  
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+![gridlock-new](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/gridlock-
+new-crop.png)
+
+**Note**: Deadlocks are closely related to process management so belong here, right after chapter 2. It was here in 2e. A goal of 3e is to make sure that the basic material gets covered in one semester. But I know we will do the first 6 chapters so there is no need for us to postpone the study of deadlock.
+
+![deadlock](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/deadlock-
+shrink.png)
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+**Definition**: A _deadlock_ occurs when every member of a set of processes is waiting for an event that can only be caused by a member of the set.
+
+Often the event waited for is the release of a resource.
+
+In the automotive world deadlocks are called _gridlocks_.
+
+  * The processes are the cars.
+  * The resources are the spaces on the street occupied by the cars.
+
+For a computer science example consider two processes A and B that each want
+to copy a file from a CD to a blank CD-R. Each processor needs exclusive
+access to a CD reader and to a CD burner. Assume the system has exactly one of
+each device.
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+
+It is quite possible for this to work perfectly. If A goes first, gets both
+devices, does the copy, releases both devices, and the B does the same, all is
+well.
+
+However, the following problematic scenario is also possible.
+
+  1. First, A obtains ownership of the burner (and will release it after getting the CD reader and copying the file).
+  2. Then B obtains ownership of the CD reader (and will release it after getting the burner and copying the file).
+  3. A now tries to get ownership of the drive, but is told to wait for B to release it.
+  4. B now tries to get ownership of the burner, but is told to wait for A to release it.
+
+**Bingo**: deadlock!
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+## 6.1 Resources
+
+**Definition**: A _resource_ is an object that can be granted to a process.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+### 6.1.1 Preemptable and Nonpreemptable Resources
+
+Resources come in two types
+
+  1. **Preemptable**, meaning that the resource can be taken away from its current owner (and given back later). An example is memory.
+  2. **Non-preemptable**, meaning that the resource cannot be taken away. An example is a CD-burner.
+
+The interesting issues arise with non-preemptable resources so those are the
+ones we study.
+
+The life history of a resource is a sequence of
+
+  1. Request
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+  2. Allocate
+  3. Use
+  4. Release
+
+Processes request the resource, use the resource, and release the resource.
+The allocate decisions are made by the system and we will study policies used
+to make these decisions.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+### 6.1.2 Resource Acquisition
+
+A simple example of the trouble you can get into.
+
+  * Two resources and two processes.
+  * Each process wants both resources.
+  * Use a semaphore for each. Call them S and T.
+  * If both processes execute  
+`   P(S); P(T); <regular instructions> V(T); V(S)  
+` all is well.
+
+  * But if **one** executes instead  
+`   P(T); P(S); <regular instructions> V(S); V(T)  
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+` disaster (deadlock can occur)! This was the CD-burner/CD-reader example just
+above.
+
+Recall from the semaphore/critical-section treatment last chapter, that it is
+easy to cause trouble if a process dies or stays forever inside its critical
+section. We assumed processes do not do this. Similarly, we assume that no
+process retains a resource forever. It may obtain the resource an unbounded
+number of times (i.e. it can have a loop with a resource request inside), but
+each time it gets the resource, it must release it eventually.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+## 6.2 Introduction to Deadlocks
+
+Definition: A **deadlock** occurs when a every member of a set of processes is
+waiting for an event that can only be caused by a member of the set.
+
+Often the event waited for is the release of a resource.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+### 6.2.1 (Necessary) Conditions for Deadlock
+
+The following four conditions (Coffman; Havender) are _necessary_ but _not_
+sufficient for deadlock. Repeat: They are not sufficient.
+
+  1. **Mutual exclusion**: A resource can be assigned to at most one process at a time (no sharing).
+  2. **Hold and wait**: A processing holding a resource is permitted to request another.
+  3. **No preemption**: A process must release its resources; they cannot be taken away.
+  4. **Circular wait**: There must be a chain of processes such that each member of the chain is waiting for a resource held by the next member of the chain.
+
+One can say If you want a deadlock, you must have these four conditions.. But
+of course you don't actually want a deadlock, so you would more likely say If
+you want to prevent deadlock, you need only violate one or more of these four
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+conditions. .
+
+The first three are static characteristics of the system and resources. That
+is, for a given system with a fixed set of resources, the first three
+conditions are either always true or always false: They don't change with
+time. The truth or falsehood of the last condition does indeed change with
+time as the resources are requested/allocated/released.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+![resource-alloc](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/resource-
+alloc.png)
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+### 6.2.2 Deadlock Modeling
+
+On the right are several examples of a **Resource Allocation Graph**, also
+called a **Reusable Resource Graph**.
+
+  * The processes are circles.
+  * The resources are squares.
+  * An arc (directed line) from a process P to a resource R signifies that process P has requested, but has **not** yet been allocated, resource R.
+  * An arc from a resource R to a process P indicates that process P has been allocated resource R and has not yet released it. We sometimes say that process P is _holding_ resource R.
+
+**Homework:** 9\. Are all such reusable resource graphs legal?
+
+Consider two concurrent processes P1 and P2 whose programs are.
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+
+    
+    
+      P1                   P2
+      request R1           request R2
+      request R2           request R1
+      release R2           release R1
+      release R1           release R2
+    
+
+On the board draw the resource allocation graph for various possible
+executions of the processes, indicating when deadlock occurs and when deadlock
+is no longer avoidable.
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+
+There are four strategies used for dealing with deadlocks.
+
+  1. Ignore the problem.
+  2. Detect deadlocks and recover from them.
+  3. Prevent deadlocks by violating one of the 4 necessary conditions.
+  4. Avoid deadlocks by carefully deciding when to allocate resources.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+## 6.3 Ignoring the Problem--The Ostrich Algorithm
+
+The put your head in the sand approach.
+
+  * If the likelihood of a deadlock is sufficiently small and the cost of avoiding a deadlock is sufficiently high it might be better to ignore the problem. For example, if each PC deadlocks once per 10 years, the one reboot may be less painful that the restrictions needed to prevent it.
+  * Clearly the ostrich algorithm is not suitable for nuclear missile launchers or for patient monitoring systems found in cardiac care units.
+  * For embedded systems (such as the two examples above) the programs to be run are known in advance so many of the issues that occur in systems like Linux, MacOS or Windows (such as many processes wanting to fork at the same time) don't occur.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+## 6.4 Deadlock Detection and Recovery
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+### 6.4.1 Detecting Deadlocks with One Resources of Each Type
+
+Consider the case in which there is **only one** instance of each resource.
+
+  * Thus a request can be satisfied by only one specific resource.
+  * In **this case** the 4 necessary (Coffman-Havender) conditions for deadlock are also sufficient.
+  * Remember we are making an assumption (single unit resources) that is often invalid. For example, many systems have several printers and a request is given for a printer not a specific printer. Similarly, one can have many CD-ROM drives.
+  * In this special case the problem reduces to finding a directed cycle in the resource allocation graph.  
+**Why**?  
+**Answer**: Because the other three Coffman-Havender conditions are either always satisfied by the system we are studying (so we need only determine if condition 4 is satisfied), or are never satisfied by the system in question (in which case deadlock is impossible). That is, conditions 1,2,3 are static conditions on the system, not conditions on the state of the system right now.
+
+To find a directed cycle in a directed graph is not hard. The algorithm is in
+the book. The idea is simple.
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+
+  1. For each node in the graph do a depth first traversal to see if the graph is a DAG (directed acyclic graph), building a list as you go down the DAG (and pruning it as you backtrack back up).
+  2. If you ever find the same node twice on your list, you have found a directed cycle, the graph is not a DAG, and deadlock exists among the processes in your current list.
+  3. If you never find the same node twice, the graph is a DAG and no deadlock exists (right now).
+
+The searches are finite since there are a finite number of nodes and you stop
+if you hit a node twice.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+### 6.4.2 Detecting Deadlocks with Multiple Unit Resources
+
+![multiunit-graph](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams
+/multiunit-graph.png)
+
+This is more difficult.
+
+  * The figure on the right shows a resource allocation graph with multiple unit resources.
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+  * Each unit is represented by a dot in the box.
+  * Request edges are drawn to the box since they represent a request for **any** dot in the box.
+  * Allocation edges are drawn from a dot to represent that a specific unit of the resource has been assigned (but all units of the resource are equivalent and the choice of which one to assign is arbitrary).
+  * Note that there is a directed cycle shown in red, but there is no deadlock. Indeed the middle process might finish, erasing the cyan arc and permitting the blue dot to satisfy the rightmost process.
+  * The book gives an algorithm for detecting deadlocks in this more general setting. The idea is as follows. 
+    1. look for a process that **might** be able to terminate. That is, a process all of whose request arcs can be satisfied by resources the manager has on hand right now.
+    2. If one such process is found, pretend that it **does** terminate (erase all its arcs), and repeat step 1.
+    3. If any processes remain, they are deadlocked.
+  * We will soon do in detail an algorithm (the Banker's algorithm) that has some of this flavor.
+  * The algorithm just given makes the most _optimistic_ assumption possible about a non-blocked process: It will return all its resources and terminate normally. If we still find processes that remain blocked, they are deadlocked.
+  * In the bankers algorithm we will make the most _pessimistic_ assumption possible about a running process: It immediately asks for all the resources it **can possibly** request (later we will explain in detail the meaning of can possibly). If, even with such demanding processes, the resource manager can insure that all process terminates, then the manager can insure that deadlock is avoided.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+### 6.4.3 Recovery from deadlock
+
+#### Recovery through Preemption
+
+Perhaps you can temporarily preempt a resource from a process. Not likely.
+
+#### Recovery through Rollback
+
+Database (and other) systems take periodic checkpoints. If the system does
+take checkpoints, one can roll back to a checkpoint whenever a deadlock is
+detected. You must somehow guarantee forward progress.
+
+#### Recovery through Killing Processes
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+
+Can always be done but might be painful. For example some processes have had
+effects that can't be simply undone. Print, launch a missile, etc.
+
+</textarea>
+    <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

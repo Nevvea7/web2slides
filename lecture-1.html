@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">Start Lecture #1
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+# Chapter -1 Administrivia
+
+I start with chapter -1 so that when we get to chapter 1, the numbering will
+agree with the text.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+## (-1).1 Contact Information
+
+  * email: my-last-name AT nyu DOT edu (best method)
+  * web: [cs.nyu.edu/~gottlieb](cs.nyu.edu/~gottlieb)
+  * brick and mortar: 715 Broadway, Room 712
+  * phone: 212 998 3344
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+## (-1).2 Course Web Page
+
+There is a web site for the course. You can find it from my home page, which
+is http://cs.nyu.edu/~gottlieb
+
+  * You can find these lecture notes on the course home page. Please let me know if you can't find them.
+  * The notes are updated as bugs are found or improvements made. As a result, I do not recommend printing the notes now (if at all).
+  * I will place markers at the end of each lecture after the lecture is given. For example, the Start Lecture #1 marker above can be thought of as End Lecture #0.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+## (-1).3 Textbook
+
+The course text is Tanenbaum, "Modern Operating Systems", Forth Edition (4e).  
+We will cover nearly all of the first six chapters, plus some material from
+later chapters.
+
+I once used a book by Finkel, which is now out of print, but is [ available on
+the web. ](ftp://ftp.cs.uky.edu/cs/manuscripts/vade.mecum.2.pdf)
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+## (-1).4 Email, and the Mailman Mailing List
+
+  * You should have all been automatically added to the mailing list for this course and should have received a test message from me dated 15 January 2016.
+  * If that automatic system didn't work, you can sign up for the mailing list by clicking [ here. ](http://www.cs.nyu.edu/mailman/listinfo/CSCI_UA_0202_001_sp16) If both methods fail, send me an email and I will have the systems group add you. This may well happen to students who join the class late. 
+  * Membership on the list is **Required**; I assume that messages I send to the mailing list are read.
+  * If you want to send mail just to me, use my-last-name AT nyu DOT edu not the mailing list.
+  * Questions on the labs should go to the mailing list. You may answer questions posed on the list as well. Note that replies **are sent to the list**.
+  * I will respond to all questions. If another student has answered the question before I get to it, I will confirm if the answer given is correct.
+  * Please use proper mailing list etiquette. 
+    * Send **plain text** messages rather than (or at least in addition to) html.
+    * Use Reply to contribute to the current thread, but **NOT** to start another topic.
+    * If quoting a previous message, trim off irrelevant parts.
+    * Use a descriptive Subject: field when starting a new topic.
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+    * Do not use one message to ask two unrelated questions.
+    * Do **NOT** make the mistake of sending your completed lab assignment to the mailing list. This is not a joke; several students have made this mistake in past semesters.
+  * I prefer that when you respond to a message, you either place your reply after the original text or interspersed with it (rather than putting your reply at the top).  
+This preference is most relevant for detailed questions that lead to serious
+conversations involving many messages. I find it quite useful when reviewing a
+serious conversations to have the entire conversation in chronological order.  
+I believe you would also find it useful when reviewing for an exam.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+## (-1).5 Grades
+
+Grades are based on the labs and exams; the weighting will be approximately  
+25%*LabAverage + 30%*MidtermExam + 45%*FinalExam (but see homeworks below).
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+## (-1).6 The Upper Left Board
+
+I use the upper left board for lab/homework assignments and announcements. I
+should never erase that board. Viewed as a file it is group readable (the
+group is those in the room), appendable by just me, and (re-)writable by no
+one. If you see me start to erase an announcement, let me know.
+
+I try very hard to remember to write all announcements on the upper left board
+and I am normally successful. If, during class, you see that I have forgotten
+to record something, please let me know. **HOWEVER**, if I forgot and no one
+reminds me, the assignment has still been given.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+## (-1).7 Homeworks and Labs
+
+I make a distinction between homeworks and labs.
+
+Labs are
+
+  * _Required_.
+  * Due several lectures later (date given on assignment).
+  * Given in the notes and on NYU Classes with supplemental material on separate web pages. Your solution is submitted via NYU Classes.
+  * Graded and form part of your final grade.
+  * Penalized for lateness. The penalty is 1 point per day up to 30 days; then 3 points per day.
+  * This penalty is **much** too mild; but it is enforced.
+  * Near the final exam a **firm** deadline will be set after which no labs will be accepted.
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+  * Computer programs you must write.
+
+Homeworks are
+
+  * Optional.
+  * Due the beginning of the _Next_ lecture.
+  * Not accepted late.
+  * Mostly from the book.
+  * The assignment is given in the notes and Classes; your solution is submitted via NYU Classes.
+  * Checked for completeness and graded 0/1/2.
+  * Able to help, but not hurt, your final grade.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+### (-1).7.1 Homework Numbering
+
+Homeworks are numbered by the class in which they are assigned. So any
+homework given today is homework #1. Even if I do not give homework today, the
+homework assigned next class will be homework #2. Unless I explicitly state
+otherwise, all homeworks assignments can be found in the class notes. So the
+homework present in the notes for lecture #n is homework #n (even if I
+inadvertently forgot to write it to the upper left board).
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+### (-1).7.2 Doing Labs on non-NYU Systems
+
+You may _develop_ (i.e., write and test) lab assignments on any system you
+wish, e.g., your laptop. However, ...
+
+  * You are responsible for any non-nyu machine. I extend deadlines if the nyu machines are down, not if yours are. So you should back up any work done on your own machine.
+  * You should test your assignments on the nyu systems, for this class that means mauler.cims.nyu.edu. More on how to do this later.
+  * In an ideal world, a program written in a high level language such as Python, Java, C, or C++ that works on one system would also work on any other system. Sadly, this ideal is not always achieved, despite marketing claims to the contrary. So, although you may _develop_ your lab on any system, you must ensure that it _runs_ on mauler, which the TAs will use when grading your labs.
+  * You submit your labs using NYU Classes.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+### (-1).7.2.1 Testing Your Labs on mauler.cims.nyu.edu
+
+I feel it is important for CS majors to be familiar with basic client-server
+computing (related to cloud computing) in which one develops on a client
+machine (for us, most likely one's personal laptop), but runs on a remote
+server (for us, mauler.cims.nyu.edu). This requires three steps.
+
+  1. Obtaining an account on mauler (and access.cims.nyu.edu).
+  2. Copying files (the lab) from your system to mauler.
+  3. Logging into mauler and running the lab.
+
+I have supposedly given you each an account on mauler (and access), which
+takes care of step 1. Accessing mauler and access is different for different
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+client (laptop) operating systems.
+
+  * If you have a unix based system (e.g., linux) you are ready to try it. From a terminal, type ssh username@access.cims.nyu.edu, where username is your username on home.nyu.edu (i.e., your netid). It should print an obnoxious warning and ask for your password. Again use the one from home.nyu.edu. You should now be logged into a unix machine so try ls. You use scp (secure copy) to copy files from one unix machine to another.
+  * If you have MacOS, you use the same commands as for unix (the core of MacOS is unix). However, some versions of the MacOS terminal emulator default to rich text (instead of plain, ascii text). Once you convert to (or are lucky enough to have) a plain text terminal, you proceed just as for a unix machine.
+  * If you have MS Windows, you need to get two programs: PuTTY and WinSCP. Both are readily available for no cost (I think nyu/its has one of them). Please get them right away and I will demo putty/winscp next class.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+### (-1).7.3 Obtaining Help with the Labs
+
+Good methods for obtaining help include
+
+  1. Asking me during office hours (see web page for my hours).
+  2. Asking the mailing list.
+  3. Asking another student.
+  4. But ...  
+Your lab must be your own.  
+That is, each student must submit a unique lab. Naturally, simply changing
+comments, variable names, etc. does **not** produce a unique lab.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+### (-1).7.4 Computer Language Used for Labs
+
+You may write your lab in Java, C, or C++.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+## (-1).8 A Grade of Incomplete
+
+The rules for incompletes and grade changes are set by the school and not the
+department or individual faculty member.
+
+The rules set by CAS can be found in [
+here](http://bulletin.cas.nyu.edu/page/academic.policies#EXAMINATIONS). They
+state:
+
+> The grade of I (Incomplete) is a temporary grade that indicates that the
+student has, for good reason, not completed all of the course work but that
+there is the possibility that the student will eventually pass the course when
+all of the requirements have been completed. A student must ask the instructor
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+for a grade of I, present documented evidence of illness or the equivalent,
+and clarify the remaining course requirements with the instructor.
+
+>
+
+> The incomplete grade is not awarded automatically. It is not used when there
+is no possibility that the student will eventually pass the course. If the
+course work is not completed after the statutory time for making up
+incompletes has elapsed, the temporary grade of I shall become an F and will
+be computed in the student's grade point average.
+
+>
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+> All work missed in the fall term must be made up by the end of the following
+spring term. All work missed in the spring term or in a summer session must be
+made up by the end of the following fall term. Students who are out of
+attendance in the semester following the one in which the course was taken
+have one year to complete the work. Students should contact the College
+Advising Center for an Extension of Incomplete Form, which must be approved by
+the instructor. Extensions of these time limits are rarely granted.
+
+>
+
+> Once a final (i.e., non-incomplete) grade has been submitted by the
+instructor and recorded on the transcript, the final grade cannot be changed
+by turning in additional course work.
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+## (-1).9 Academic Integrity Policy
+
+This email from the assistant director, describes the departmental policy.
+
+    
+    
+      Dear faculty,
+    
+      The vast majority of our students comply with the
+      department's academic integrity policies; see
+    
+      www.cs.nyu.edu/web/Academic/Undergrad/academic_integrity.html
+      www.cs.nyu.edu/web/Academic/Graduate/academic_integrity.html
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+    
+      Unfortunately, every semester we discover incidents in
+      which students copy programming assignments from those of
+      other students, making minor modifications so that the
+      submitted programs are extremely similar but not identical.
+    
+      To help in identifying inappropriate similarities, we
+      suggest that you and your TAs consider using Moss, a
+      system that automatically determines similarities between
+      programs in several languages, including C, C++, and Java.
+      For more information about Moss, see:
+    
+      http://theory.stanford.edu/~aiken/moss/
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+    
+      Feel free to tell your students in advance that you will be
+      using this software or any other system.  And please emphasize,
+      preferably in class, the importance of academic integrity.
+    
+      Rosemary Amico
+      Assistant Director, Computer Science
+      Courant Institute of Mathematical Sciences
+    
+
+The university-wide policy is described [ here ](//www.nyu.edu/about/policies-
+guidelines-compliance/policies-and-guidelines/academic-integrity-for-students-
+at-nyu.html)
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+# Chapter 0 Interlude on Linkers
+
+Originally called a _linkage editor_ by IBM.
+
+A linker is an example of a _utility_ program included with an operating
+system distribution. Like a compiler, the linker is not part of the operating
+system per se, i.e., it does not run in supervisor mode. Unlike a compiler it
+is OS dependent (what object/load file format is used) and is not (normally)
+language dependent.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+## 0.1 What does a Linker Do?
+
+Link, of course.
+
+When the compiler and assembler have finished processing a module, they
+produce an **object module** that is almost runnable. There are two remaining
+tasks to be accomplished before object modules can be run. Both are involved
+with linking (that word, again) together multiple object modules. The tasks
+are **relocating relative addresses** and **resolving external references**;
+each is described just below.
+
+The output of a linker is called a **load module** because, with relative
+addresses relocated and the external addresses resolved, the module is ready
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+to be loaded and run.
+
+![relocate](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/relocate.png)
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+### 0.1.1 Relocating Relative Addresses
+
+The compiler and assembler (mistakenly) treat each module as if it will be
+loaded at location zero. For example, the machine instruction  
+    jump 120  
+is used to indicate a jump to location 120 of the current module.
+
+To convert this **relative address** to an **absolute address**, the linker
+adds the **base address** of the module to the relative address. The base
+address is the address at which this module will be loaded.
+
+For example, assume a module is to be loaded starting at location 2300 and
+contains the above instruction  
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+    jump 120  
+The linker changes this instruction to  
+    jump 2420
+
+How does the linker know that the module is to be loaded starting at location
+2300?
+
+  * It processes the modules one at a time. The first module is to be loaded at location zero. So relocating the first module is trivial (adding zero). We say that the relocation constant is zero.
+  * After processing the first module, the linker knows its length (say that length is L1).
+  * Hence the next module is to be loaded starting at L1, i.e., the relocation constant is L1.
+  * In general the linker keeps the sum of the lengths of all the modules it has already processed; this sum is the relocation constant for the next module.
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+![resolve](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/resolve.png)
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+### 0.1.2 Resolving External References
+
+If a C (or Java, or Pascal, or Ada, etc) program contains a function call
+`f(x)`  to a function `f()` that is compiled separately, the resulting object
+module must contain some kind of jump to the beginning of f.
+
+  * But this is impossible!
+  * When the program is compiled, the compiler and assembler do _not_ know the location of f() so there is _no way_ they can supply the starting address.
+  * Instead a dummy address is supplied and a notation made that this address needs to be filled in with the location of f(). This is called a **use** of f().
+  * The object module containing the **definition** of f() contains a notation that f() is being defined and gives the relative address of the definition, which the linker converts to an absolute address (as above).
+  * The linker then changes all uses of f() to the correct absolute address.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+### 0.1.3 An Example from Lab 1
+
+To see how a linker works lets consider the following example, which is the
+first dataset from lab #1. The description in lab1 is more detailed.
+
+The target machine is word addressable and each word consists of 4 decimal
+digits. The first (leftmost) digit is the opcode and the remaining three
+digits form an address.
+
+Each object module contains three parts, a definition list, a use list, and
+the program text itself. Each definition is a pair (sym, loc) signifying that
+this symbol is defined at this location.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+Each use is again a pair (sym, loc), but this time signifying that sym is used
+in the linked list started at loc. The address in loc points to the next use
+of sym. An address of 777 is the sentinel ending the list
+
+The program text consists of a count N followed by N pairs (type, word), where
+word is a 4-digit instruction as described above and type is a single
+character indicating if the address in the word is Immediate, Absolute,
+Relative, or External.
+
+The actions taken by the linker depend on the type of the address, as we now
+illustrate. Consider the first input set from the lab.
+
+    
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+    
+      Input set #1
+      4
+      1 xy 2
+      1 z 4
+      5 R 1004  I 5678  E 2777  R 8002  E 7002
+      0
+      1 z 3
+      6 R 8001  E 1777  E 1001  E 3002  R 1002  A 1010
+      0
+      1 z 1
+      2 R 5001  E 4777
+      1 z 2
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+      1 xy 2
+      3 A 8000  E 1777  E 2001
+    
+
+The first pass simply finds the base address of each module and produces the
+symbol table giving the values for xy and z (2 and 15 respectively). The
+second pass does the real work using the symbol table and base addresses
+produced in pass one.
+
+The resulting output (shown below) is more detailed than I expect you to
+produce. The detail is there to help me explain what the linker is doing. All
+I would expect from you is the symbol table and the rightmost column of the
+memory map.
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+
+Output for Linked List format with addr-type a letter
+
+    
+    
+      Symbol Table
+          xy=2
+          z=15
+      Memory Map
+      +0
+      0:       R 1004      1004+0 = 1004
+      1:       I 5678               5678
+      2: xy:   E 2777 ->z           2015
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+      3:       R 8002      8002+0 = 8002
+      4:       E 7002 ->z           7015
+      +5
+      0        R 8001      8001+5 = 8006
+      1        E 1777 ->z           1015
+      2        E 1001 ->z           1015
+      3        E 3002 ->z           3015
+      4        R 1002      1002+5 = 1007
+      5        A 1010               1010
+      +11
+      0        R 5001      5001+11= 5012
+      1        E 4777 ->z           4015
+      +13
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+      0        A 8000               8000
+      1        E 1777 ->xy          1002
+      2 z:     E 2001 ->xy          2002
+    
+
+**Note**: It is faster (less I/O) to do a one pass approach, but is harder since you need fix-up code whenever a use occurs in a module that precedes the module with the definition.
+
+Historical note: The linker on unix was mistakenly called ld (for loader),
+which is unfortunate since it links but does not load.
+
+Unix was originally developed at Bell Labs; the seventh edition of unix was
+made publicly available (perhaps earlier ones were somewhat available). The
+7th ed man page for ld begins (see http://cm.bell-labs.com/7thEdMan).
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+
+    
+    
+        .TH LD 1
+        .SH NAME
+        ld \- loader
+        .SH SYNOPSIS
+        .B ld
+        [ option ] file ...
+        .SH DESCRIPTION
+        .I Ld
+        combines several
+        object programs into one, resolves external
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+        references, and searches libraries.
+      
+
+By the mid 80s the Berkeley version (4.3BSD) man page referred to ld as link
+editor and this more accurate name is now standard in unix/linux
+distributions.
+
+During the 2004-05 fall semester a student wrote to me:
+
+> BTW - I have meant to tell you that I know the lady who wrote ld. She told
+me that they called it loader, because they just really didn't have a good
+idea of what it was going to be at the time.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+[ The wikipedia reference ](http://en.wikipedia.org/wiki/Linker)
+
+**Lab #1:** Implement a two-pass linker. See the class home page and NYU Classes for details.
+
+</textarea>
+    <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

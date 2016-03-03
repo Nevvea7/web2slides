@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">Start Lecture #8
+
+![process-states](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/process-
+states.png)
+
+#### Medium-Term Scheduling
+
+In addition to the short-term scheduling we have discussed, we add _medium-
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+term scheduling_ in which decisions are made at a coarser time scale.
+
+Recall my favorite diagram, shown again on the right. Medium term scheduling
+determines the transitions from the top triangle to the bottom row. We suspend
+(swap out) some process if memory is over-committed, dropping the (ready or
+blocked) process down. We also need resume transitions to return a process to
+the top triangle.
+
+Criteria for choosing a victim to suspend include:
+
+  * How long since previously suspended.
+  * How much CPU time used recently.
+  * How much memory does it use.
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+  * External priority (pay more, get swapped out less).
+
+We will discuss medium term scheduling again when we study memory management
+and understand what is meant by saying memory is over-committed.
+
+#### Review Homework Assigned Last Time
+
+ProcessCPU  
+TimeStart  
+Time Blocks  
+after/for
+
+P0
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+
+10
+
+0
+
+5
+
+9
+
+P1
+
+11
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+4
+
+4
+
+6
+
+P2
+
+9
+
+4
+
+ never
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+
+Consider the following problem of the same genre as those in the homework. In
+this example we have RR scheduling with q=3 and zero context switch time.
+
+The system contains three processes. Their relevant characteristics are given
+in the table on the right.
+
+The diagram below presents a detailed solution. The numbers above the
+horizontal lines give the CPU time remaining at the beginning and end of the
+execution interval. The numbers below the horizontal lines give the length of
+the execution interval. The red lines indicate a blocked process.
+
+We see that P2 finishes at time 21, P0 at time 23, and P1 at time 30.
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+
+![rr-example](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/rr-
+example.png)
+
+#### Long Term Scheduling
+
+This is sometimes called Job scheduling.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+  1. The system decides when to start jobs, i.e., it does not necessarily start them when submitted.
+  2. Used at many supercomputer sites.
+
+A similar idea (but more drastic and not always so well coordinated) is to
+force some users to log out, kill processes, and/or block logins if over-
+committed.
+
+  * CTSS (an early time sharing system at MIT) did this to insure decent interactive response time.
+  * Unix does this if out of memory.
+  * Only LEM jobs during the day (Grumman).
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+### 2.4.4 Scheduling in Real Time Systems
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+### 2.4.5 Policy versus Mechanism
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+### 2.4.6 Thread Scheduling
+
+#### Lab 2 (Scheduling) Discussion
+
+    
+    
+      // A general program
+      // that alternates
+      // computing with I/O
+      //
+      // Compute with no I/O
+      // I/O with no computing
+      // Compute with no I/O
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+      // I/O with no computing
+      // ...
+      // Compute with no I/O
+      // I/O with no computing
+    
+
+On the right is the general form of many programs, compute, I/O, compute, I/O,
+..., compute, I/O. In lab 2 we characterize a program of this type by a tuple
+of four nonnegative integers (A, B, C, IO), only A can be zero.
+
+A is the arrival (or start) time and C is the (total) CPU time. These two were
+used in the problems I did on the board.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+B the CPU-burst time and IO the I/O-burst time, generalize the blocks after
+and blocks for in the previous example. They are used to calculate the times
+for each of the compute and I/O sections of the program on the right.
+
+Show the detailed output
+
+  1. In FCFS see the affect of A, B, C, and IO.
+  2. In RR see how the cpu burst is limited.
+  3. Note the intital sorting to ease finding the tie breaking process.
+  4. Illustrate the show random option.
+  5. Comment on how to do it: (time-based) discrete-event simulation (DES). 
+    1. DoBlockedProcesses()
+    2. DoRunningProcesses()
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+    3. DoArrivingProcesses()
+    4. DoReadyProcesses()
+  6. For processor sharing need event-based DES.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+## 2.3 Interprocess Communication (IPC) and Coordination/Synchronization
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+### 2.3.1 Race Conditions
+
+A **race condition** occurs when
+
+  1. Two processes A and B are each about to perform some (possibly different) action.
+  2. The program does not determine which process goes first.
+  3. The result if A goes first differs from the result if B goes first.
+
+In other words, there is a race between A and B and the program result differs
+depending on which one wins the race.
+
+**Notes:**
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+  1. There can be more that 2 competing processes.
+  2. The interesting case is when one ordering, which occurs most frequently, gives the expected result, and another, rarely occurring, ordering give an unexpected result.
+  3. The example below exhibits this interesting case.
+
+Imagine two processes both accessing x, which is initially 10.
+
+    
+    
+      A1: LOAD  r1,x     B1: LOAD  r2,x
+      A2: ADD   r1,1     B2: SUB   r2,1
+      A3: STORE r1,x     B3: STORE r2,x
+    
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+  * One process is to execute x := x+1.
+  * The other is to execute x := x-1.
+  * When both are finished x should be 10.
+  * But x := x+1 is not atomic; see the code on the right.
+  * Show in class how we can get 9 or 11!
+  * Tanenbaum shows how this can lead to disaster for a printer spooler.
+
+**Remark**: Homework solutions for ch1 are posted. They are protected by a password that I will give in class and will repeat in class any lecture that I am asked. However, I can't send it to the class list as that is public.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+### 2.3.2 Critical Regions (Sections)
+
+We must prevent interleaving sections of code that need to be atomic with
+respect to each other. That is, the conflicting sections need **mutual
+exclusion**. If process A is executing its critical section, it excludes
+process B from executing its critical section. Conversely if process B is
+executing its critical section, it excludes process A from executing its
+critical section.
+
+Tanenbaum gives four requirements for a critical section implementation.
+
+  1. No two processes may be simultaneously inside their critical section.
+  2. No assumption may be made about the speeds or the number of concurrent threads/processes.
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+  3. No process outside its critical section (including the entry and exit code) may block other processes.
+  4. No process should have to wait forever to enter its critical section. 
+    * I do **NOT** make this last requirement.
+    * I just require that the system as a whole make progress (so not all processes are blocked).
+    * Specifically, I require that if one process is ready to enter its critical section, **some** processes (possibly not the one now ready to enter) will eventually enter its critical section.
+    * I refer to solutions that do not satisfy Tanenbaum condition as _unfair_, but nonetheless _correct_, solutions.
+    * Stronger fairness conditions have also been defined.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+### 2.3.3 Mutual exclusion with busy waiting
+
+We will study only solutions of this kind. Note that higher level solutions,
+e.g., having one process block when it cannot enter its critical are
+**implemented** using busy waiting algorithms.
+
+#### Disabling Interrupts
+
+The operating system can choose not to preempt itself. That is, we could
+choose not to preempt system processes (if the OS is client server) or
+processes running in system mode (if the OS is self service). Forbidding
+preemption within the operating system would prevent the problem above where
+x<\--x+1 not being atomic crashed the printer spooler (assume the spooler is
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+part of the OS).
+
+The way to prevent preemption of kernel-mode code is to disable interrupts.
+Indeed, disabling (i.e., temporarily preventing) interrupts is often done for
+exactly this reason. This is not, however, a complete solution.
+
+  * It does not work for user-mode programs. So the Unix print spooler, which is a user-mode program would need another solution.
+  * We do not want to block interrupts for too long or the system will seem unresponsive.
+  * Disabling interrupts is insufficient if the system has several processors. 
+    * The main line can be executing on both processors simultaneously so interrupts are not involved.
+    * One processor cannot block interrupts on the other.
+
+#### Software solutions for two processes
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+
+  
+
+##### Lock Variables
+
+The idea is that each process, before entering the critical section, sets a
+variable that locks the other process out of the critical section.
+
+    
+    
+      Initially:   P1wants = P2wants = false
+    
+      Code for P1                             Code for P2
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+    
+      Loop forever {                          Loop forever {
+         P1wants <-- true         ENTRY          P2wants <-- true
+         while (P2wants) {}       ENTRY          while (P1wants) {}
+         critical-section                        critical-section
+         P1wants <-- false        EXIT           P2wants <-- false
+         non-critical-section }                  non-critical-section }
+    
+
+Explain why this works.
+
+But it is wrong!  
+Why?
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+
+Let's try again. The trouble was that setting want before the loop permitted
+us to get stuck. We had them in the wrong order!
+
+    
+    
+      Initially P1wants=P2wants=false
+    
+      Code for P1                             Code for P2
+    
+      Loop forever {                          Loop forever {
+         while (P2wants) {}       ENTRY          while (P1wants) {}
+         P1wants <-- true         ENTRY          P2wants <-- true
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+         critical-section                        critical-section
+         P1wants <-- false        EXIT           P2wants <-- false
+         non-critical-section }                  non-critical-section }
+    
+
+Explain why this works.
+
+But it is wrong again!  
+Why?
+
+##### Strict Alternation
+
+Now let's try being polite and really take turns. None of this wanting stuff.
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+
+    
+    
+      Initially turn=1
+      
+      Code for P1                      Code for P2
+    
+      Loop forever {                   Loop forever {
+         while (turn = 2) {}              while (turn = 1) {}
+         critical-section                 critical-section
+         turn <-- 2                       turn <-- 1
+         non-critical-section }           non-critical-section }
+    
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+
+This one forces alternation, so is not general enough. Specifically, it does
+not satisfy condition three, which requires that no process in its non-
+critical section can stop another process from entering its critical section.
+With alternation, if one process is in its non-critical section (NCS) then the
+other can enter the CS once but not again.
+
+The first example violated rule 4 (the whole system blocked). The second
+example violated rule 1 (both in the critical section. The third example
+violated rule 3 (one process in the NCS stopped another from entering its CS).
+
+##### The First Correct Solution
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+In fact, it took years (way back when) to find a correct solution. Many
+earlier solutions were found and several were published, but all were wrong.
+The first correct solution was found by a mathematician named Dekker, who
+combined the ideas of turn and wants. The basic idea is that you take turns
+when there is contention, but when there is no contention, the requesting
+process can enter. It is very clever, but I am skipping it (I cover it when I
+teach distributed operating systems in CSCI-GA.2251). Subsequently, algorithms
+with better fairness properties were found (e.g., no task has to wait for
+another task to enter the CS twice).
+
+What follows is Peterson's solution, which also combines wants and turn to
+force alternation only when there is contention. When Peterson's algorithm was
+published, it was a surprise to see such a simple solution. In fact Peterson
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+gave a solution for any number of processes. A proof that the algorithm
+satisfies our properties (including a strong fairness condition) for any
+number of processes can be found in _Operating Systems Review_ Jan 1990, pp.
+18-22.
+
+    
+    
+      Initially P1wants=P2wants=false  and  turn=1
+    
+      Code for P1                        Code for P2
+    
+      Loop forever {                     Loop forever {
+         P1wants <-- true                   P2wants <-- true
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+         turn <-- 2                         turn <-- 1
+         while (P2wants and turn=2) {}      while (P1wants and turn=1) {}
+         critical-section                   critical-section
+         P1wants <-- false                  P2wants <-- false
+         non-critical-section }             non-critical-section }
+    
+
+</textarea>
+    <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

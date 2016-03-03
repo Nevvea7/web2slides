@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">Start Lecture #7
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+### 2.4.3 Scheduling in Interactive Systems
+
+The following algorithms can also be used for batch systems, but in that case,
+the gain may not justify the extra complexity.
+
+#### Round Robin (RR, RR, RR, RR)
+
+Round Robin (RR) is an important _preemptive _ policy. It is essentially the
+preemptive version of FCFS. One property of RR is that it loosely approximates
+SJF without knowing in advance how long each process will require.
+
+When a process is put into the running state a timer is set to q milliseconds,
+a key parameter of the policy, called the _quantum_. If the timer goes off and
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+the process is still running, the OS **preempts** the process.
+
+  * Preemption requires a clock interrupt so that OS can take control when the quantum expires.
+  * The currently running process is moved to the ready state (the _preempt_ arc in my favorite diagram), where it is placed at the rear of the ready list.
+  * The process at the front of the ready list is removed from the list and run (i.e., moves to state running).
+
+Note that, as in FCFS, the ready list is being treated as a queue. Indeed many
+always call the list of ready processes the ready queue. But I don't. For
+other scheduling algorithms the ready list is not accessed in a FIFO manner so
+I find the term queue misleading. For FCFS and RR, the term ready queue is
+appropriate.
+
+When a process is created or unblocked, it is likewise placed at the rear of
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+the ready list.
+
+Note that RR with a quantum of say 10ms. works well if you have a 1 hr job and
+then a 1 second job. This is the sense in which it approximates SJF.
+
+As q gets large, RR approaches FCFS. Indeed if q is larger that the longest
+time any process will run before terminating or blocking, then RR **is** FCFS.
+A good way to see this is to look at my favorite diagram and note the three
+arcs leaving running. They are triggered by three conditions: process
+terminating, process blocking, and process preempted. If the first trigger
+condition to arise is never preemption, we can erase that arc and then RR
+becomes FCFS.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+As q gets small, RR approaches PS (Processor Sharing, described next).
+
+**Question:** What value of q should we choose?  
+**Answer:** A trade-off exists.
+
+  * A small q makes the system more responsive, a long compute-bound job cannot delay a short job for an excessive period.
+  * A large q makes the system more efficient since there is less process switching.
+  * A reasonable time for q is a few tens of milliseconds or perhaps a few milliseconds for a very fast system. (millisecond = 1/1000 second and is abbreviated ms). This means every other job can delay your job receiving some attention by at most q (plus the context switch time CS, which is much less than 1ms). Also the overhead is CS/(CS+q), which is small.
+
+A student  found the following reference for the name Round Robin in the
+Encyclopedia of Word and Phrase Origins by Robert Hendrickson (Facts on File,
+New York, 1997). A similar, but less detailed, citation can be found in
+wikipedia.
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+
+> The round robin was originally a petition, its signatures arranged in a
+circular form to disguise the order of signing. Most probably it takes its
+name from the ruban rond, (round ribbon), in 17th-century France, where
+government officials devised a method of signing their petitions of grievances
+on ribbons that were attached to the documents in a circular form. In that way
+no signer could be accused of signing the document first and risk having his
+head chopped off for instigating trouble. Ruban rond later became round robin
+in English and the custom continued in the British navy, where petitions of
+grievances were signed as if the signatures were spokes of a wheel radiating
+from its hub. Today round robin usually means a sports tournament where all of
+the contestants play each other at least once and losing a match doesn't
+result in immediate elimination.
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+
+**Homework:** Round-robin schedulers normally maintain a list of all ready processes, with each process occurring exactly once in the list. What would happen if a process occurred more than once in the list? Can you think of any reason for allowing this?
+
+**Homework:** Give an argument favoring a large quantum; give an argument favoring a small quantum.
+
+ProcessCPU TimeCreation Time
+
+P1
+
+20
+
+0
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+P2
+
+3
+
+3
+
+P3
+
+2
+
+5
+
+**Homework:**
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+
+  * Consider the set of processes in the table to the right.
+  * Assume each process performs no I/O, i.e., no process ever blocks.
+  * When does each process finish if RR scheduling is used with q=1, if q=2, if q=3, if q=100?
+  * First assume (unrealistically) that context switch time is zero.
+  * Then assume it is 0.1.
+  * All times are in milliseconds.
+  * The CPU time is the total time required for the process (excluding any context switch time).
+  * The creation time is the time when the process is created. So P1 is created when the problem begins and P3 is created 5 milliseconds later.
+  * If two processes have equal priority (in RR this means if they both enter the ready state at the same cycle), we give priority (in RR this means place first on the queue) to the process with the earliest creation time. If they also have the same creation time, then we give priority to the process with the lower number, i.e., P1 has priority over P2, which in turn has priority over P3. Since I plan on using this rule for lab 2, I will refer to it as the lab 2 tie-breaking rule.
+  * Remind me to discuss this problem in class next time.
+
+**Homework:** Redo the previous homework for q=2 with the following changes. After process P1 runs for 3ms (milliseconds), it blocks for 2ms. P1 never blocks again. That is, P1 begins with a CPU burst of 3ms, then has an I/O burst of 2ms, and finally it has a CPU burst of 20-3 = 17ms. P2 never blocks. After P3 runs for 1 ms it blocks for 1ms. Assume the context switch time is zero. Remind me to answer this problem in class next lecture.
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+
+#### Processor Sharing (PS, **, PS, PS)
+
+Merge the ready and running states and permit all ready jobs to be run at
+once. However, the processor slows down so that when n jobs are running at
+once, each progresses at a speed 1/n as fast as it would if it were running
+alone.
+
+  * Clearly impossible as stated due to the overhead of process switching.
+  * Of theoretical interest (easy to analyze).
+  * Approximated by RR with a small quantum. Make **sure** you understand this last point. For example, consider the last homework assignment (with zero context switch time and no blocking) and consider q=1, q=.1, q=.01, etc.
+  * Show what happens with PS for 3 processes, A, B, C, each requiring 3 seconds of CPU time. A starts at time 0, B at 1 second, C at 2.
+  * Consider three processes all starting at time 0. One requires 1ms, the second 100ms, the third 10sec (seconds). Compute the total/average waiting time for RR q=1ms, PS, SJF, SRTN, and FCFS. Note that this depends on the order the processes happen to be processed in. The effect is huge for FCFS, modest for RR with modest quantum, and non-existent for PS and SRTN.
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+
+**Homework:** 38.
+
+#### Variants of Round Robin
+
+  1. _State dependent RR_
+    * Same as RR but q is varied dynamically depending on the state of the system.
+    * Favor processes holding important resources, for example, non-swappable memory.
+    * Perhaps this should be considered medium term scheduling since you probably do not recalculate q each time.
+  2. _External priorities_: RR but a user can pay more and get bigger q. That is, one process can be given a higher priority than another. But this is not an absolute priority: the lower priority (i.e., less important) process does get to run, but not as much as the higher priority process.
+
+#### Priority Scheduling
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+Each job is assigned a priority (externally, perhaps by charging more for
+higher priority) and the highest priority ready job is run.
+
+  * Sometimes a large priority means an important job; sometimes a small priority means an important job.
+  * Similar to External priorities above.
+  * If many processes have the highest priority, use RR among them. Indeed one often groups several priorities into a priority class and employs RR within a class.
+  * Can easily starve processes, which can be fixed by the standard technique, which is right below.
+  * Can have the priorities changed dynamically to favor processes holding important resources  (similar to state dependent RR above).
+  * Many policies can be thought of as priority scheduling in which we run the job with the highest priority. The different scheduling policies have different notions of priority. For example: 
+    * FCFS and RR are priority scheduling where the priority is the time last inserted on the ready list.
+    * SJF and SRTN are priority scheduling, where the priority of the job is the time it needs to run in order to complete (or complete its current CPU burst).
+
+#### Two Examples to Do in Class
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+
+  1. FCFS with three processes, A, B, and C. Each CPU burst is 3 time units (ms if you like). Each I/O burst is also 3. Show the ready queue.
+  2. Then repeat for RR with q=2.
+
+####  Priority Aging--The Standard Technique to Prevent Starvation
+
+As a job is waiting, increase its priority; hence it will eventually have the
+highest priority.
+
+  * **Starvation** means that from a certain time on, some process never runs, because it never has the highest priority. The formal way to say this is that a system is free of starvation if, No job can remain in the ready state forever.
+  * Priority aging is the standard technique used to prevent starvation (assuming all jobs terminate or the policy is preemptive).
+  * There may be many processes with the maximum priority.
+  * If so, can schedule those with max priority using FIFO (risks starvation if a job doesn't terminate) or RR (the preemptive equivalent).
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+  * We can apply priority aging to many policies, in particular to priority scheduling described above.
+
+**Homework:** 44, 45. Note that when the book says RR with each process getting its fair share, it means Processor Sharing.
+
+![srr.png](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/srr.png)
+
+#### Selfish RR (SRR, **, SRR, **)
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+SRR is a preemptive policy in which unblocked (i.e. ready and running)
+processes are divided into two classes the Accepted processes, which are
+scheduled using RR and the others, which are not run until they become
+accepted. (Perhaps SRR really stands for snobbish RR).
+
+  * A new process starts at priority 0.
+  * Accepted process have their priority increase at rate a≥0.
+  * A non-accepted process has its priority increases at rate b≥0.
+  * A non-accepted process becomes accepted when its priority reaches that of the accepted processes (or when there are no accepted processes and it has the highest priority of the unaccepted processes).
+  * Hence, once a process is accepted, it remains accepted until it terminates (or blocks, see below). Also all accepted processes have same priority.
+  * Note that, when the only accepted process terminates (or blocks, see below), all the process with the next highest priority become accepted.
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+![srr-2](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/srr-2.png)
+
+The behavior of SRR depends on the relationships between a, b, and zero. There
+are four cases.
+
+  * If a=0, get RR.
+  * If a≥b>0, get FCFS.
+  * If b>a>0, it is interesting.
+  * If a>b=0, you get RR in batches. This is similar to n-step scan for disk I/O.
+
+It is not clear what to do to the priority when a process blocks. There are
+several possibilities.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+  1. Reset the priority to zero when a process is blocked. In this case unblock acts like create in terms of priority.
+  2. Freeze the priority at its current value. When it unblocks, the process will have the same priority it had when it was blocked.
+  3. Let the priority continue to grow as if the process was not blocked. The growth can be a rate a or b depending on whether the process was accepted at the time of blockage. Presumably a process can become accepted during blockage if the other currently accepted processes terminate.
+
+The third possibility seems a little weird. We shall adopt the first
+possibility (reset to zero) since it seems the simplest.
+
+#### Approximating the Behavior of SFJ and PSJF
+
+Recall that SFJ/PSFJ do a good job of minimizing the average waiting time. The
+problem with them is the difficulty in finding the job whose next CPU burst is
+minimal. We now learn three scheduling algorithms that attempt to do this. The
+first algorithm does it statically, presumably with some manual help; the
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+other two are dynamic and fully automatic.
+
+#### Multilevel Queues (**, **, MLQ, **)
+
+Put different classes of processs in different queues
+
+  * Processes do not move from one queue to another.
+  * Can have different policies on the different queues.  
+For example, might have a background (batch) queue that is FCFS and one or
+more foreground queues that are RR (possibly with different quanta).
+
+  * Must also have a policy _among_ the queues.  
+For example, might have two queues, foreground and background, and give the
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+first absolute priority over the second
+
+    * Might apply priority aging to prevent background starvation.
+    * But might not, i.e., no guarantee of service for background processes.
+    * Might have 3 queues, foreground, background, no-cost (and might starve).
+  * Another possible **inter**-queue policy would be have 2 queues, apply RR to each but cycle through the higher priority queue twice and then cycle through the lower priority queue once.
+
+#### Multiple Queues (FB, MFQ, MLFBQ, MQ)
+
+As with multilevel queues above, we have many queues, but now processes move
+from queue to queue in an attempt to dynamically separate batch-like from
+interactive processs so that we can favor the latter.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+Remember that low average waiting time is achieved by SJF. Multiple Queues is
+an attempt to determine dynamically those processes that are interactive,
+which means have very short cpu bursts.
+
+  * Run processes from the highest priority nonempty queue in a RR manner.
+  * When a process uses its full quanta (acts a like batch process), move it to a lower priority queue.
+  * When a process doesn't use a full quanta (acts like an interactive process), move it to a higher priority queue.
+  * A long process with frequent (perhaps spurious) I/O will remain in the better queues.
+  * Might have the bottom queue FCFS.
+  * Many variants.  
+For example, might let process stay in top queue 1 quantum, next queue 2
+quanta, next queue 4 quanta (i.e., sometimes return a process to the rear of
+the same queue it was in if the quantum expires).  
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+Might move to a higher queue only if a keyboard interrupt occurred rather than
+if the quantum failed to expire for any other reason (e.g., disk I/O).
+
+#### Shortest Process Next
+
+![spn](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/spn.png)
+
+Shortest process next (mentioned previously) is an attempt to apply sjf to
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+interactive scheduling. What is needed is an estimate of how long the process
+will run until it blocks again. One method is to choose some initial estimate
+when the process starts and then, whenever the process blocks choose a new
+estimate via  
+`     NewEstimate = A*OldEstimate + (1-A)*LastBurst  
+` where 0<A<1 and LastBurst is the actual time used during the burst that just
+ended.
+
+#### Highest Penalty Ratio Next (HPRN, HRN, **, **)
+
+Run the process that has been hurt the most.
+
+  * For each process, let r = T/t; where T is how long this process has been in system and t is the running time of the process to date.
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+  * For example, r=2.5 means the job has been running 1/2.5 = 40% of the time it has been in the system.
+  * We call r the _penalty ratio_ and run the process having the highest r value.
+  * We must worry about a process that just enters the system since t=0 and hence the ratio is undefined. Define t to be the max of 1 and the running time to date. Since now t is at least 1, the ratio is always defined.
+  * HPRN is normally defined to be non-preemptive (i.e., the system only checks r when a burst ends).
+  * There is an preemptive analogue. That analogue differs from HPRN as follows. 
+    * When putting a process into the run state compute the time at which it will no longer have the highest ratio and set a timer.
+    * When a process is moved into the ready state, compute its ratio and preempt if needed.
+  * HRN stands for highest response ratio next and means the same thing.
+  * This policy is yet another example of priority scheduling.
+
+#### Guaranteed Scheduling
+
+A variation on HPRN. The penalty ratio is a little different. It is nearly the
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+reciprocal of the above, namely  
+   t / (T/n)  
+where n is the multiprogramming level. So if n is constant, this ratio is a
+constant times 1/r.
+
+#### Lottery Scheduling
+
+Each process gets a fixed number of tickets and at each scheduling event a
+random ticket is drawn (**with** replacement) and the process holding that
+ticket runs for the next interval (probably a RR-like quantum q).
+
+On the average a process with P percent of the tickets will get P percent of
+the CPU (assuming no blocking, i.e., full quanta).
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+
+#### Fair-Share Scheduling
+
+If you treat processes fairly you may not be treating users fairly since users
+with many processes will get more service than users with few processes. The
+scheduler can group processes by user and only give one of a user's processes
+a time slice before moving to another user.
+
+For example, linux has cgroups for a related purpose. The scheduler first
+schedules across cgroups so if a big job has many processes in the same
+cgroup, it will not get more time than a small job with just one process.
+
+Fancier methods have been implemented that give some fairness to groups of
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+users. Say one group paid 30% of the cost of the computer. That group would be
+entitled to 30% of the cpu cycles providing it had at least one process
+active. Furthermore a group earns some credit when it has no processes active.
+
+#### Theoretical Issues
+
+Considerable theory has been developed.
+
+  * NP completeness results abound.
+  * Much work in queuing theory to predict performance.
+  * Not covered in this course.
+
+</textarea>
+    <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

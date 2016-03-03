@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">Start Lecture #9
+
+#### The TSL Instruction (Hardware Assist test-and-set)
+
+Tanenbaum calls this instruction test and set lock TSL.
+
+I call it test and set (TAS) and define  
+    TAS(b)     where b is a binary variable,  
+to ATOMICALLY set b<-true and return the OLD value of b.
+
+Of course it would be silly to return the new value of b since we know the new
+value is true.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+The word **atomically** means that the two actions performed by TAS(x),
+testing x (i.e., returning its old value) and setting x (i.e., giving it the
+value true) are inseparable. Specifically it is **not** possible for two
+concurrent TAS(x) operations to both return false (unless there is also
+another concurrent statement that sets x to false).
+
+With TAS available, implementing a critical section for any number of
+processes is easy.
+
+    
+    
+      loop forever {
+          while (TAS(s)) {}  ENTRY
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+          CS
+          s<--false          EXIT
+          NCS }
+    
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+### 2.3.4 Sleep and Wakeup
+
+**Note:** Tanenbaum presents both busy waiting (as above) and blocking (process switching) solutions. We study only busy waiting solutions, which are easier and used in the blocking solutions. Sleep and Wakeup are the simplest blocking primitives. Sleep voluntarily blocks the process and wakeup unblocks a sleeping process. However, it is far from clear how sleep and wakeup are implemented. Indeed, deep inside, they typically use TAS or some similar primitive. We will not cover these solutions.
+
+**Homeworkg:** Explain the difference between busy waiting and blocking process synchronization.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+### 2.3.5 Semaphores
+
+**Terminology note:** Tannenbaum use the term semaphore _only_ for blocking solutions. I will use the term for our busy waiting solutions (as well as for blocking solutions). Others call our solutions _spin locks_.
+
+#### P and V
+
+The entry code is often called P and the exit code V. Thus the critical
+section problem is to write P and V so that the loop on the right satisfies:
+
+    
+    
+      loop forever
+         P
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+         critical-section
+         V
+         non-critical-section
+    
+
+  1. Mutual exclusion.
+  2. No speed assumptions.
+  3. No blocking by processes in NCS.
+  4. Forward progress (my weakened version of Tanenbaum's last condition).
+
+Note that, when writing pseudo-code, I use indenting carefully and hence do
+not need (and sometimes omit) the braces {} used in languages like C or java.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+#### Binary Semaphores
+
+A **binary semaphore** abstracts the TAS solution we gave for the critical
+section problem.
+
+  * A binary semaphore S has two possible values open and closed (think of S as a gate (to a castle).
+  * Two operations are supported.
+  * P(S) is 
+    
+              while (S==closed) {}
+          S<-closed     -- This is NOT the body of the while
+        
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+where finding S=open and setting S<-closed is a single _atomic_
+
+  * (Very) informally, the process waits until the gate is open, then atomically  
+runs through and closes the gate.
+
+  * Said yet another way, it is not possible for two processes doing P(S) simultaneously to both see S=open (unless a V(S) is also simultaneous with both of them).
+  * V(S) is simply S<-open
+
+The above code is _not_ real, i.e., it is _not_ an implementation of P. It
+requires a sequence of two instructions to be atomic and that is, after all,
+what we are trying to implement in the first place. The above code is,
+instead, a _definition_ of the effect P is to have.
+
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+To repeat: for any number of processes, the critical section problem can be
+solved using P and V as follows.
+
+    
+    
+      loop forever
+         P(S)
+         CS
+         V(S)
+         NCS
+    
+
+The only solution we have seen for an arbitrary number of processes is the one
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+just before 2.3.4 with P(S) implemented via test and set.
+
+**Note**: Peterson's solution requires each process to know its process number; the TAS soluton does not. Moreover the definition of P and V does not permit use of the process number. Thus, strictly speaking Peterson did not provide an implementation of P and V. He did, however, solve the critical section problem.
+
+</textarea>
+    <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

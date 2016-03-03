@@ -18,7 +18,14 @@ def main():
 	w = open('tmp', 'w')
 	w.write(md)
 	w.close
-	divideToLectures('tmp')
+	lecture_no = divideToLectures('tmp')
+	index_html = open('index.html', 'w')
+	printHeadings(index_html)
+	index_html.write('## Lecture Notes for OS202\n\n')
+	index_html.write('\n_Contents generated from: ' + ALLAN_NOTES_LINK + '_\n\n')
+	for i in range(lecture_no):
+		index_html.write('[lecture-%d](lecture-%d.html)\n' % (i, i))
+	printEndings(index_html)
 
 def divideToLectures(md):
 	lecture_no = 0
@@ -57,6 +64,7 @@ def divideToLectures(md):
 		lines += 1
 	printEndings(f)
 	f.close()
+	return lecture_no
 
 def newPage(f):
 	f.write("\n_Contents generated from: " + ALLAN_NOTES_LINK + "_\n")
