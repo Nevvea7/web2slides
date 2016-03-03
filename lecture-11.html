@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Title</title>
+    <title>NYU OS 202 Lecture Slides</title>
     <meta charset="utf-8">
     <style>
       @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
@@ -27,12 +27,12 @@
   4. There was no homework for lecture #8.
   5. The homework for lectures #9 and #10 is due Thursday, 3 March. Then I will post solutions to chapter 2 homeworks.
   6. The homework for lectures #11 and #12 will be due Tuesday, 8 March. Then I will post solutions to chapter 6 homeworks.
-  7. I had tried to make lab 2 a little easier and removed () from the inputs. Unfortunately, I didn't removed them from the description of the problem. We will accept the lab either way. For example your lab may accept input-1 as either  
-    1   0 1 5 1     or as     1   (0 1 5 1).  
-If your lab 2 expects the () please say so in your README.
 
 _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 ---
+  7. I had tried to make lab 2 a little easier and removed () from the inputs. Unfortunately, I didn't removed them from the description of the problem. We will accept the lab either way. For example your lab may accept input-1 as either  
+    1   0 1 5 1     or as     1   (0 1 5 1).  
+If your lab 2 expects the () please say so in your README.
 
 **Note**: We are doing 6.6 before 6.5 since 6.6 is easier and I believe serves as a good warm-up.
 
@@ -110,12 +110,12 @@ practical solution that follows, the Banker's Algorithm.
     
     
           H             V
-      <reg code>    <reg code>
-      P(print)      P(plot)
-      <reg code>    <reg code>
 
 _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 ---
+      <reg code>    <reg code>
+      P(print)      P(plot)
+      <reg code>    <reg code>
       P(plot)       P(print)
       <reg code>    <reg code>
       V(print)      V(plot)
@@ -124,18 +124,21 @@ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.
       <reg code>    <reg code>
     
 
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+
 The diagram below depicts two processes H (horizontal) and V (vertical)
 executing the programs shown on the right.
 
 We plot progress of each process along an axis. In the example we show, there
 are two processes, hence two axes, i.e., planar.
 
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
-
   * <reg code> signifies computation that neither requests nor releases any resources.
   * H first requests the printer; then requests the plotter; then uses both; and finally releases the plotter and then the printer
   * V requests the plotter first and releases the printer first.
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
   * The origin of the graph represents both processes starting.
   * Their combined state is a point on the graph.
 
@@ -156,12 +159,12 @@ s.png)
   * Gold is possible (H has the plotter, V has the printer), but the system can't get there.
   * The cyan is safe. From anywhere in the cyan we have horizontal and vertical moves to the finish point without hitting any impossible area.
   * The brown dot is ... (cymbals) deadlock. We don't want to go there.
-  * The magenta is very interesting. It is 
-    * Possible: each processor has a different resource.
-    * Reachable from the starting point.
 
 _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 ---
+  * The magenta is very interesting. It is 
+    * Possible: each processor has a different resource.
+    * Reachable from the starting point.
     * Not deadlocked: each processor can move within the magenta.
     * Deadly: deadlock is unavoidable. The system will hit a magenta-green boundary and then will have no choice but to turn and go to the brown dot.
   * The cyan-magenta border is the danger zone.
@@ -169,19 +172,22 @@ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.
 The dashed line represents a possible execution pattern.
 
   * With a uniprocessor no diagonals are possible. We either move to the right meaning H is executing or move up indicating V is executing.
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
   * The trajectory shown represents. 
     1. H excuting a little.
     2. V excuting a little.
     3. H executes; requests the printer; gets it; executes some more.
     4. V executes; requests the plotter.
 
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 The crisis is at hand!
 
   * If the resource manager gives V the plotter, the magenta has been entered and all is lost. Abandon all hope ye who enter here--Dante.
   * The right thing to do is to deny the request, let H execute and move horizontally. While we are under the magenta, we must continue to refuse V even though the plotter is available.
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
   * Once we are under the dark green, we no longer have a choice: The plotter is no longer available so V's request cannot be granted.
   * At the end of the dark green, no danger remains, both processes will complete successfully. Victory!
 
@@ -191,10 +197,10 @@ advance what requests each process will make and in what order.
 
 **Homework:** 17\. All the trajectories in the Figure are horizontal or vertical. Under what conditions is is possible for a trajectory to be a diagonal.
 
+**Homework:** 18, 19.
 
 _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 ---
-**Homework:** 18, 19.
 
 
 _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
@@ -209,12 +215,12 @@ Avoiding deadlocks given some extra knowledge.
   * Instead, when each process starts, it announces its maximum usage. That is each process, before making any resource requests, tells the resource manager the maximum number of units of each resource the process can possible need. This is called the **claim** of the process. 
     * If the claim is greater than the total number of units in the system the resource manager kills the process when receiving the claim (or returns an error code so that the process can make a new claim).
     * If during the run the process asks for more than its claim, the process is aborted (or an error code is returned and no resources are allocated).
-    * If a process claims more than it needs, the result is that the resource manager will be more conservative than need be and there will be more waiting.
-
-**Definition**: A state is **safe** if there is an ordering of the processes such that: if the processes are run in this order, they will all terminate (assuming none exceeds its claim, and assuming each would terminate if all its requests are granted).
 
 _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 ---
+    * If a process claims more than it needs, the result is that the resource manager will be more conservative than need be and there will be more waiting.
+
+**Definition**: A state is **safe** if there is an ordering of the processes such that: if the processes are run in this order, they will all terminate (assuming none exceeds its claim, and assuming each would terminate if all its requests are granted).
 
 Recall the comparison made above between detecting deadlocks with multi-unit
 resources and the banker's algorithm).
@@ -222,27 +228,30 @@ resources and the banker's algorithm).
   * The deadlock detection algorithm makes the most _optimistic_ assumption possible about a running process, namely that the process will return all its resources and then terminate normally. If we still find processes that remain blocked, they are deadlocked.
   * The banker's algorithm will make the most _pessimistic_ assumption about a running process, namely that the process will immediately asks for all the resources it **can** (i.e., up to its initial claim). If, even with such demanding processes, the resource manager can assure that all process terminates, then we can ensure that deadlock is avoided.
 
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
 In the definition of a safe state no assumption is made about the running
 processes. That is, for a state to be safe, termination must occur no matter
 what the processes do (providing each would terminate if run alone and each
 never exceeds its claims). Making no assumption on a process's behavior is the
 same as making the most pessimistic assumption.
 
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 **Remark**: When I say pessimistic I am speaking from the point of view of the resource manager. From the manager's viewpoint, the worst thing a process can do is request resources.
 
 Give an example of each of the following four possibilities. A state that is
 
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
   1. Safe and deadlocked--not possible.
   2. Safe and not deadlocked--a trivial is example is a graph with no arcs.
   3. Not safe and deadlocked--easy (any deadlocked state).
   4. Not safe and not deadlocked--interesting.
+![safe-or-not](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/safe-or-
 
 _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 ---
-![safe-or-not](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/safe-or-
 not.png)
 
 Is the figure on the right safe or not?
@@ -253,11 +262,11 @@ For the figure on the right, if the initial claims are:
 
   * P: 1 unit of R and 2 units of S (written (1,2))
   * Q: 2 units of R and 1 unit of S (written (2,1))
-the state in the figure is **NOT** safe.
-
 
 _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 ---
+the state in the figure is **NOT** safe.
+
 But if the initial claims are instead:
 
   * P: 2 units of R and 1 units of S (written (2,1))
@@ -266,19 +275,22 @@ the state in the figure **IS** safe.
 
 Explain why this is so.
 
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
 Please do not make the unfortunately common exam mistake to give an example
 involving safe states without giving the claims. So if I ask you to draw a
 resource allocation graph that is safe or if I ask you to draw one that is
 unsafe, you **MUST** include the initial claims for each process. I often, but
 not always, ask such a question and **every** time I have done so, several
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 students forgot to give the claims and hence lost points.
 
 A manager can determine if a state is safe.
 
   * Since the manager know all the claims, it can determine the maximum amount of additional resources each process can request.
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
   * The manager knows how many units of each resource it has left.
 
 The manager then follows the following procedure, which is part of **Banker's
@@ -287,11 +299,11 @@ Algorithms** discovered by Dijkstra, to determine if the state is safe.
   1. If there are no processes remaining, the state is **safe**.
   2. Seek a process P whose maximum additional request for each resource type is less than what remains for that resource type. 
     * If no such process can be found, then the state is **not safe**.
+    * If such a P can be found, the banker (manager) knows that if it refuses all requests except those from P, then it will be able to satisfy all of P's requests.  
+**Why?**  
 
 _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 ---
-    * If such a P can be found, the banker (manager) knows that if it refuses all requests except those from P, then it will be able to satisfy all of P's requests.  
-**Why?**  
 **Answer:** Look at how P was chosen.
   3. The banker now pretends that P has terminated (since the banker knows that it can guarantee this will happen). Hence the banker pretends that all of P's currently held resources are returned. This makes the banker richer and hence perhaps a process that was not eligible to be chosen as P previously, can now be chosen.
   4. Repeat these steps.
@@ -302,10 +314,10 @@ Consider the example shown in the table on the right.
 
 A safe state with 22 units of one resource
 
-processinitial claimcurrent alloc max add'l
 
 _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 ---
+processinitial claimcurrent alloc max add'l
 
 X
 
@@ -315,19 +327,22 @@ X
 
 2
 
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
 Y
 
 11
 
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 5
 
 6
 
 Z
 
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
 19
 
 10
@@ -336,11 +351,11 @@ Z
 
 Total
 
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
-
 16
 
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
 Available
 
 6
@@ -364,12 +379,12 @@ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.
 This example is a continuation of example 1 in which Z requested 2 units and
 the manager (foolishly?) granted the request.
 
-An unsafe state with 22 units of one resource
-
-processinitial claimcurrent alloc max add'l
 
 _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 ---
+An unsafe state with 22 units of one resource
+
+processinitial claimcurrent alloc max add'l
 
 X
 
@@ -377,19 +392,22 @@ X
 
 1
 
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
 2
 
 Y
 
 11
 
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 5
 
 6
 
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
 Z
 
 19
@@ -400,9 +418,9 @@ Z
 
 Total
 
+
 _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 ---
-
 18
 
 Available
@@ -413,11 +431,11 @@ Available
   * The manager has 4 units.
   * The max additional needs are 2, 6, and 7.
   * This state is unsafe 
-    1. X is the only process whose maximum additional request can be satisfied at this point.
-    2. So use 2 unit to satisfy X; now the manager has 5 units.
 
 _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 ---
+    1. X is the only process whose maximum additional request can be satisfied at this point.
+    2. So use 2 unit to satisfy X; now the manager has 5 units.
     3. Y needs 6 and Z needs 7 and we can't guarantee satisfying either request.
   * Note that we **were** able to find a process (X) that can terminate, but then we were stuck. So it is not enough to find one process. We must find a sequence of all the processes.
 
@@ -426,6 +444,9 @@ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.
   1. An unsafe state is **not** necessarily a deadlocked state. Indeed, for many unsafe states, if the manager gets lucky all processes will terminate successfully. Processes that are not currently blocked can terminate (instead of requesting more resources up to their initial claim, which is the worst case and is the case the manager prepares for). A safe state means that the manager can **guarantee** that no deadlock will occur (even in the worst case in which processes request as much as permitted by their initial claims.)
   2. When the banker determines that a state is safe, the banker has found an ordering of the processes for which it is guaranteed that all will terminate. There can be other good orderings as well. The banker is **not** committed to the ordering it has found.  
 For example, the banker in example 1 found that the order X, Y, Z will
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
 guarantee termination. However, if the next event is a request for 1 unit by
 Y, the banker will grant that request because the resulting state is again
 safe. This is explained further in the next section.
@@ -443,12 +464,12 @@ In a little more detail the banker's algorithm is as follows.
 
   * Before execution begins, ensure that the system is safe. That is, check that no process claims more than the manager has. If the check fails, then the offending process is trying to claim more of some resource than exists in the system and hence cannot be guaranteed to complete even if run by itself. You might say that it can become deadlocked all by itself. The only thing the manager can do is to refuse to acknowledge the existence of the offending process.
   * When the manager receives a request, it **pretends** to grant it, and then checks if the resulting state is safe. If it is safe, the request is really granted; if it is not safe the process is blocked (that is, the request is held up).
-  * When a resource is returned, the manager (politely thanks the process and then) checks to see if the first pending requests can be granted (i.e., if the result would now be safe). If so, the pending request is granted. Whether or not the request was granted, the manager checks to see if the next pending request can be granted, etc.
-
-**Homework:** 21.
 
 _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 ---
+  * When a resource is returned, the manager (politely thanks the process and then) checks to see if the first pending requests can be granted (i.e., if the result would now be safe). If so, the pending request is granted. Whether or not the request was granted, the manager checks to see if the next pending request can be granted, etc.
+
+**Homework:** 21.
 
 
 _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
@@ -463,12 +484,12 @@ But what is a safe state in this new setting?
 The same definition (if processes are run in a certain order they will all
 terminate).
 
-Checking for safety is the same idea as above. The difference is that to tell
-if there are enough free resources for a processes to terminate, the manager
-must check that, for **all** resource types, the number of free units is at
 
 _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 ---
+Checking for safety is the same idea as above. The difference is that to tell
+if there are enough free resources for a processes to terminate, the manager
+must check that, for **all** resource types, the number of free units is at
 least equal to the max additional need of the process.
 
 **Homework:** Consider a system containing a total of 12 units of resource R and 24 units of resource S managed by the banker's algorithm. There are three processes P1, P2, and P3. P1's claim is 0 units of R and 12 units of S, written (0,12). P2's claim is (8,15). P3's claim is (8,20). Currently P1 has 4 units of S, P2 has 8 units of R, P3 has 8 units of S, and there are no outstanding requests.
@@ -477,18 +498,21 @@ least equal to the max additional need of the process.
   2. If P2 instead of P1 makes the request, what is the largest number of units of S that the banker will grant?
   3. If P3 instead of P1 or P2 makes the request, what is the largest number of units of S that the banker will grant?
 
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
+
 **Remark**: Go over the previous homework.
 
 #### Limitations of the Banker's Algorithm
 
   * Often users don't know the maximum requests their process will make. They then estimate conservatively (i.e., use big numbers for the claim). This causes the manager becomes very conservative.
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
   * New processes arriving cause a problem (but not so bad as Tanenbaum suggests). 
     * The process's claim must be less than the total number of units of the resource in the system. If not, the process is not accepted by the manager.
     * Since the state without the new process is safe, so is the state with the new process! Just use the process order the banker had originally and put the new process at the end.
     * Insuring fairness (starvation freedom) needs a little more work, but isn't too hard either (once an hour stop taking new processes until all current processes finish).
+
+_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+---
   * A resource can become unavailable (e.g., a CD-ROM drive might break). This can result in an unsafe state and deadlock.
 
 **Homework:** 26, 29, and 38. There is an interesting typo in 26. A has claimed 3 units of resource 5, but there are only 2 units in the entire system. Change the problem by having B both claim and be allocated 1 unit of resource 5.
@@ -518,12 +542,12 @@ to make a request. But if the request msg is lost the server is still waiting
 for the client and the client is waiting for the server to respond to the
 (lost) last request. Each will wait for the other forever, a deadlock.
 
-A solution to this communication deadlock would be to use a timeout so that
-the client eventually determines that the msg was lost and sends another.
-
 
 _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 ---
+A solution to this communication deadlock would be to use a timeout so that
+the client eventually determines that the msg was lost and sends another.
+
 But it is not nearly that simple: The msg might have been greatly delayed and
 now the server will get two requests, which could be bad, and is likely to
 send two replies, which also might be bad.
