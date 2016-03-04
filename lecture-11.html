@@ -155,7 +155,7 @@ s.png)
   * The system starts at the lower left corner and the goal is to reach the upper right corner, where both processes have finished.
   * The dark green is where both processes have the plotter and hence execution cannot reach this area.
   * Light green represents both having the printer; also impossible.
-  * Pink represents both processes having both printer and plotter, which is impossible.
+  * Pink represents both processes having both printer and plotter, which is (doubly) impossible.
   * Gold is possible (H has the plotter, V has the printer), but the system can't get there.
   * The cyan is safe. From anywhere in the cyan we have horizontal and vertical moves to the finish point without hitting any impossible area.
   * The brown dot is ... (cymbals) deadlock. We don't want to go there.
@@ -501,8 +501,6 @@ least equal to the max additional need of the process.
 _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 ---
 
-**Remark**: Go over the previous homework.
-
 #### Limitations of the Banker's Algorithm
 
   * Often users don't know the maximum requests their process will make. They then estimate conservatively (i.e., use big numbers for the claim). This causes the manager becomes very conservative.
@@ -510,11 +508,11 @@ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.
     * The process's claim must be less than the total number of units of the resource in the system. If not, the process is not accepted by the manager.
     * Since the state without the new process is safe, so is the state with the new process! Just use the process order the banker had originally and put the new process at the end.
     * Insuring fairness (starvation freedom) needs a little more work, but isn't too hard either (once an hour stop taking new processes until all current processes finish).
+  * A resource can become unavailable (e.g., a CD-ROM drive might break). This can result in an unsafe state and deadlock.
+
 
 _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 ---
-  * A resource can become unavailable (e.g., a CD-ROM drive might break). This can result in an unsafe state and deadlock.
-
 **Homework:** 26, 29, and 38. There is an interesting typo in 26. A has claimed 3 units of resource 5, but there are only 2 units in the entire system. Change the problem by having B both claim and be allocated 1 unit of resource 5.
 
 
@@ -588,7 +586,7 @@ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.
 
 Read.
 
-**Remark**: End of material on midterm.
+**Note**: End of material on midterm.
 
 </textarea>
     <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js">

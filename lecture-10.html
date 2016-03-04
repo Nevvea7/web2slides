@@ -429,7 +429,7 @@ However, the following problematic scenario is also possible.
 
   1. First, A obtains ownership of the burner (and will release it after getting the CD reader and copying the file).
   2. Then B obtains ownership of the CD reader (and will release it after getting the burner and copying the file).
-  3. A now tries to get ownership of the drive, but is told to wait for B to release it.
+  3. A now tries to get ownership of the CD reader, but is told to wait for B to release it.
   4. B now tries to get ownership of the burner, but is told to wait for A to release it.
 
 **Bingo**: deadlock!
@@ -599,9 +599,9 @@ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.
 
 The put your head in the sand approach.
 
-  * If the likelihood of a deadlock is sufficiently small and the cost of avoiding a deadlock is sufficiently high it might be better to ignore the problem. For example, if each PC deadlocks once per 10 years, the one reboot may be less painful that the restrictions needed to prevent it.
+  * If the likelihood of a deadlock is sufficiently small and the cost of avoiding a deadlock is sufficiently high it might be better to ignore the problem. For example, if a PC OS deadlocks once per 10 years, the one reboot may be less painful that the restrictions needed to prevent it.
   * Clearly the ostrich algorithm is not suitable for nuclear missile launchers or for patient monitoring systems found in cardiac care units.
-  * For embedded systems (such as the two examples above) the programs to be run are known in advance so many of the issues that occur in systems like Linux, MacOS or Windows (such as many processes wanting to fork at the same time) don't occur.
+  * For embedded systems (such as the two examples above) the programs to be run are known in advance so many of the issues that occur in systems like Linux, MacOS or Windows (e.g., many processes wanting to fork at the same time) don't occur.
 
 
 _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
