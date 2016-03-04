@@ -17,7 +17,10 @@
     </style>
   </head>
   <body>
-    <textarea id="source">Start Lecture #10
+    <textarea id="source">
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
+Start Lecture #10
 
 #### Counting (or Generalized) Semaphores
 
@@ -36,7 +39,6 @@ ourselves to a _binary_ variable, but instead define a **generalized** or
     
               while (S==0) {}
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
           S--
@@ -55,7 +57,6 @@ original critical-section problem.
     
     
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
       initially S=k
@@ -76,7 +77,6 @@ from his.
 ##### The Problem Statement
 
 Unlike the previous problems of mutual exclusion where all processes are th
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 e
@@ -98,7 +98,6 @@ when viewed at a lower level (Finkel's level principle).
 ##### A Solution
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 Let k be the size of the buffer (the number of slots). Let e be a counting
@@ -121,7 +120,6 @@ semaphore (representing the number of full slots).
 
 We assume the buffer itself is only serially accessible. That is, only one
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 operation can be done at a time. This explains the P(b) V(b) around buffer
@@ -135,7 +133,6 @@ The P(e), V(f) motif is used to force bounded alternation. If k=1 it gives
 strict alternation.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 2.3.6 Mutexes
@@ -153,7 +150,6 @@ critical
 (binary) semaphore
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 semi-critical
@@ -177,7 +173,6 @@ semi-critical
 no name
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 semaphore
@@ -185,19 +180,16 @@ semaphore
 #### Mutexes in Pthreads
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 2.3.7 Monitors
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 2.3.8 Message Passing
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 2.3.9 Barriers
@@ -207,13 +199,11 @@ You can find some information on barriers in my [ lecture notes
 course (see in particular lecture number 16).
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ## 2.5 Classical IPC Problems
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 2.5.0 The Producer-Consumer (or Bounded Buffer) Problem
@@ -221,7 +211,6 @@ course (see in particular lecture number 16).
 We did this previously.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 2.5.1 The Dining Philosophers Problem
@@ -245,7 +234,6 @@ What algorithm do you use for access to the shared resource (the forks)?
 
   * The obvious solution (pick up right; pick up left) deadlocks.
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
   * Big lock around everything serializes.
@@ -260,7 +248,6 @@ you are interested look, for example
 **Homework:** 51 and 55 (these have short answers but are not easy).
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 2.5.2 The Readers and Writers Problem
@@ -283,7 +270,6 @@ Variants
   * Reader-priority readers/writers.
 
 Solutions to the readers-writers problem are quite useful in multiprocessor
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
@@ -293,7 +279,6 @@ and V). The disadvantage of the easy way out is that you give up reader
 concurrency. Again for more information see the web page referenced above.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ## 2.5A Critical Sections versus Database Transactions
@@ -312,7 +297,6 @@ _Computer Architecture Letters_ (volume 5, number 2, July-Dec. 2006, pp.
 65-66). As mentioned above, busy-waiting (binary) semaphores are often called
 locks (or spin locks).
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
@@ -322,7 +306,6 @@ was previously atomic only with respect to other critical sections guarded by
 the same lock is now atomic with respect to _all_ other critical sections.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ## 2.5B: Summary of 2.3 and 2.5
@@ -342,7 +325,6 @@ Generalized) Semaphore**, for which we gave **NO** implementation. I asserted
 that a counting semaphore can be implemented using 2 binary semaphores and
 gave a reference.
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
@@ -354,7 +336,6 @@ Finally we briefly discussed some classical problems, but did not give (full)
 solutions.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ## 2.6 Research on Processes and Threads
@@ -362,19 +343,13 @@ solutions.
 Skipped.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ## 2.7 Summary
 
 Skipped, but you should read.
 
-**Remark**: Chapter 2 homework solutions are on the web site. Password will be given again in class.
 
-**Remark**: Midterm coming up. Could be next class but I think that is too soon. This is a big class for me to grade by the deadline so it must be the 22nd (next thursday).
-
-
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 # Chapter 6 Deadlocks
@@ -382,7 +357,6 @@ Skipped, but you should read.
 ![gridlock](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/gridlock-crop-
 shrink.png)  
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ![gridlock-new](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/gridlock-
@@ -391,7 +365,6 @@ new-crop.png)
 **Note**: Deadlocks are closely related to process management so belong here, right after chapter 2. It was here in 2e. A goal of 3e is to make sure that the basic material gets covered in one semester. But I know we will do the first 6 chapters so there is no need for us to postpone the study of deadlock.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ![deadlock](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/deadlock-
@@ -412,7 +385,6 @@ access to a CD reader and to a CD burner. Assume the system has exactly one of
 each device.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 It is quite possible for this to work perfectly. If A goes first, gets both
@@ -429,7 +401,6 @@ However, the following problematic scenario is also possible.
 **Bingo**: deadlock!
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ## 6.1 Resources
@@ -437,7 +408,6 @@ However, the following problematic scenario is also possible.
 **Definition**: A _resource_ is an object that can be granted to a process.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 6.1.1 Preemptable and Nonpreemptable Resources
@@ -458,7 +428,6 @@ The life history of a resource is a sequence of
   4. Release
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 Processes request the resource, use the resource, and release the resource.
@@ -466,7 +435,6 @@ The allocate decisions are made by the system and we will study policies used
 to make these decisions.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 6.1.2 Resource Acquisition
@@ -487,7 +455,6 @@ above.
 
 Recall from the semaphore/critical-section treatment last chapter, that it is
 easy to cause trouble if a process dies or stays forever inside its critica
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 l
@@ -497,7 +464,6 @@ number of times (i.e. it can have a loop with a resource request inside), but
 each time it gets the resource, it must release it eventually.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ## 6.2 Introduction to Deadlocks
@@ -508,7 +474,6 @@ waiting for an event that can only be caused by a member of the set.
 Often the event waited for is the release of a resource.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 6.2.1 (Necessary) Conditions for Deadlock
@@ -524,7 +489,6 @@ sufficient for deadlock. Repeat: They are not sufficient.
 One can say If you want a deadlock, you must have these four conditions.. But
 of course you don't actually want a deadlock, so you would more likely say If
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 you want to prevent deadlock, you need only violate one or more of these four
@@ -537,14 +501,12 @@ time. The truth or falsehood of the last condition does indeed change with
 time as the resources are requested/allocated/released.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ![resource-alloc](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/resource-
 alloc.png)
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 6.2.2 Deadlock Modeling
@@ -565,7 +527,6 @@ Consider two concurrent processes P1 and P2 whose programs are.
     
       P1                   P2
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
       request R1           request R2
@@ -586,7 +547,6 @@ There are four strategies used for dealing with deadlocks.
   4. Avoid deadlocks by carefully deciding when to allocate resources.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ## 6.3 Ignoring the Problem--The Ostrich Algorithm
@@ -598,13 +558,11 @@ The put your head in the sand approach.
   * For embedded systems (such as the two examples above) the programs to be run are known in advance so many of the issues that occur in systems like Linux, MacOS or Windows (e.g., many processes wanting to fork at the same time) don't occur.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ## 6.4 Deadlock Detection and Recovery
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 6.4.1 Detecting Deadlocks with One Resources of Each Type
@@ -617,7 +575,6 @@ Consider the case in which there is **only one** instance of each resource.
   * In this special case the problem reduces to finding a directed cycle in the resource allocation graph.  
 **Why**?  
 **Answer**: Because the other three Coffman-Havender conditions are either always satisfied by the system we are studying (so we need only determine if condition 4 is satisfied), or are never satisfied by the system in question (in which case deadlock is impossible). That is, conditions 1,2,3 are static conditions on the system, not conditions on the state of the system ri
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ght now.
@@ -633,7 +590,6 @@ The searches are finite since there are a finite number of nodes and you stop
 if you hit a node twice.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 6.4.2 Detecting Deadlocks with Multiple Unit Resources
@@ -646,7 +602,6 @@ This is more difficult.
   * The figure on the right shows a resource allocation graph with multiple unit resources.
   * Each unit is represented by a dot in the box.
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
   * Request edges are drawn to the box since they represent a request for **any** dot in the box.
@@ -658,14 +613,12 @@ This is more difficult.
     3. If any processes remain, they are deadlocked.
   * We will soon do in detail an algorithm (the Banker's algorithm) that has some of this flavor.
   * The algorithm just given makes the most _optimistic_ assumption possible about a non-blocked process: It will return all its resources and termina
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 te normally. If we still find processes that remain blocked, they are deadlocked.
   * In the bankers algorithm we will make the most _pessimistic_ assumption possible about a running process: It immediately asks for all the resources it **can possibly** request (later we will explain in detail the meaning of can possibly). If, even with such demanding processes, the resource manager can insure that all process terminates, then the manager can insure that deadlock is avoided.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 6.4.3 Recovery from deadlock

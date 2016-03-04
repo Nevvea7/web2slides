@@ -3783,10 +3783,6 @@ Skipped.
 
 Skipped, but you should read.
 
-**Remark**: Chapter 2 homework solutions are on the web site. Password will be given again in class.
-
-**Remark**: Midterm coming up. Could be next class but I think that is too soon. This is a big class for me to grade by the deadline so it must be the 22nd (next thursday).
-
 # Chapter 6 Deadlocks
 
 ![gridlock](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/gridlock-crop-
@@ -4689,7 +4685,7 @@ There are several possibilities, including best fit, worst fit, first fit,
 circular first fit, quick fit, next fit, and Buddy.
 
   * First fit chooses the first eligible hole (i.e., the first one big enough).
-  * Chooses the smallest eligible hole. Best fit doesn't waste big holes, but does leave slivers and is expensive to run. More expensive to run than first fit since keeps going after finding a hole bigger than the size needed. Tends to leave ``slivers''.
+  * Best fit chooses the smallest eligible hole. Best fit doesn't waste big holes, but does leave slivers and is expensive to run. More expensive to run than first fit since keeps going after finding a hole bigger than the size needed. Tends to leave ``slivers''.
   * Worst fit avoids slivers, but quickly eliminates all big holes so a big job will require compaction.
   * Quick fit keeps lists of some common sizes (but has other problems, see Tanenbaum).
   * Buddy system 
@@ -4784,13 +4780,17 @@ Considerations in choosing a victim
     1. Demand paging is a fine term and is quite descriptive.
     2. Virtual memory should be used in contrast with physical memory to describe any virtual to physical address translation.
 
+Start Lecture #13
+
+**Remark**: Solutions to chapter 2 homework problems are on nyu classes.
+
 #### ** (Non-Demand) Paging
 
 ![mapping-pages](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/mapping-
 pages.png)
 
 Paging is the simplest scheme to remove the requirement of contiguous physical
-memory.
+memory and the potentially large external fragmentation that it causes..
 
   * The program is logically divided into fixed size pieces called **pages**. The partitioning is invisible to the user.
   * This is a division of the virtual address space and is shown in the middle column on the right.
@@ -4807,18 +4807,28 @@ memory.
 
 ##### Virtual to Physical Address Translation
 
-The figure on the right shows how to find in physical memory a given virtual
-address.
+The figure on the right shows how to translate a virtual address into the
+corresponding physical address, i.e. how to find where in physical memory a
+given virtual address resides.
 
   1. The address is divided into two part: the page number and the offset. The page number equals the (virtual) address divided by the page size. The offset equals the address mod the page size.
   2. The page number is used to index the page table.
   3. The table entry gives the frame number for this page.
-  4. The frame number is combined with the offset to obtain the physical address.
+  4. The frame number is combined with the offset to obtain the physical address. Specifically the physical address is  
+  frame number times frame size plus offset.
 
-**Example:** Assume a decimal machine with page size = frame size = 1000.  
-Assume PTE 3 contains 459.  
-Then virtual address 3372 corresponds to physical address 459372.  
-Referring to the diagram p#=3, f#=459, and offset=372.
+**Example:** Given a machine with page size (PS) = frame size = 1000.  
+What is the physical address (PA) corresponding to the virtual address (VA) =
+3372?
+
+  1. The page number is p# = VA / PS = 3372 / 1000 = 3
+  2. The offset O = VA % PS = 3372 % 1000 = 372.
+  3. The frame number f# is the contents of PTE[3].
+  4. Assume PTE 3 contains 459.
+  5. Then VA 3372 translates to   
+  PA = f# * FS + O= 459 * 1000 + 372 = 459372.
+
+  6. Referring to the diagram p#=3, f#=459, and offset=372.
 
 Properties of (non-demand) paging (without segmentation).
 
@@ -4837,14 +4847,35 @@ Properties of (non-demand) paging (without segmentation).
 
 ##### Cost of Address Translation in Paging
 
-  * Each memory reference turns into 2 memory references. 
-    1. Reference the page table.
-    2. Reference central memory.
-  * This would be a disaster!
-  * But it isn't done that way. Instead,the MMU caches page#->frame# translations. This cache is kept near the processor and can be accessed rapidly.
-  * This cache is called a translation lookaside buffer (TLB) or translation buffer (TB).
-  * For the above example, after referencing virtual address 3372, there would be an entry in the TLB containing the mapping 3->459.
-  * Hence a subsequent access to virtual address 3881 would be translated to physical address 459881 without an extra memory reference. Naturally, a memory reference for location 459881 itself would be required.
+There seems to be a bunch of arithmetic and an extra memory reference (to the
+page table) required, which would make the scheme totally impractable.
+
+The arithmetic is not needed. Indeed we can divide by 1000 (the page size) or
+take mod 1000 in our heads by separating the rightmost three digits from the
+rest. That is because 1000 is 103 and we write numbers in decimal.
+
+Computers use binary so designers choose the page size to be a power of two
+and again dividing and modding simple require separating the leftmost digits
+from the rightmost.
+
+It does seem as though each memory reference turns into 2 memory references.
+
+  1. Reference the page table.
+  2. Reference central memory.
+
+This would indeed be a disaster! But it isn't done that way. Instead,the MMU
+caches page#->frame# translations. This cache is kept near the processor and
+can be accessed rapidly.
+
+This cache is called a translation lookaside buffer (TLB) or translation
+buffer (TB).
+
+For the above example, after referencing virtual address 3372, there would be
+an entry in the TLB containing the mapping 3->459.
+
+Hence a subsequent access to virtual address 3881 would be translated to
+physical address 459881 without an extra memory reference. Naturally, a memory
+reference for location 459881 itself would be required.
 
 Choice of page size is discuss below.
 
@@ -4875,7 +4906,7 @@ Disadvantages
 
   * More complicated for the OS.
   * Execution time less predictable (depends on other jobs).
-  * Can over-commit memory (more later).
+  * Can over-commit memory (more on this later).
 
 #### The Memory Management Unit and Virtual to Physical Address Translation
 

@@ -17,10 +17,12 @@
     </style>
   </head>
   <body>
-    <textarea id="source">Start Lecture #2
-
-
+    <textarea id="source">
  _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
+Start Lecture #2
+
+
 
 ---
 # Chapter 1 Introduction
@@ -43,7 +45,6 @@ machine supplied by the lower layers and in turn provides a more abstract
 Using a broad brush, the layers are.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
   1. Applications (e.g., web browser) and utilities (e.g., compiler, linker).
@@ -62,7 +63,6 @@ In contrast user programs cannot directly modify the hardware; for example I/O
 instructions are normally privileged. So the programs you and I write
 **cannot** perform I/O; but they can ask the OS to perform the I/O for them.
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
@@ -82,7 +82,6 @@ Often the machine independent part is itself more than one layer.
 
 The term Operating System is not well defined. Is it just the kernel, i.e.,
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 the portion run in supervisor mode? How about the libraries? The utilities?
@@ -90,7 +89,6 @@ All these are certainly **system software** but it is not clear how much is
 part of the OS.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ## 1.1 What is an operating system?
@@ -100,7 +98,6 @@ level virtual machine. A second related key objective for the OS is to manage
 the resources provided by this virtual machine.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.1.1 The Operating System as an Extended Machine
@@ -115,7 +112,6 @@ blocks.
 Well designed abstractions are a key to managing complexity.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.1.2 The Operating System as a Resource Manager
@@ -134,7 +130,6 @@ With sharing comes various issues such as protection, privacy, fairness, etc.
 #### How is an OS Fundamentally Different from (say) a Compiler?
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 Answer: Concurrency! Per Brinch Hansen in _Operating Systems Principles_
@@ -148,7 +143,6 @@ else, this explains the difficulty of making operating systems reliable.
 **Homework:** 1\. (Unless otherwise stated, problems numbers are from the end of the current chapter in Tanenbaum.) What are the two main functions of an operating system?
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ## 1.2 History of Operating Systems
@@ -158,7 +152,6 @@ naturally more interested in the latter. These two development paths are
 related as the improving hardware enabled the more advanced OS features.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.2.1 The first Generation (1945-55): Vacuum Tubes (and No OS)
@@ -175,7 +168,6 @@ typewriter; decimal). During the short time you had the machine, it was truly
 a personal computer.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.2.2 The Second Generation (1955-65): Transitors and Batch Systems
@@ -192,7 +184,6 @@ OS-like support features used.
 The batches of user jobs were prepared offline (cards to magnetic tape) using
 a separate computer (an IBM 1401 with a 1402 card reader/punch). The tape was
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 brought to the main computer (an IBM 7090/7094) where the output to be printed
@@ -200,7 +191,6 @@ was written on another tape. This tape went back to the service machine (1401)
 and was printed (on a 1403).
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.2.3 The Third Generation (1965-1980): ICs and Multiprogramming
@@ -219,7 +209,6 @@ protected from the other jobs.
 
 The purpose of multiprogramming is to overlap CPU and I/O activity and thus
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 greatly improve CPU utilization. Recall that these computers, in particular
@@ -236,7 +225,6 @@ the processors, were very expensive.
     * Jobs were **spooled** from cards into the memory; similarly output was spooled from the memory to a printer.
     * More details are presented later, when we study memory management.
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
   * IBM OS/MVT (Multiprogramming with a Variable number of Tasks) (then other names). 
@@ -251,7 +239,6 @@ could be printing, and a third computing. So when a card deck was submitted by
 the user it could be read directly into an on-disk queue. Then when the system
 is ready to run another job, it is already there. Similarly, jobs would print
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 to disk and later another task would really print these disk files onto paper.
@@ -271,7 +258,6 @@ MIT and Dartmouth were pioneers in timesharing. Since I went to MIT, I
 naturally believe MIT was first. In particular, during my second semester
 (jan-may 1964), I took a course that by luck was chosen to the first one on
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 the MIT timesharing system CTSS. I do believe that I was in the first group of
@@ -280,7 +266,6 @@ also asserts that MIT was first, but again he was a student there (in
 physics).
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.2.4 The Fourth Generation (1980-Present): Personal Computers
@@ -300,7 +285,6 @@ are multiprogrammed.
 **Homework:**
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
   * What is multiprogramming?
@@ -309,7 +293,6 @@ are multiprogrammed.
   * 5\. On early computers, every byte of data read or written was handled by the CPU (i.e., there was no DMA). What implications does this have for multiprogramming?
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.2.5 The Fifth Generation (1990-Present): Mobile Computers
@@ -317,7 +300,6 @@ are multiprogrammed.
 Primarily hardware changes.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ## 1.3 Computer Hardware Review
@@ -330,7 +312,6 @@ The picture above is very simplified. (For one thing, today separate buses are
 used to Memory and Video.)
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 A **bus** is a set of wires that connect two or more devices. Only one message
@@ -340,7 +321,6 @@ some of the wires form an address that indicates which devices should actually
 process the message.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.3.1 Processors
@@ -359,7 +339,6 @@ defined physical address. This is the key for _system calls_ in which a user
 program enters the operating system. We will have much more to say about traps
 at the end of this chapter.
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
@@ -372,7 +351,6 @@ way toward preparing for the first class. The remaining multi-processor issues
 are not covered in this course.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.3.2 Memory
@@ -390,7 +368,6 @@ turned off.
 
 #### ROM / PROM / EPROM / EEPROM / Flash Ram
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
@@ -406,7 +383,6 @@ RAM)** can be erased by normal circuitry, which is much more convenient.
 #### Memory Protection and Context Switching
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 As mentioned above when discussing OS/MFT and OS/MVT, multiprogramming
@@ -423,14 +399,12 @@ the OS and (2) relocating relative addresses (into absolute addresses) in your
 lab 1 linker.
 
 When **context switching** from one process to another, the translation mus
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 t
 change, which can be an expensive operation.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.3.3 Disks
@@ -451,7 +425,6 @@ components
 Devices are often quite difficult to manage and a separate computer, called a
 controller, is used to translate OS commands into what the device requires.
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
@@ -463,7 +436,6 @@ The blocks can be written a large number of times. However, the large number
 is not large enough to be completely ignored.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.3.A Tapes
@@ -474,7 +446,6 @@ their technology improvement has not kept up with the improvement in disks. We
 will not study tapes in this course.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.3.4 I/O Devices
@@ -492,7 +463,6 @@ drivers.
 In theory any SCSI (Small Computer System Interconnect) controller can control
 any SCSI disk. In practice this is not true as SCSI gets inproved to wide
 scsi, ultra scsi, etc. The newer controllers can still control the older di
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 sks
@@ -506,7 +476,6 @@ Three methods are employed.
   2. The OS can tell the controller to start the I/O and then switch to other tasks. The controller must then **interrupt** the OS when the I/O is done. This method induces less waiting, but is harder to program (concurrency!). Moreover, on modern processors a single interrupt is rather costly, much more costly than a single memory reference, but much, much less costly than a disk I/O.
   3. Some controllers can do **DMA (Direct Memory Access)** in which case they deal directly with memory after being started by the CPU. A DMA controller relieves the CPU of some work and halves the number of bus accesses.
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
@@ -517,7 +486,6 @@ last point about halving bus accesses.
 png)
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.3.6 Buses
@@ -535,13 +503,11 @@ controller.
 Unlike the situation in the previous diagram with a single bus, now several
 pairs of components can be communicating simultaneously, giving a significant
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 improvement in performance (and complexity).
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.3.7 Booting the Computer
@@ -557,7 +523,6 @@ The above assumes that the boot medium selected by the bios was the hard disk.
 Other possibilities include a CD-ROM or the network.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ## 1.4 OS Zoo
@@ -571,7 +536,6 @@ This course covers all four of those classes, which perhaps should be
 considered just one class .
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.4.1 Mainframe Operating Systems
@@ -580,7 +544,6 @@ Used in data centers, these systems ofter tremendous I/O capabilities and
 extensive fault tolerance.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.4.2 Server Operating Systems
@@ -589,7 +552,6 @@ Perhaps the most important servers today are web servers. Again I/O (and
 network) performance are critical.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.4.3 Multiprocessor Operating systems
@@ -609,7 +571,6 @@ classified as either a _Network OS_ or a _Distributed OS_. The former is
 basically a collection of ordinary PCs on a LAN that use the network
 facilities available on PC operating systems. Some extra utilities are often
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 present to ease running jobs on remote processors.
@@ -621,7 +582,6 @@ where the boundaries between the processors are made nearly invisible to users
 This subject is not part of our course (but often is covered in 2251).
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.4.4 PC Operating Systems
@@ -632,7 +592,6 @@ This seems to be gone now; a modern PC OS is fully functional. I guess for
 marketing reasons some of the functionality can be disabled.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.4.5 Handheld Computer Operating Systems
@@ -644,7 +603,6 @@ to very modest memory and very low power. However, the very modest memory
 keeps getting bigger and some phones now include a stripped-down linux.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.4.6 Embedded Operating Systems
@@ -657,7 +615,6 @@ OS is similar to the very earliest computers. Embedded OS are very important
 commercially, but not covered much in this course.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.4.7 Sensor Node Operating Systems
@@ -666,7 +623,6 @@ These are embedded systems that also contain sensors and communication devices
 so that the systems in an area can cooperate.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.4.8 Real-time Operating Systems
@@ -677,7 +633,6 @@ missing a deadline is a fatal error--sometimes literally. Very important
 commercially, but not covered much in this course.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.4.9 Smart Card Operating Systems

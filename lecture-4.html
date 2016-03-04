@@ -17,10 +17,12 @@
     </style>
   </head>
   <body>
-    <textarea id="source">Start Lecture #4
-
-
+    <textarea id="source">
  _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
+Start Lecture #4
+
+
 
 ---
 ## 1.7 Operating System Structure
@@ -37,7 +39,6 @@ of Linux has called into question the belief that all new operating systems
 will be microkernel based.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.7.1 Monolithic approach
@@ -58,13 +59,11 @@ We can structure the system better than above might suggest, which brings us
 to ...
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ![layers](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/layers.png)
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.7.2 Layered Systems
@@ -86,7 +85,6 @@ The actual layers were
 The layering was done by convention, i.e. there was no enforcement by hardware
 and the entire OS is linked together as one program. This is true of many
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 modern OS systems as well (e.g., linux).
@@ -96,7 +94,6 @@ several protection layers and the OS used them. That is, arbitrary code could
 not jump into or access data in a more protected layer.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.7.3 Microkernels
@@ -107,7 +104,6 @@ provided by separate processes. The _microkernel_ provides just enough to
 implement processes.
 
 ![microkernel](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/microkern
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 el.
@@ -125,7 +121,6 @@ system call there are more processes switches. These are not free.
 Related to microkernels is the idea of putting the mechanism in the kernel,
 but not the policy. For example, the kernel would know how to select the
 highest priority process and run it, but some external process would assign
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
@@ -145,7 +140,6 @@ What's your opinion on microkernels vs. monolithic?
 tend to be pretty large these days, monolithic kernels with loadable device
 drivers are taking up more of the advantages claimed for microkernels.
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
@@ -153,7 +147,6 @@ I should note, however, that Tanenbaum's Minix microkernel (excluding the
 processes) _is_ quite small, about 13,000 lines.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.7.4 Client-Server
@@ -167,7 +160,6 @@ A _distributed system_ can be thought of as an extension of the client server
 concept where the servers are remote.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ![dist-client-server](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/dist-
@@ -187,7 +179,6 @@ programs. Perhaps the program needs data found only on certain machine (no one
 machine has all the data). For example, think of (legal, of course) file
 sharing programs.  
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
   
@@ -198,7 +189,6 @@ concurrently on separate computers.
 **Homework:** The client-server model is popular in distributed systems. Can it also be used in single-computer system?
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.7.5 Virtual Machines
@@ -210,7 +200,6 @@ Virtual Machine Monitor (VMM).
 #### VM/370
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ![hypervisor](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/hypervisor.pn
@@ -227,7 +216,6 @@ RAID) to Conversational Monitor System.
   * CMS believes it is running on the actual hardware so issues I/O instructions but ...
   * ... I/O instructions in CMS trap to VM/370.
   * This idea is still used but the guest OS is now normally a full-featured operating system rather than a simple system like CMS. For example, the n
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ewest IBM systems can run multiple instances of linux as well as multiple instances of traditional IBM Operating Systems on a single hardware platform.
@@ -244,7 +232,6 @@ host operating system. See the text for a sketch of how this (and another idea
 paravirtualization) works. An important research advance was Disco from
 Stanford University that led to the successful commercial product VMware.
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
@@ -263,7 +250,6 @@ The idea is that a new (rather simple) computer architecture called the Java
 Virtual Machine (JVM) was invented but not built (in hardware). Instead,
 interpreters for this architecture are implemented in software on many
 different hardware platforms. Each interpreter is also called a JVM. The ja
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 va
@@ -278,7 +264,6 @@ architecture and other languages can be compiled into instructions for a
 software-implemented virtual machine (e.g., pascal with its p-code).
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.7.6 Exokernels
@@ -287,13 +272,11 @@ Similar to VM/CMS but the virtual machines have disjoint resources (e.g.,
 distinct disk blocks) so less remapping is needed.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ## 1.8 The World According to C
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.8.1 The C Language
@@ -301,7 +284,6 @@ distinct disk blocks) so less remapping is needed.
 Assumed knowledge.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.8.2 Header Files
@@ -309,7 +291,6 @@ Assumed knowledge.
 Assumed knowledge.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.8.3 Large Programming Projects
@@ -318,7 +299,6 @@ Mostly assumed knowledge. Linker's are very briefly discussed. Our earlier
 discussion was much more detailed.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.8.4 The model of Run Time
@@ -331,7 +311,6 @@ operating itself.
   * The data segment is initially not empty, with some of it initialized. It can grow under program control and perhaps can shrink.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ## 1.9 Research on Operating Systems
@@ -339,7 +318,6 @@ operating itself.
 Skipped
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ## 1.10 Outline of the Rest of this Book
@@ -347,7 +325,6 @@ Skipped
 Skipped
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ## 1.11 Metric Units
@@ -356,7 +333,6 @@ Assumed knowledge. Note that what is covered is just the prefixes, i.e. the
 names and abbreviations for various powers of 10.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ## 1.12 Summary
@@ -365,7 +341,6 @@ Skipped, but you should read and be sure you understand it (about 2/3 of a
 page).
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 # Chapter 2 Process and Thread Management
@@ -375,7 +350,6 @@ management. The subject matter is processes, threads, scheduling, interrupt
 handling, and IPC (Inter-Process Communication--and Coordination).
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ## 2.1 Processes
@@ -388,7 +362,6 @@ handling, and IPC (Inter-Process Communication--and Coordination).
   * We do not study real parallelism (parallel processing, distributed systems, multiprocessors, etc) in this course.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 2.1.1 The Process Model
@@ -401,7 +374,6 @@ gives each process the _illusion_ that it is running alone.
 
 #### Virtual Time
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
@@ -418,7 +390,6 @@ believes it has a contiguous chunk of memory starting at location zero. Of
 course this can't be true of all processes (or they would be using the same
 memory) and in modern systems it is actually true of no processes (the memory
 assigned to a single process is not contiguous and does not include locatio
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 n
@@ -436,7 +407,6 @@ pleasant virtual machine than actually exists.
 **Remark**: Please note that the problem numbers are from the fourth edition. They are not the same problems in older editions.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 2.1.2 Process Creation
@@ -456,7 +426,6 @@ is created at system initialization; all the others are created by the
 
 **Question**: Why have init? That is why not have all processes created via method 2?  
 **Answer**: Because without init there would be no running process to creat
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 e any others.
@@ -475,7 +444,6 @@ occur. The idea is that the perpetrator of the condition need not be aware
 that a daemon is lurking (though often a program will commit an action only
 because it knows that it will implicitly invoke a daemon). For example, under
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ITS (a very early OS), writing a file on the LPT spooler's directory would
@@ -491,7 +459,6 @@ it to refer to what ITS called a dragon; the prototype was a program called
 DAEMON that automatically made tape backups of the file system. Although the
 meaning and the pronunciation have drifted, we think this glossary reflects
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 current (2000) usage.
@@ -507,7 +474,6 @@ daemons have names that end with the letter "d"; for example, syslogd is the
 daemon which handles the system log.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 2.1.3 Process Termination
@@ -526,7 +492,6 @@ signal is not caught (via the signal() or sigaction() system call) the process
 is terminated. There is also an uncatchable signal. The exit() system call is
 used for self termination and can indicate success or failure.
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
@@ -534,7 +499,6 @@ used for self termination and can indicate success or failure.
 hier.png)
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 2.1.4 Process Hierarchies
@@ -550,14 +514,12 @@ processes.
 Old or primitive operating system like MS-DOS are not fully multiprogrammed,
 so when one process starts another, the first process is _automatically_
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 blocked and waits until the second is finished. This implies that the process
 tree degenerates into a line.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 2.1.5 Process States and Transitions
@@ -570,7 +532,6 @@ states.png)
 
 Consider a running process P that issues an I/O request.
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
@@ -590,7 +551,6 @@ Suspend and resume are medium term scheduling.
   * Involves memory management as well. As a result we study it later.
   * Sometimes called two level scheduling.
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ![fig-2-3](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/fig-2-3.png)
@@ -606,7 +566,6 @@ As mentioned previously, one can organize an OS around the scheduler.
   * Systems like traditional Unix or Linux are then called _self-service_ since the user process serves itself. That is, the user process switches to kernel mode (via the TRAP instruction) and performs the system call itself without transferring control to another process.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 2.1.6 Implementation of Processes
@@ -623,7 +582,6 @@ Characteristics of the process table.
   * We have converted an active entity (a process) into a data structure (a process control block). Finkel calls this the _level principle_ an active entity becomes a data structure when looked at from a lower level.
   * The process control block contains a great deal of information about the process. For example, 
     * Saved value of registers including the program counter (i.e., the add
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ress of the next instruction) when the process not running.

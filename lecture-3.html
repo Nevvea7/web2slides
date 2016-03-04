@@ -17,10 +17,12 @@
     </style>
   </head>
   <body>
-    <textarea id="source">Start Lecture #3
-
-
+    <textarea id="source">
  _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
+Start Lecture #3
+
+
 
 ---
 ## 1.5 Operating System Concepts
@@ -29,7 +31,6 @@ This will be very brief. Much of the rest of the course will consist of
 filling in the details.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.5.1 Processes
@@ -47,7 +48,6 @@ The OS keeps information about all processes in the **process table**. Indeed,
 the OS views the process **as** the entry. This is an example of an active
 entity being viewed as a data structure (cf. discrete event simulations), an
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 observation I first encountered in the (out of print) OS textbook by Finkel I
@@ -58,7 +58,6 @@ enables a processes that is currently blocked or suspended to resume execution
 in the future.
 
 ![process-tree](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/process-
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
@@ -78,7 +77,6 @@ produces a process tree as shown on the far right.
 A process can send a **signal** to another process to cause the latter to
 execute a predefined function (the signal handler). It can be tricky to write
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 a program with a signal handler since the programmer does not know when in the
@@ -97,7 +95,6 @@ Access to files and devices can be limited to a given UID or GID.
 A set of processes is _deadlocked_ if each of the processes is blocked by a
 process in the set. The automotive equivalent, shown below, is called
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 gridlock. (The photograph was sent to me by Laurent Laor, a former 2250
@@ -106,14 +103,12 @@ student.)
 ![deadlock](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/deadlock-
 shrink.png)  
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ![gridlock](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/gridlock-crop-
 shrink.png)
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.5.2 Address Spaces
@@ -130,7 +125,6 @@ to be given _more_ (**virtual**) memory than the _total_ amount of (**real**)
 memory on the machine.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.5.3 Files
@@ -147,7 +141,6 @@ Modern systems have a hierarchy of files. A file system tree.
 You can name a file via an **absolute path** starting at the root directory
 (or in Windows a root directory) or via a **relative path** starting at the
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 **current working directory**. One consequence is that the OS must know the
@@ -166,7 +159,6 @@ You kill the cat (sorry) by typing cntl-C. I tried this on my linux box (using
 a text console) and no damage occurred. Your mileage may vary.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 Before a file can be accessed, it is normally **opened** and a file descriptor
@@ -185,7 +177,6 @@ process upon startup. These (initial) file descriptors are fixed.
 A convenience offered by some command interpreters is a pipe or pipeline. For
 example the following command, which pipes the output of dir into a
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 character/word/line counter, will give the number of files in the directory.
@@ -196,7 +187,6 @@ character/word/line counter, will give the number of files in the directory.
     
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.5.4 Input/Output
@@ -209,7 +199,6 @@ The OS contains device specific code (drivers) for each device (really each
 controller) as well as device-independent I/O code.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.5.5 Protection
@@ -225,7 +214,6 @@ Files and directories have associated permissions.
 Memory assigned to a process, i.e., an address space, must also be protected
 so that unrelated processes do not read and write each others' memory.
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
@@ -236,7 +224,6 @@ deep and I do not feel that the necessarily superficial coverage that time
 would permit is useful so we are not covering the topic at all.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.5.6 The Shell (or Command Interpreter)
@@ -253,7 +240,6 @@ offers several convenient features.
 Instead of a shell, one can have a more graphical interface.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.5.7 Ontogeny Recapitulates Phylogeny
@@ -274,7 +260,6 @@ Multiprogramming requires protection hardware. Once the hardware becomes
 available monoprogramming becomes obsolete. Again when minicomputers and
 microcomputers were introduced, they had no such hardware so monoprogramming
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 revived.
@@ -294,7 +279,6 @@ physical memory). The ability to dynamically remap address also permits
 programs to link to libraries during runtime. Hence, when VM hardware becomes
 available, so does dynamic linking.
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
@@ -304,7 +288,6 @@ available, so does dynamic linking.
 g)
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ## 1.6 System Calls
@@ -323,14 +306,12 @@ invokes system calls and generates page faults.
 There is an important difference between these two cases.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
   * When the user issues a system call or generates a page fault, the operating system is not executing. When the operating system last relinquished control, it had the opportunity to prepare itself for processing a system call or a page fault.
   * In contrast at almost any point during execution, an interrupt can transfer control to a given point in the operating system. This means that at (almost) any point during its execution, the OS must be prepared for an immediate transfer to a driver or the scheduler. Since the code being executed just prior to the interrupt might be using variables shared with the drivers and the scheduler, being prepared for this immediate transfer is not always easy. 
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.6.A Executing a System Call
@@ -349,7 +330,6 @@ detailed picture below, but at a high level, the following actions occur.
 #### A Method Call and the Runtime Stack
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ![sinX](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/sinX.png)
@@ -368,7 +348,6 @@ The problems we need to solve are first to transfer control from the caller to
 the callee passing the value of x and second to transfer control back
 returning the calculated value of sin(x).
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
@@ -384,7 +363,6 @@ show on the board.
 #### The read() System Call
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ![syscall](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/syscall.png)
@@ -405,7 +383,6 @@ encountered). In more detail, the steps performed are as follows.
   2. Push the second parameter on the stack.
   3. Push the first parameter on the stack.
   4. Call the library routine, which involves saving the return address and
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
  jumping to the routine.
@@ -420,14 +397,12 @@ encountered). In more detail, the steps performed are as follows.
 A major complication is that the system call handler may block. Indeed, the
 read system call handler is likely to block. In that case a the operating
 system will probably switch to another process. Such process switching is f
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ar
 from trivial and is discussed later in the course.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.6.1 System Calls for Process Management
@@ -451,7 +426,6 @@ Replace current process
 wait(pid)
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 WaitForSingleObject
@@ -475,7 +449,6 @@ Open a file & return descriptor
 close
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 CloseHandle
@@ -499,7 +472,6 @@ lseek
 SetFilePointer
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 Move file pointer
@@ -523,7 +495,6 @@ rmdir
 RemoveDirectory
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 Remove _empty_ directory
@@ -547,7 +518,6 @@ mount
 Mount a file system
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 umount
@@ -571,7 +541,6 @@ chmod
 Change permissions on a file
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 kill
@@ -595,7 +564,6 @@ management, consider the following highly simplified shell.
     
     
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
       while (true)
@@ -615,7 +583,6 @@ The parent and child are very, VERY nearly identical. For example they have
 the same instructions, they have the same data, and they are both currently
 executing the fork() system call.
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
@@ -631,7 +598,6 @@ the code above.
 Note that simply removing the waitpid(...) gives background jobs.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.6.2 System Calls for File Management
@@ -646,13 +612,11 @@ For non-sequential access, lseek is used to move the File Pointer, which is
 the location in the file where the next read or write will take place.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ![mount](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/mount.png)
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.6.3 System Calls for Directory Management
@@ -670,7 +634,6 @@ chosen is empty before the mount so no files become (temporarily) invisible.
 
 The top picture shows two file systems; the second row shows the result when
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 the right hand file system is mounted on /y. In both cases squares represent
@@ -681,7 +644,6 @@ physical disks and using different filesystems, to be descendants of a single
 root
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.6.4 Miscellaneous System Calls
@@ -689,7 +651,6 @@ root
 Skipped
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.6.5 The Windows Win32 API
@@ -697,7 +658,6 @@ Skipped
 Skipped
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ## 1.A Addendum on Transfer of Control
@@ -715,7 +675,6 @@ hidden inside the kernel itself, yet another example of the operating system
 providing a more abstract, i.e., simpler, virtual machine to the user
 processes.
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
@@ -733,7 +692,6 @@ happen, rather than a real description of what does happen with, say, C
 compiled by the Microsoft compiler running on Windows 7.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.A.1 User-mode Procedure Calls
@@ -753,7 +711,6 @@ process again in this description.
 Note: Stacks usually grow downward from the top of P's segment, so pushing an
 item onto the stack actually involves decrementing the stack pointer, SP.  
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 Note: Some compilers store arguments in registers not on the stack.
@@ -774,7 +731,6 @@ the next instruction (the instruction to be executed by f when g returns).
 
   5. Start execution from the beginning of the program, referencing the parameters as needed. The execution may involve calling other procedures, possibly including recursive calls to f and/or g.
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
@@ -795,7 +751,6 @@ Undo step 2: Remove the arguments from the stack by incrementing SP.
   
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
   10. Undo step 1: Restore the registers while popping their values off the stack.  
@@ -809,12 +764,10 @@ Undo step 2: Remove the arguments from the stack by incrementing SP.
   * LIFO (stack-like) structure of control transfer: we can be sure that control will return to f() when the call to g() exits. The above statement holds even if g() calls h() and then h() calls d(). In fact it even holds if, via recursion, g() calls f().  We are ignoring language features such as throwing and catching exceptions, and the use of unstructured assembly coding. In the latter cases all bets are off.
   * Everything happens entirely in user mode and user space.
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.A.2 Kernel-mode procedure calls
@@ -832,7 +785,6 @@ change in that respect.
 One difference is that often a different stack is used in kernel mode, but
 that simply means that the stack pointer must be set to the kernel stack when
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 switching from user to kernel mode. But we are not switching modes in this
@@ -840,7 +792,6 @@ section; the stack pointer already points to the kernel stack. Often there are
 two stack pointers one for kernel mode and one for user mode.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 1.A.3 The Trap instruction
@@ -859,7 +810,6 @@ being executed is written in assembler since there are no high level languages
 that generate a trap instruction. There is no need to name the function that
 is executing. Compare the following example to the explanation of f calls g
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 given above.
@@ -879,7 +829,6 @@ location in the OS determined by trap-number, and saves the return address.
 For example, the processor may be designed so that the next instruction
 executed after a trap is at physical address 8 times the trap-number.  
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 The trap-number can be thought of as the name of the code-sequence to which
@@ -897,7 +846,6 @@ If you learned about writing jump tables in assembler, this is very similar.
 
   5. Check all arguments passed. The kernel must be paranoid and assume that the authors of the user mode program wear black hats.  
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
   
@@ -914,7 +862,6 @@ The kernel and user stacks are separate.
   
 
   9. Undo step 3: Execute (in assembler) another special instruction, RTI or ReTurn from Interrupt, which returns the processor to user mode and transfers control to the return location saved by the trap. The word interrupt appears because an RTI is also used when the kernel is returning from an interrupt as well as the present case when it is returning from an trap. Actually, an RTI doesn't always go back to user mode. Instead it returns to the 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 mode before the trap or interrupt.
@@ -932,7 +879,6 @@ Undo step 1: Restore the registers by popping the stack.
   * Synchronous behavior: The author of the assembly code in P knows where and hence when the trap will occur. There are no surprises, so it is relatively easy for the programmer to prepare for the transfer of control.
   * Trivial control transfer _when viewed from P_: The next instruction _of P_ that will be executed is the one following the trap. As we shall see later, other processes may execute between P's trap and the next P instruction.
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
   * Starts and ends in user mode and user space, but executed in kernel mode and kernel space in the middle.

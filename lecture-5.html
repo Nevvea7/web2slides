@@ -17,10 +17,12 @@
     </style>
   </head>
   <body>
-    <textarea id="source">Start Lecture #5
-
-
+    <textarea id="source">
  _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
+Start Lecture #5
+
+
 
 ---
 ### 2.1.6A: An Addendum on Interrupts
@@ -38,7 +40,6 @@ completion of a disk read previously issued by process Q, which is currently
 blocked. Note that disk interrupts are unlikely to be for the currently
 running process (because the process that initiated the disk access is likely
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 to be blocked).
@@ -55,7 +56,6 @@ just before the interrupt.
     * Indeed, we do not even know which process P was running when the interrupt occurred (again we can determine this after the fact for one execution, but a re-execution will likely be different).
     * We cannot (even for one specific execution) point to an instruction and say this instruction _caused_ the interrupt.
     * The best we can do is (for one specific execution) point to an instru
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ction and say  this instruction _immediately preceeded_ the interrupt .
@@ -73,7 +73,6 @@ asynchronous.
 
   5. An assembly language routine saves registers.
   6. The assembly routine sets up a new stack. (These last two steps are of
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ten called setting up the C environment.)
@@ -90,7 +89,6 @@ ten called setting up the C environment.)
       * The code that Q needs to run initially is likely to be OS code. For example, the data just read is probably now in kernel space and the OS needs to copy it into user space.
     * Now we have at least two processes ready to run, namely P and Q. There may be arbitrarily many others.
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
   9. The scheduler decides which process to run, P or Q or something else. (This very loosely corresponds to g calling other procedures in the simple f calls g case we discussed previously). Eventually the scheduler decides to run P.
@@ -105,7 +103,6 @@ ten called setting up the C environment.)
   * Phew.
   * Unpredictable (to an extent). We cannot tell what was executed just _before_ the interrupt occurred. That is, the control transfer is asynchronous; it is difficult to ensure that everything is always prepared for the transfer.
   * The user code is _unaware_ of the difficulty and cannot (easily) detect
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
  that it occurred. This is another example of the OS presenting the user with a virtual machine environment that is more pleasant than reality (in this case synchronous rather asynchronous behavior).
@@ -118,7 +115,6 @@ P, Q, R, or S (or some other process).
   * The system might have been in user-mode or supervisor mode when the interrupt occurred. The interrupt processing starts in supervisor mode.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 #### The OS Running As a User Process
@@ -130,7 +126,6 @@ this execution. Try running the time program on one of the Unix systems and
 noting the output.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 2.1.7 Modeling Multiprogramming (Crudely)
@@ -147,7 +142,6 @@ There are at least two causes of inaccuracy in the above modeling procedure.
 
   * Some CPU time is spent by the OS in switching from one process to another. So the "useful utilization", i.e. the proportion of time the CPU is executing user code, is lower than predicted.
   * The model assumes that the probability that one process is waiting for 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 I/O is independent of the probability that another process is waiting for I/O. This assumption was used when we asserted that the probability all n jobs are waiting for I/O is pn.
@@ -164,7 +158,6 @@ course.
 
   * 1\. In Figure 2-2, three process states are shown. In theory, with three states, there could be six transitions. However, only four transitions are shown. Are there any circumstances in which either of both of the missing transitions might occur?
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
   * What is the key difference between a trap and an interrupt?
@@ -173,13 +166,11 @@ course.
 **Remark**: Our final exam is Thursday 12 May at 4PM. Check out [ the official list](//cs.nyu.edu/dynamic/courses/exams)
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ![threads](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/threads.png)
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ## 2.2 Threads
@@ -196,7 +187,6 @@ other threads), but a thread contains less state than a process (e.g., the
 address space belongs to the process in which the thread runs.)
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 2.2.1 Thread Usage
@@ -217,7 +207,6 @@ So it is a ofter performance/simplicity trade-off.
 #### Two Threads in One Process vs Two Processes
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 Although there are many differences, we will be primarily interested in just
@@ -238,7 +227,6 @@ two.
      
      
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
      
@@ -260,7 +248,6 @@ two.
 
 Consider the first frame of code on the right. Assume for simplicity each line
 takes 10ms so the entire loop processes 10KB every 30ms. However, the CPU i
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 s
@@ -278,7 +265,6 @@ communicating. Similarly for processes 2 and 3.
 
 If instead the three loops were each a thread within the same process, then
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 the two uses of inBuffer would refer to the same variable and similarly for
@@ -297,7 +283,6 @@ outBuffers as shown in the solution immediately following.
 The diagram on the right shows the actions during the first four time stems.
 The disk on the right contains the input and the one on the left will contain
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 the output. The two circles on the right are input buffers and the two on the
@@ -307,7 +292,6 @@ no data).
 ![pipeline](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/pipeline.png)
 
   1. During the first time step, as indicated by the arrow in the diagram, 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 thread 1 reads data from the input disk to the top input buffer. For this time step one disk is active (thread 1), the other disk (thread 3) and the cpu (thread 2) are inactive, which is no better that the simpler non-threaded solution.  
@@ -319,7 +303,6 @@ thread 1 reads data from the input disk to the top input buffer. For this time s
   3. Starting with the third time step, we hit top speed, all three threads are busy. Thread 1 reads the input disk into the top input buffer, overwriting what was written before (that is why the circle is no longer blue). Thread 2 computes using the bottom buffers. Thread 3 writes from the top (blue, i.e. valid) output buffer to the output disk.  
   
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
@@ -337,7 +320,6 @@ on I/O, additional threads can process other WWW connections.
 
 A common organization for a multithreaded application is to have a dispatcher
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 thread that fields requests and then passes each request on to an idle worker
@@ -357,7 +339,6 @@ book the user is writing) and the user deletes a word early in the book. This
 can cause changes on all subsequent pages. Hence, reformatting the book could
 cause a detectable delay in the user interface. With a threaded
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 implementation, a second thread can be assigned the reformatting task while
@@ -375,12 +356,10 @@ interfaces with the user is not blocked during the backup. However some
 coordination between threads may be needed so that the backup is of a
 consistent state.
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 2.2.2 The Classical Thread Model
@@ -404,7 +383,6 @@ Stack
 Child processes
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 Pending alarms
@@ -423,7 +401,6 @@ much state, switching between them is much less expensive than switching
 between separate processes. The table on the right shows which properties are
 common to all threads in a given process and which properties are thread
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 specific.
@@ -441,7 +418,6 @@ You may recall that a serious advantage of microkernel OS design was that the
 separate OS processes could not, even if buggy, damage each others data
 structures.
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
@@ -457,7 +433,6 @@ preempted itself.
 
 **Homework:** 15\. Why would a thread ever voluntarily give up the CPU by calling thread_yield? After all, since there is no periodic clock interrupt, it may never get back the CPU?
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
@@ -472,7 +447,6 @@ threads
   4. Moves a file pointer via lseek?
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 2.2.3 POSIX Threads
@@ -485,7 +459,6 @@ An alternative to the classical model are the so-called Linux threads, which
 are discussed in section 10.3 of the 4e.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 2.2.4 Implementing Threads in User Space
@@ -505,7 +478,6 @@ Advantages of User-Mode Threads:
   * Very fast since no context switching.
   * Can customize the scheduler for each application.
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
@@ -519,7 +491,6 @@ Disadvantages
 
   * Perhaps the OS supplies a non-blocking version of the system call, e.g. a non-blocking read.
   * Perhaps the OS supplies another system call that tells if the blocking system call will in fact block. For example, a unix select() can be used to
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
  tell if a read would block. It might not block if, for example, 
@@ -539,14 +510,12 @@ processor/core. In this case, user-mode threads are wonderful, there are no
 system calls and the extremely low overhead is beneficial.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 However, there are serious issues involved is programming applications for
 this environment.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 2.2.5 Implementing Threads in the Kernel
@@ -562,7 +531,6 @@ undertaking.
   * Similarly a page fault or infinite loop in one thread does not automatically block the other threads in the process.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 2.2.6 Hybrid Implementations
@@ -577,7 +545,6 @@ the user-level threads.
   * Switching between kernel threads of the same process requires a system call and is essentially the same as in the case of pure kernel-level threads.
   * Since a blocking system call or page fault blocks only one kernel thread, the multi-threaded application as a whole can still run since user-level threads in other kernel-level threads of this process are still runnable.
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
@@ -592,7 +559,6 @@ kernel-level thread.
   * 18\. What is the biggest advantage of implementing threads in user space? What is the biggest disadvantage?
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 2.2.7 Scheduler Activations
@@ -600,7 +566,6 @@ kernel-level thread.
 Skipped
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 2.2.8 Popup Threads
@@ -612,7 +577,6 @@ arrival and thread execution can be very small since the new thread does not
 have state to restore.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 2.2.9 Making Single-threaded Code Multithreaded
@@ -628,7 +592,6 @@ Definitely _NOT_ for the faint of heart.
 **Note**: We shall do section 2.4 before section 2.3 for two reasons.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
   1. Sections 2.3 and 2.5 are closely related; having 2.4 in between seems awkward to me.
@@ -638,7 +601,6 @@ Definitely _NOT_ for the faint of heart.
 states.png)
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ## 2.4 Process Scheduling
@@ -657,12 +619,10 @@ processor) scheduling is called the (short-term, processor) **scheduler** and
 the algorithm used is called the (short-term, processor) **scheduling
 algorithm**.
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 2.4.1 Introduction to Scheduling
@@ -683,7 +643,6 @@ should think of.
 
 A processes alternates between CPU activity and I/O activity, which I often
 refer to as CPU bursts and I/O bursts. In particular the Scheduling lab wil
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 l

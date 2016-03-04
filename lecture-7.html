@@ -17,10 +17,12 @@
     </style>
   </head>
   <body>
-    <textarea id="source">Start Lecture #7
-
-
+    <textarea id="source">
  _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
+Start Lecture #7
+
+
 
 ---
 ### 2.4.3 Scheduling in Interactive Systems
@@ -39,7 +41,6 @@ a key parameter of the policy, called the _quantum_. If the timer goes off and
 the process is still running, the OS **preempts** the process.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
   * Preemption requires a clock interrupt so that OS can take control when the quantum expires.
@@ -56,7 +57,6 @@ When a process is created or unblocked, it is likewise placed at the rear of
 the ready list.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 Note that RR with a quantum of say 10ms. works well if you have a 1 hr job and
@@ -76,7 +76,6 @@ As q gets small, RR approaches PS (Processor Sharing, described next).
 **Answer:** A trade-off exists.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
   * A small q makes the system more responsive, a long compute-bound job cannot delay a short job for an excessive period.
@@ -92,7 +91,6 @@ wikipedia.
 circular form to disguise the order of signing. Most probably it takes its
 name from the ruban rond, (round ribbon), in 17th-century France, where
 government officials devised a method of signing their petitions of grievan
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ces
@@ -107,7 +105,6 @@ result in immediate elimination.
 
 **Homework:** Round-robin schedulers normally maintain a list of all ready processes, with each process occurring exactly once in the list. What would happen if a process occurred more than once in the list? Can you think of any reason for allowing this?
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
@@ -130,7 +127,6 @@ P2
 P3
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 2
@@ -148,7 +144,6 @@ P3
   * The CPU time is the total time required for the process (excluding any context switch time).
   * The creation time is the time when the process is created. So P1 is created when the problem begins and P3 is created 5 milliseconds later.
   * If two processes have equal priority (in RR this means if they both enter the ready state at the same cycle), we give priority (in RR this means place first on the queue) to the process with the earliest creation time. If
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
  they also have the same creation time, then we give priority to the process with the lower number, i.e., P1 has priority over P2, which in turn has priority over P3. Since I plan on using this rule for lab 2, I will refer to it as the lab 2 tie-breaking rule.
@@ -163,7 +158,6 @@ once. However, the processor slows down so that when n jobs are running at
 once, each progresses at a speed 1/n as fast as it would if it were running
 alone.
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
@@ -179,7 +173,6 @@ alone.
 
   1. _State dependent RR_
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
     * Same as RR but q is varied dynamically depending on the state of the system.
@@ -195,7 +188,6 @@ higher priority) and the highest priority ready job is run.
   * Sometimes a large priority means an important job; sometimes a small priority means an important job.
   * Similar to External priorities above.
   * If many processes have the highest priority, use RR among them. Indeed 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 one often groups several priorities into a priority class and employs RR within a class.
@@ -210,7 +202,6 @@ one often groups several priorities into a priority class and employs RR within 
   1. FCFS with three processes, A, B, and C. Each CPU burst is 3 time units (ms if you like). Each I/O burst is also 3. Show the ready queue.
   2. Then repeat for RR with q=2.
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
@@ -226,7 +217,6 @@ highest priority.
   * We can apply priority aging to many policies, in particular to priority scheduling described above.
 
 **Homework:** 44, 45. Note that when the book says RR with each process get
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ting its fair share, it means Processor Sharing.
@@ -240,7 +230,6 @@ processes are divided into two classes the Accepted processes, which are
 scheduled using RR and the others, which are not run until they become
 accepted. (Perhaps SRR really stands for snobbish RR).
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
@@ -251,7 +240,6 @@ accepted. (Perhaps SRR really stands for snobbish RR).
   * Hence, once a process is accepted, it remains accepted until it terminates (or blocks, see below). Also all accepted processes have same priority.
   * Note that, when the only accepted process terminates (or blocks, see below), all the process with the next highest priority become accepted.
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ![srr-2](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/srr-2.png)
@@ -270,7 +258,6 @@ several possibilities.
   1. Reset the priority to zero when a process is blocked. In this case unblock acts like create in terms of priority.
   2. Freeze the priority at its current value. When it unblocks, the process will have the same priority it had when it was blocked.
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
   3. Let the priority continue to grow as if the process was not blocked. The growth can be a rate a or b depending on whether the process was accepted at the time of blockage. Presumably a process can become accepted during blockage if the other currently accepted processes terminate.
@@ -288,7 +275,6 @@ other two are dynamic and fully automatic.
 
 #### Multilevel Queues (**, **, MLQ, **)
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
@@ -307,7 +293,6 @@ first absolute priority over the second
     * But might not, i.e., no guarantee of service for background processes.
     * Might have 3 queues, foreground, background, no-cost (and might starve).
   * Another possible **inter**-queue policy would be have 2 queues, apply RR to each but cycle through the higher priority queue twice and then cycle 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 through the lower priority queue once.
@@ -326,7 +311,6 @@ which means have very short cpu bursts.
   * When a process uses its full quanta (acts a like batch process), move it to a lower priority queue.
   * When a process doesn't use a full quanta (acts like an interactive process), move it to a higher priority queue.
   * A long process with frequent (perhaps spurious) I/O will remain in the 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 better queues.
@@ -341,7 +325,6 @@ if the quantum failed to expire for any other reason (e.g., disk I/O).
 #### Shortest Process Next
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ![spn](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/spn.png)
@@ -361,7 +344,6 @@ Run the process that has been hurt the most.
 
   * For each process, let r = T/t; where T is how long this process has been in system and t is the running time of the process to date.
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
   * For example, r=2.5 means the job has been running 1/2.5 = 40% of the time it has been in the system.
@@ -377,7 +359,6 @@ Run the process that has been hurt the most.
 #### Guaranteed Scheduling
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 A variation on HPRN. The penalty ratio is a little different. It is nearly the
@@ -398,7 +379,6 @@ the CPU (assuming no blocking, i.e., full quanta).
 #### Fair-Share Scheduling
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 If you treat processes fairly you may not be treating users fairly since users
@@ -417,7 +397,6 @@ active. Furthermore a group earns some credit when it has no processes active.
 
 #### Theoretical Issues
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 

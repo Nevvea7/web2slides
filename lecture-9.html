@@ -17,7 +17,10 @@
     </style>
   </head>
   <body>
-    <textarea id="source">Start Lecture #9
+    <textarea id="source">
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
+Start Lecture #9
 
 #### The TSL Instruction (Hardware Assist test-and-set)
 
@@ -36,7 +39,6 @@ value true) are inseparable. Specifically it is **not** possible for two
 concurrent TAS(x) operations to both return false (unless there is also
 another concurrent statement that sets x to false).
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
@@ -53,7 +55,6 @@ processes is easy.
     
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 2.3.4 Sleep and Wakeup
@@ -63,7 +64,6 @@ processes is easy.
 **Homework:** Explain the difference between busy waiting and blocking process synchronization.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 2.3.5 Semaphores
@@ -84,7 +84,6 @@ section problem is to write P and V so that the loop on the right satisfies:
          non-critical-section
     
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
@@ -105,7 +104,6 @@ section problem.
   * Two operations are supported.
   * P(S) is 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
     
@@ -125,7 +123,6 @@ The above code is _not_ real, i.e., it is _not_ an implementation of P. It
 requires a sequence of two instructions to be atomic and that is, after all,
 what we are trying to implement in the first place. The above code is,
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 instead, a _definition_ of the effect P is to have.
@@ -146,7 +143,6 @@ The only solution we have seen for an arbitrary number of processes is the one
 just before 2.3.4 with P(S) implemented via test and set.
 
 **Note**: Peterson's solution requires each process to know its process num
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ber; the TAS soluton does not. Moreover the definition of P and V does not permit use of the process number. Thus, strictly speaking Peterson did not provide an implementation of P and V. He did, however, solve the critical section problem.

@@ -17,7 +17,10 @@
     </style>
   </head>
   <body>
-    <textarea id="source">Start Lecture #6
+    <textarea id="source">
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
+Start Lecture #6
 
 #### When to Schedule
 
@@ -33,7 +36,6 @@ those where it is manditory.
 
   1. Process creation.  
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 The running process has issued a fork() system call and hence the OS runs;
@@ -53,7 +55,6 @@ This was most likely due to I/O interrupt being received. Since the OS takes
 control, scheduling is possible. When an I/O interrupt occurs, this normally
 means that a blocked process is now ready. Hence, we have a new runnable
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 process and scheduling is therefore **desirable**.
@@ -74,7 +75,6 @@ algorithms.
   * We do not emphasize yield (a solid arrow from running to ready).
   * Preemption needs a clock interrupt (or equivalent).
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
   * Preemption is needed to guarantee fairness.
@@ -94,7 +94,6 @@ importance of preemption.
 For multiprogramed batch systems (we do not consider uniprogrammed systems,
 which have no need for schedulers) the primary concern is efficiency. Since no
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 user is waiting at a terminal, preemption is not crucial and if it is used, it
@@ -116,7 +115,6 @@ tries to achieve. These include.
   1. Fairness.  
 Treating users uniformly, which must be balanced against ...
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
@@ -138,7 +136,6 @@ This is important for batch jobs.
 
   5. High throughput.  
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 That is, maximize the number of jobs completed per day. Not quite the same as
@@ -159,7 +156,6 @@ Dartmouth (DTSS) wasted cycles and limited logins for repeatability.
 #### Deadline scheduling
 
 This is used for real time systems. The objective of the scheduler is to fi
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 nd
@@ -180,7 +176,6 @@ books: In chronological order they are Finkel, Deitel, Silberschatz, and
 Tanenbaum. The table just below illustrates the name game for these four
 books. After the table we discuss several scheduling policy in some detail.
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
@@ -202,7 +197,6 @@ books. After the table we discuss several scheduling policy in some detail.
 **Note**: For an alternate organization of the scheduling algorithms (due to my former PhD student Eric Freudenthal and presented by him Fall 2002) click [here.](scheduling-eric.pdf)
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ### 2.4.2 Scheduling in Batch Systems
@@ -222,7 +216,6 @@ get LCFS. Perhaps you could get some sort of random policy as well.
 
 #### Shortest Job First (SPN, SJF, SJF, SJF)
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
@@ -241,7 +234,6 @@ Here's why.
   * Assume you have a schedule with a long job right before a short job.
   * Consider swapping these two jobs.
   * This swap decreases the wait for the short job by the length of the long job and increases the wait of the long job by the length of the short job
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 .
@@ -257,7 +249,6 @@ argument for making the RR quantum is small is that short jobs are favored
 
 In the more realistic case of true SJF where the scheduler switches to a new
 process when the currently running process blocks (say for I/O), I would ca
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 ll
@@ -279,7 +270,6 @@ Starvation can be prevented by the standard technique.
 
 #### Shortest Remaining Time Next (PSPN, SRT, PSJF/SRTF, SRTN)
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 
@@ -298,7 +288,6 @@ less time than the remaining time for the currently running process.
 SRTN Can starve a process that requires a long burst.
 
 
- _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
 ---
 Starvation can be prevented by the standard technique.  

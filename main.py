@@ -87,13 +87,14 @@ def divideToLectures(md):
 	return [lecture_no, lecture_titles]
 
 def newPage(f):
-	f.write("\n _Contents generated from: " + ALLAN_NOTES_LINK + "_\n\n")
-	f.write('---\n')
+	f.write('\n\n---\n')
 
 def printHeadings(f):
 	h = open('headings', 'r')
 	for l in h:
 		f.write(l)
+	f.write("\n _Contents generated from: " + ALLAN_NOTES_LINK + "_\n\n")
+
 
 def printEndings(f):
 	e = open('endings', 'r')
