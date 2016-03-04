@@ -33,7 +33,7 @@ def main():
 			newPage(index_html)
 			line = 0
 		index_html.write('[lecture-%d](lecture-%d.html)\n' % (i, i))
-		index_html.write(lecture_titles[i] + '\n\n')
+		index_html.write(lecture_titles[i][:len(lecture_titles[i]) - 2] + '\n\n')
 		line += 2
 	printEndings(index_html)
 
@@ -72,8 +72,8 @@ def divideToLectures(md):
 				lines += 10
 
 			sp = l.split()
-			if l.startswith("# "):
-				lecture_title += l[2:] + "\t"
+			if l.startswith("# ") or (l.startswith("## ") and len(lecture_title) == 0):
+				lecture_title += l[2:] + ",\t"
 			
 			if lines >= 20 or (len(sp) > 0 and sp[0] in SLIDE_STARTER):
 				
