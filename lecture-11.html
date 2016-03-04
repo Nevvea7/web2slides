@@ -27,24 +27,27 @@
   4. There was no homework for lecture #8.
   5. The homework for lectures #9 and #10 is due Thursday, 3 March. Then I will post solutions to chapter 2 homeworks.
   6. The homework for lectures #11 and #12 will be due Tuesday, 8 March. Then I will post solutions to chapter 6 homeworks.
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
   7. I had tried to make lab 2 a little easier and removed () from the inputs. Unfortunately, I didn't removed them from the description of the problem. We will accept the lab either way. For example your lab may accept input-1 as either  
     1   0 1 5 1     or as     1   (0 1 5 1).  
 If your lab 2 expects the () please say so in your README.
 
+
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
+---
 **Note**: We are doing 6.6 before 6.5 since 6.6 is easier and I believe serves as a good warm-up.
 
 
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
 ---
 ## 6.6: Deadlock Prevention
 
 Attack one of the Coffman/Havender conditions.
 
 
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
 ---
 ### 6.6.1 Attacking the Mutual Exclusion Condition
 
@@ -52,7 +55,8 @@ The idea is to use spooling instead of mutual exclusion. Not possible for many
 kinds of resources.
 
 
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
 ---
 ### 6.6.2 Attacking the Hold and Wait Condition
 
@@ -60,7 +64,8 @@ Require each processes to request all resources at the beginning of the run.
 This is often called **One Shot**.
 
 
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
 ---
 ### 6.6.3 Attacking the No Preemption Condition
 
@@ -72,7 +77,8 @@ study, is if the resource (say a CD-ROM drive) can be virtualized (recall
 hypervisors).
 
 
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
 ---
 ### 6.6.4 Attacking the Circular Wait Condition
 
@@ -85,7 +91,8 @@ It is easy to see that a cycle is no longer possible.
 **Homework:** 10\. Consider Figure 6-4. Suppose that in step (o) C requested S instead of requesting R. Would this lead to deadlock? Suppose that it requested both S and R.
 
 
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
 ---
 ## 6.5: Deadlock Avoidance
 
@@ -98,7 +105,8 @@ it can. To avoid deadlocks with all four conditions present, the manager must
 be smart not optimistic.
 
 
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
 ---
 ### 6.5.1 Resource Trajectories
 
@@ -110,9 +118,6 @@ practical solution that follows, the Banker's Algorithm.
     
     
           H             V
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
       <reg code>    <reg code>
       P(print)      P(plot)
       <reg code>    <reg code>
@@ -121,11 +126,12 @@ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.
       V(print)      V(plot)
       <reg code>    <reg code>
       V(plot)       V(print)
+
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
+---
       <reg code>    <reg code>
     
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 
 The diagram below depicts two processes H (horizontal) and V (vertical)
 executing the programs shown on the right.
@@ -136,32 +142,31 @@ are two processes, hence two axes, i.e., planar.
   * <reg code> signifies computation that neither requests nor releases any resources.
   * H first requests the printer; then requests the plotter; then uses both; and finally releases the plotter and then the printer
   * V requests the plotter first and releases the printer first.
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
   * The origin of the graph represents both processes starting.
   * Their combined state is a point on the graph.
 
 The time periods where the printer and plotter are needed by each process are
+
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
+---
 indicated along the axes and their combined effect is represented by the
 colors of the squares.
 
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 ![trajectories](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/trajectorie
 s.png)
 
   * The system starts at the lower left corner and the goal is to reach the upper right corner, where both processes have finished.
-  * The dark green is where both processes have the plotter and hence execution cannot reach this area.
+  * The dark green is where both processes have the plotter and hence execu
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
+---
+tion cannot reach this area.
   * Light green represents both having the printer; also impossible.
   * Pink represents both processes having both printer and plotter, which is (doubly) impossible.
   * Gold is possible (H has the plotter, V has the printer), but the system can't get there.
   * The cyan is safe. From anywhere in the cyan we have horizontal and vertical moves to the finish point without hitting any impossible area.
   * The brown dot is ... (cymbals) deadlock. We don't want to go there.
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
   * The magenta is very interesting. It is 
     * Possible: each processor has a different resource.
     * Reachable from the starting point.
@@ -171,10 +176,11 @@ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.
 
 The dashed line represents a possible execution pattern.
 
-  * With a uniprocessor no diagonals are possible. We either move to the right meaning H is executing or move up indicating V is executing.
+  * With a uniprocessor no diagonals are possible. We either move to the ri
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 ---
+ght meaning H is executing or move up indicating V is executing.
   * The trajectory shown represents. 
     1. H excuting a little.
     2. V excuting a little.
@@ -185,13 +191,14 @@ The crisis is at hand!
 
   * If the resource manager gives V the plotter, the magenta has been entered and all is lost. Abandon all hope ye who enter here--Dante.
   * The right thing to do is to deny the request, let H execute and move horizontally. While we are under the magenta, we must continue to refuse V even though the plotter is available.
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
   * Once we are under the dark green, we no longer have a choice: The plotter is no longer available so V's request cannot be granted.
   * At the end of the dark green, no danger remains, both processes will complete successfully. Victory!
 
 This procedure is not practical for a general purpose OS since it requires
+
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
+---
 knowing the programs in advance. That is, the resource manager, knows in
 advance what requests each process will make and in what order.
 
@@ -199,11 +206,9 @@ advance what requests each process will make and in what order.
 
 **Homework:** 18, 19.
 
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 ---
 ### 6.5.2 Safe States
 
@@ -216,7 +221,8 @@ Avoiding deadlocks given some extra knowledge.
     * If the claim is greater than the total number of units in the system the resource manager kills the process when receiving the claim (or returns an error code so that the process can make a new claim).
     * If during the run the process asks for more than its claim, the process is aborted (or an error code is returned and no resources are allocated).
 
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
 ---
     * If a process claims more than it needs, the result is that the resource manager will be more conservative than need be and there will be more waiting.
 
@@ -226,11 +232,12 @@ Recall the comparison made above between detecting deadlocks with multi-unit
 resources and the banker's algorithm).
 
   * The deadlock detection algorithm makes the most _optimistic_ assumption possible about a running process, namely that the process will return all its resources and then terminate normally. If we still find processes that remain blocked, they are deadlocked.
-  * The banker's algorithm will make the most _pessimistic_ assumption about a running process, namely that the process will immediately asks for all the resources it **can** (i.e., up to its initial claim). If, even with such demanding processes, the resource manager can assure that all process terminates, then we can ensure that deadlock is avoided.
+  * The banker's algorithm will make the most _pessimistic_ assumption about a running process, namely that the process will immediately asks for all the resources it **can** (i.e., up to its initial claim). If, even with suc
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 ---
+h demanding processes, the resource manager can assure that all process terminates, then we can ensure that deadlock is avoided.
+
 In the definition of a safe state no assumption is made about the running
 processes. That is, for a state to be safe, termination must occur no matter
 what the processes do (providing each would terminate if run alone and each
@@ -241,30 +248,29 @@ same as making the most pessimistic assumption.
 
 Give an example of each of the following four possibilities. A state that is
 
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
   1. Safe and deadlocked--not possible.
+
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
+---
   2. Safe and not deadlocked--a trivial is example is a graph with no arcs.
   3. Not safe and deadlocked--easy (any deadlocked state).
   4. Not safe and not deadlocked--interesting.
 ![safe-or-not](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/safe-or-
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 not.png)
 
 Is the figure on the right safe or not?
 
 You can **NOT** tell until I give you the initial claims of the process.
 
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
+---
+
 For the figure on the right, if the initial claims are:
 
   * P: 1 unit of R and 2 units of S (written (1,2))
   * Q: 2 units of R and 1 unit of S (written (2,1))
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 the state in the figure is **NOT** safe.
 
 But if the initial claims are instead:
@@ -275,22 +281,20 @@ the state in the figure **IS** safe.
 
 Explain why this is so.
 
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 Please do not make the unfortunately common exam mistake to give an example
 involving safe states without giving the claims. So if I ask you to draw a
 resource allocation graph that is safe or if I ask you to draw one that is
-unsafe, you **MUST** include the initial claims for each process. I often, but
+unsafe, you **MUST** include the initial claims for each process. I often, 
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
+---
+but
 not always, ask such a question and **every** time I have done so, several
 students forgot to give the claims and hence lost points.
 
 A manager can determine if a state is safe.
 
   * Since the manager know all the claims, it can determine the maximum amount of additional resources each process can request.
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
   * The manager knows how many units of each resource it has left.
 
 The manager then follows the following procedure, which is part of **Banker's
@@ -299,11 +303,12 @@ Algorithms** discovered by Dijkstra, to determine if the state is safe.
   1. If there are no processes remaining, the state is **safe**.
   2. Seek a process P whose maximum additional request for each resource type is less than what remains for that resource type. 
     * If no such process can be found, then the state is **not safe**.
-    * If such a P can be found, the banker (manager) knows that if it refuses all requests except those from P, then it will be able to satisfy all of P's requests.  
-**Why?**  
+    * If such a P can be found, the banker (manager) knows that if it refuses all requests except those from P, then it will be able to satisfy all of
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 ---
+ P's requests.  
+**Why?**  
 **Answer:** Look at how P was chosen.
   3. The banker now pretends that P has terminated (since the banker knows that it can guarantee this will happen). Hence the banker pretends that all of P's currently held resources are returned. This makes the banker richer and hence perhaps a process that was not eligible to be chosen as P previously, can now be chosen.
   4. Repeat these steps.
@@ -314,22 +319,20 @@ Consider the example shown in the table on the right.
 
 A safe state with 22 units of one resource
 
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 processinitial claimcurrent alloc max add'l
 
 X
 
+
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
+---
 3
 
 1
 
 2
 
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 Y
 
 11
@@ -340,22 +343,20 @@ Y
 
 Z
 
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 19
 
 10
 
+
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
+---
 9
 
 Total
 
 16
 
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 Available
 
 6
@@ -366,10 +367,11 @@ Available
   * Hence the manager currently has 6 units left.
   * Also note that the max additional needs for the processes are 2, 6, and 9 respectively.
   * So the manager cannot assure (with its **current** remaining supply of 6 units) that Z can terminate. But that is **not** the question.
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
   * This state is safe. 
+
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
+---
     1. Use 2 units to satisfy X; now the manager has 7 units.
     2. Use 6 units to satisfy Y; now the manager has 12 units.
     3. Use 9 units to satisfy Z; done!
@@ -379,9 +381,6 @@ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.
 This example is a continuation of example 1 in which Z requested 2 units and
 the manager (foolishly?) granted the request.
 
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 An unsafe state with 22 units of one resource
 
 processinitial claimcurrent alloc max add'l
@@ -393,7 +392,8 @@ X
 1
 
 
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
 ---
 2
 
@@ -405,9 +405,6 @@ Y
 
 6
 
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 Z
 
 19
@@ -419,7 +416,8 @@ Z
 Total
 
 
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
 ---
 18
 
@@ -431,9 +429,6 @@ Available
   * The manager has 4 units.
   * The max additional needs are 2, 6, and 7.
   * This state is unsafe 
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
     1. X is the only process whose maximum additional request can be satisfied at this point.
     2. So use 2 unit to satisfy X; now the manager has 5 units.
     3. Y needs 6 and Z needs 7 and we can't guarantee satisfying either request.
@@ -441,18 +436,20 @@ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.
 
 **Notes**:
 
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
+---
+
   1. An unsafe state is **not** necessarily a deadlocked state. Indeed, for many unsafe states, if the manager gets lucky all processes will terminate successfully. Processes that are not currently blocked can terminate (instead of requesting more resources up to their initial claim, which is the worst case and is the case the manager prepares for). A safe state means that the manager can **guarantee** that no deadlock will occur (even in the worst case in which processes request as much as permitted by their initial claims.)
   2. When the banker determines that a state is safe, the banker has found an ordering of the processes for which it is guaranteed that all will terminate. There can be other good orderings as well. The banker is **not** committed to the ordering it has found.  
 For example, the banker in example 1 found that the order X, Y, Z will
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 guarantee termination. However, if the next event is a request for 1 unit by
 Y, the banker will grant that request because the resulting state is again
 safe. This is explained further in the next section.
 
 
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
 ---
 ### 6.5.3 The Banker's Algorithm (Dijkstra) for a Single Resource
 
@@ -463,16 +460,18 @@ given. We will relax these assumptions at the end of the chapter.
 In a little more detail the banker's algorithm is as follows.
 
   * Before execution begins, ensure that the system is safe. That is, check that no process claims more than the manager has. If the check fails, then the offending process is trying to claim more of some resource than exists in the system and hence cannot be guaranteed to complete even if run by itself. You might say that it can become deadlocked all by itself. The only thing the manager can do is to refuse to acknowledge the existence of the offending process.
-  * When the manager receives a request, it **pretends** to grant it, and then checks if the resulting state is safe. If it is safe, the request is really granted; if it is not safe the process is blocked (that is, the request is held up).
+  * When the manager receives a request, it **pretends** to grant it, and then checks if the resulting state is safe. If it is safe, the request is really granted; if it is not safe the process is blocked (that is, the reques
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 ---
+t is held up).
   * When a resource is returned, the manager (politely thanks the process and then) checks to see if the first pending requests can be granted (i.e., if the result would now be safe). If so, the pending request is granted. Whether or not the request was granted, the manager checks to see if the next pending request can be granted, etc.
 
 **Homework:** 21.
 
 
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
 ---
 ### 6.5.4 The Banker's Algorithm for Multiple Resources
 
@@ -484,51 +483,53 @@ But what is a safe state in this new setting?
 The same definition (if processes are run in a certain order they will all
 terminate).
 
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 Checking for safety is the same idea as above. The difference is that to tell
 if there are enough free resources for a processes to terminate, the manager
 must check that, for **all** resource types, the number of free units is at
 least equal to the max additional need of the process.
 
-**Homework:** Consider a system containing a total of 12 units of resource R and 24 units of resource S managed by the banker's algorithm. There are three processes P1, P2, and P3. P1's claim is 0 units of R and 12 units of S, written (0,12). P2's claim is (8,15). P3's claim is (8,20). Currently P1 has 4 units of S, P2 has 8 units of R, P3 has 8 units of S, and there are no outstanding requests.
+**Homework:** Consider a system containing a total of 12 units of resource 
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
+---
+R and 24 units of resource S managed by the banker's algorithm. There are three processes P1, P2, and P3. P1's claim is 0 units of R and 12 units of S, written (0,12). P2's claim is (8,15). P3's claim is (8,20). Currently P1 has 4 units of S, P2 has 8 units of R, P3 has 8 units of S, and there are no outstanding requests.
 
   1. What is the largest number of units of S that P1 can request at this point that the banker will grant?
   2. If P2 instead of P1 makes the request, what is the largest number of units of S that the banker will grant?
   3. If P3 instead of P1 or P2 makes the request, what is the largest number of units of S that the banker will grant?
 
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
-
 #### Limitations of the Banker's Algorithm
 
   * Often users don't know the maximum requests their process will make. They then estimate conservatively (i.e., use big numbers for the claim). This causes the manager becomes very conservative.
   * New processes arriving cause a problem (but not so bad as Tanenbaum suggests). 
+
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
+---
     * The process's claim must be less than the total number of units of the resource in the system. If not, the process is not accepted by the manager.
     * Since the state without the new process is safe, so is the state with the new process! Just use the process order the banker had originally and put the new process at the end.
     * Insuring fairness (starvation freedom) needs a little more work, but isn't too hard either (once an hour stop taking new processes until all current processes finish).
   * A resource can become unavailable (e.g., a CD-ROM drive might break). This can result in an unsafe state and deadlock.
 
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 **Homework:** 26, 29, and 38. There is an interesting typo in 26. A has claimed 3 units of resource 5, but there are only 2 units in the entire system. Change the problem by having B both claim and be allocated 1 unit of resource 5.
 
 
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
 ---
 ## 6.7 Other Issues
 
 
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
 ---
 ### 6.7.1 Two-phase locking
 
 This is covered extensively in a database text. We will skip it.
 
 
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
 ---
 ### 6.7.2 Communication Deadlocks
 
@@ -540,20 +541,22 @@ to make a request. But if the request msg is lost the server is still waiting
 for the client and the client is waiting for the server to respond to the
 (lost) last request. Each will wait for the other forever, a deadlock.
 
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 A solution to this communication deadlock would be to use a timeout so that
 the client eventually determines that the msg was lost and sends another.
 
 But it is not nearly that simple: The msg might have been greatly delayed and
 now the server will get two requests, which could be bad, and is likely to
+
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
+---
 send two replies, which also might be bad.
 
 This gives rise to the serious subject of communication protocols.
 
 
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
 ---
 ### 6.7.3 Livelock
 
@@ -566,7 +569,8 @@ is blocked, this is not technically deadlock, but a related concept called
 _livelock_.
 
 
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
 ---
 ### 6.7.4 Starvation
 
@@ -575,12 +579,14 @@ the highest priority process to get the resource. Also can periodically stop
 accepting new processes until all old ones get their resources.
 
 
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
 ---
 ## 6.8 Research on Deadlocks
 
 
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
 ---
 ## 6.9 Summary
 

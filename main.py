@@ -11,6 +11,8 @@ ALLAN_NOTES_LINK = "http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html"
 
 SLIDE_STARTER = {'#', '##', '###'}
 
+LINE_SIZE = 75
+
 def main():
 	h = HTML2Text(baseurl=ALLAN_NOTES_LINK)
 	web_pg = getHTML(ALLAN_NOTES_LINK)
@@ -45,46 +47,47 @@ def divideToLectures(md):
 	consec_empty_lines = 0
 	lecture_titles = []
 	lecture_title = ""
-	for l in rlines:
-		#l = str(l)
-		# if there are 3 consecutive empty lines then new slide
-		if len(l) == 0:
-			consec_empty_lines += 1
-			if consec_empty_lines == 2:
-				newPage(f)
-				consec_empty_lines = 0
-			continue
+	for rl in rlines:
+		rls = [ rl[i:i + LINE_SIZE] for i in range(0, len(rl), LINE_SIZE) ]
+		for l in rls:
+			# if there are 3 consecutive empty lines then new slide
+			if len(l) == 0:
+				consec_empty_lines += 1
+				if consec_empty_lines == 2:
+					newPage(f)
+					consec_empty_lines = 0
+				continue
 
-		if l.startswith("Start Lecture #"):
-			printEndings(f)
-			f.close()
-			lecture_no += 1
-			lecture_titles.append(lecture_title)
-			lecture_title = ""
-			f = open('lecture-%d.html' % lecture_no, 'w')
-			printHeadings(f)
-			lines = 0
+			if l.startswith("Start Lecture #"):
+				printEndings(f)
+				f.close()
+				lecture_no += 1
+				lecture_titles.append(lecture_title)
+				lecture_title = ""
+				f = open('lecture-%d.html' % lecture_no, 'w')
+				printHeadings(f)
+				lines = 0
 
-		if l.startswith('!['):
-			lines += 5
+			if l.startswith('!['):
+				lines += 10
 
-		sp = l.split()
-		if l.startswith("# "):
-			lecture_title += l[2:] + "\t"
-		
-		if lines >= 10 or (len(sp) > 0 and sp[0] in SLIDE_STARTER):
+			sp = l.split()
+			if l.startswith("# "):
+				lecture_title += l[2:] + "\t"
 			
-			newPage(f)
-			lines = 0
+			if lines >= 20 or (len(sp) > 0 and sp[0] in SLIDE_STARTER):
+				
+				newPage(f)
+				lines = 0
 
-		f.write(l)
-		lines += 1
+			f.write(l)
+			lines += 1
 	printEndings(f)
 	f.close()
 	return [lecture_no, lecture_titles]
 
 def newPage(f):
-	f.write("\n_Contents generated from: " + ALLAN_NOTES_LINK + "_\n")
+	f.write("\n _Contents generated from: " + ALLAN_NOTES_LINK + "_\n\n")
 	f.write('---\n')
 
 def printHeadings(f):

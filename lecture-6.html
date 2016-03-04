@@ -27,22 +27,20 @@ the uniprocessor systems we are considering, no scheduling can occur when a
 user process is running. (In the mulitprocessor situation, no scheduling can
 occur when all processors are running user jobs).
 
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 We refer to the arcs in the state transition diagram above (especially the top
 triangle) and discuss those transitions where scheduling is desirable and
 those where it is manditory.
 
   1. Process creation.  
+
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
+---
 The running process has issued a fork() system call and hence the OS runs;
 thus scheduling is **possible**. Scheduling is also **desirable** at this time
 since the scheduling algorithm might favor the new process.
 
   2. Process termination.  
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 The exit() system call has again transferred control to the OS so scheduling
 is possible. Moreover, scheduling is **necessary** since the previously
 running process has terminated.
@@ -53,10 +51,11 @@ Same as termination.
   4. Process is unblocked (note grammatical difference).  
 This was most likely due to I/O interrupt being received. Since the OS takes
 control, scheduling is possible. When an I/O interrupt occurs, this normally
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 means that a blocked process is now ready. Hence, we have a new runnable
+
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
+---
 process and scheduling is therefore **desirable**.
 
   5. Process is preempted.  
@@ -66,9 +65,6 @@ preempted, scheduling is **necessary**.
 
 #### Preemption
 
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 It is important to distinguish preemptive from non-preemptive scheduling
 algorithms.
 
@@ -77,11 +73,12 @@ algorithms.
   * The preempt arc in the diagram is present for preemptive scheduling algorithms.
   * We do not emphasize yield (a solid arrow from running to ready).
   * Preemption needs a clock interrupt (or equivalent).
+
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
+---
   * Preemption is needed to guarantee fairness.
   * Preemption is found in all modern general purpose operating systems.
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
   * Even non-preemptive systems can be multiprogrammed (remember that processes do block for I/O).
   * Preemption is expensive.
 
@@ -92,22 +89,20 @@ importance of preemption.
 
   1. Batch.
   2. Interactive.
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
   3. Real Time.
 
 For multiprogramed batch systems (we do not consider uniprogrammed systems,
 which have no need for schedulers) the primary concern is efficiency. Since no
+
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
+---
 user is waiting at a terminal, preemption is not crucial and if it is used, it
 is performed rarely, i.e., each process is given a long time period before
 being preempted.
 
 For interactive systems (and multiuser servers), preemption is crucial for
 fairness and rapid response time to short requests.
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 
 We don't study real time systems in this course, but will say that preemption
 is typically not important since all the processes are cooperating and are
@@ -118,11 +113,12 @@ programmed to do their task in a prescribed time window.
 There are numerous objectives, several of which conflict, that a scheduler
 tries to achieve. These include.
 
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
   1. Fairness.  
 Treating users uniformly, which must be balanced against ...
+
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
+---
 
   2. Respecting priority.  
 That is, favoring jobs considered more important. For example, if my laptop is
@@ -131,9 +127,6 @@ appreciably slow down my compiles and especially don't want it to make my
 system seem sluggish when I am modifying these class notes. In general,
 interactive jobs should have higher priority.
 
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
   3. Efficiency.  
 This has two aspects.
 
@@ -145,7 +138,8 @@ This is important for batch jobs.
 
   5. High throughput.  
 
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
 ---
 That is, maximize the number of jobs completed per day. Not quite the same as
 minimizing the (average) turnaround time as we shall see when we discuss
@@ -157,9 +151,6 @@ when the response is given. This is very important for interactive jobs.
 Again, as we shall soon see when studying shortest job first, minimizing
 response time, is not the same as maximizing throughput.
 
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
   7. Repeatability.  
 Dartmouth (DTSS) wasted cycles and limited logins for repeatability.
 
@@ -167,12 +158,13 @@ Dartmouth (DTSS) wasted cycles and limited logins for repeatability.
 
 #### Deadline scheduling
 
-This is used for real time systems. The objective of the scheduler is to find
+This is used for real time systems. The objective of the scheduler is to fi
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
+---
+nd
 a schedule for all the tasks (there are a fixed set of tasks) so that each
 meets its deadline. The run time of each task is known in advance.
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 
 Actually it is more complicated.
 
@@ -183,22 +175,20 @@ Actually it is more complicated.
 #### The Name Game
 
 There is an amazing inconsistency in naming the different (short-term,
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 processor) scheduling algorithms. Over the years I have used primarily 4
 books: In chronological order they are Finkel, Deitel, Silberschatz, and
 Tanenbaum. The table just below illustrates the name game for these four
 books. After the table we discuss several scheduling policy in some detail.
+
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
+---
 
     
     
       Finkel  Deitel  Silbershatz Tanenbaum
       -------------------------------------
       FCFS    FIFO    FCFS        FCFS
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
       RR      RR      RR          RR
       PS      **      PS          PS
       SRR     **      SRR         not in tanenbaum
@@ -209,13 +199,11 @@ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.
       FB      MLFQ    MLFQ        MQ
     
 
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 **Note**: For an alternate organization of the scheduling algorithms (due to my former PhD student Eric Freudenthal and presented by him Fall 2002) click [here.](scheduling-eric.pdf)
 
 
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
 ---
 ### 2.4.2 Scheduling in Batch Systems
 
@@ -227,9 +215,6 @@ get LCFS. Perhaps you could get some sort of random policy as well.
 
   * Only FCFS is ever used in practice.
   * **Non-**preemptive.
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
   * The simplist scheduling policy.
   * In some sense the fairest since it is first come first served. But perhaps that is not so fair. Consider a 1 hour job submitted one second before a 3 second job.
   * An efficient usage of cpu in the sense that the scheduler is very fast.
@@ -237,12 +222,13 @@ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.
 
 #### Shortest Job First (SPN, SJF, SJF, SJF)
 
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
+---
+
 Sort jobs by execution time needed and run the shortest first.
 
 This is a **Non**-preemptive algorithm.
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 
 First consider a static (overly simple, non-realistic) situation where all
 jobs are available in the beginning and we know how long each one will take to
@@ -253,11 +239,12 @@ In this situation, uniprogrammed SJF has the shortest average waiting time.
 Here's why.
 
   * Assume you have a schedule with a long job right before a short job.
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
   * Consider swapping these two jobs.
-  * This swap decreases the wait for the short job by the length of the long job and increases the wait of the long job by the length of the short job.
+  * This swap decreases the wait for the short job by the length of the long job and increases the wait of the long job by the length of the short job
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
+---
+.
   * Since the gain for the short job exceeds the loss for the long job, the swap decreases the total waiting time for these two.
   * It does not affect any other job's wait.
   * Hence the swap decreases the total waiting for all jobs and hence decreases the average waiting time as well.
@@ -266,22 +253,20 @@ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.
 
 The above argument illustrates an advantage of favoring short jobs: the
 average waiting time is reduced. For example we will soon learn about RR. An
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 argument for making the RR quantum is small is that short jobs are favored
 
 In the more realistic case of true SJF where the scheduler switches to a new
-process when the currently running process blocks (say for I/O), I would call
+process when the currently running process blocks (say for I/O), I would ca
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
+---
+ll
 the policy shortest next-CPU-burst first. However, I have never heard anyone
 (except me) call it that.
 
 The real difficulty is predicting the future (i.e., knowing in advance the
 time required for the job or the job's next-CPU-burst).
 
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 One way to estimate the duration of the next CPU burst is to calculate a
 weighted average of the duration of recent CPU bursts. Tanenbaum calls this
 Shortest Process Next.
@@ -292,10 +277,11 @@ Starvation can be prevented by the standard technique.
 **Question**: What is that technique?  
 **Answer**: Priority aging (see below).
 
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 #### Shortest Remaining Time Next (PSPN, SRT, PSJF/SRTF, SRTN)
+
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
+---
 
 Preemptive version of above. Indeed some authors call it preemptive shortest
 job first.
@@ -305,15 +291,16 @@ the time for the new process (or for its next burst) is less than the
 _remaining_ time for the running process (or for its current burst).
 
 It will never happen that a process already in the ready list will require
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 less time than the remaining time for the currently running process.  
 **Question**: Why?  
 **Answer**: When the process joined the ready list it would have started running if the current process had more time remaining. Since that didn't happen the currently running job then had less time remaining and now it has even less.
 
 SRTN Can starve a process that requires a long burst.
 
+
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
+---
 Starvation can be prevented by the standard technique.  
 **Question**: What is that technique?  
 **Answer**: Priority aging (see below).

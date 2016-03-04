@@ -27,9 +27,6 @@ I call it test and set (TAS) and define
     TAS(b)     where b is a binary variable,  
 to ATOMICALLY set b<-true and return the OLD value of b.
 
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 Of course it would be silly to return the new value of b since we know the new
 value is true.
 
@@ -39,10 +36,11 @@ value true) are inseparable. Specifically it is **not** possible for two
 concurrent TAS(x) operations to both return false (unless there is also
 another concurrent statement that sets x to false).
 
-With TAS available, implementing a critical section for any number of
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 ---
+
+With TAS available, implementing a critical section for any number of
 processes is easy.
 
     
@@ -54,11 +52,9 @@ processes is easy.
           NCS }
     
 
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
 ---
 ### 2.3.4 Sleep and Wakeup
 
@@ -67,7 +63,8 @@ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.
 **Homework:** Explain the difference between busy waiting and blocking process synchronization.
 
 
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
 ---
 ### 2.3.5 Semaphores
 
@@ -79,9 +76,6 @@ The entry code is often called P and the exit code V. Thus the critical
 section problem is to write P and V so that the loop on the right satisfies:
 
     
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
     
       loop forever
          P
@@ -90,11 +84,12 @@ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.
          non-critical-section
     
 
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
+---
+
   1. Mutual exclusion.
   2. No speed assumptions.
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
   3. No blocking by processes in NCS.
   4. Forward progress (my weakened version of Tanenbaum's last condition).
 
@@ -106,21 +101,19 @@ not need (and sometimes omit) the braces {} used in languages like C or java.
 A **binary semaphore** abstracts the TAS solution we gave for the critical
 section problem.
 
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
-
   * A binary semaphore S has two possible values open and closed (think of S as a gate (to a castle).
   * Two operations are supported.
   * P(S) is 
+
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
+---
     
               while (S==closed) {}
           S<-closed     -- This is NOT the body of the while
         
 
 where finding S=open and setting S<-closed is a single _atomic_
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
 
   * (Very) informally, the process waits until the gate is open, then atomically  
 runs through and closes the gate.
@@ -132,7 +125,8 @@ The above code is _not_ real, i.e., it is _not_ an implementation of P. It
 requires a sequence of two instructions to be atomic and that is, after all,
 what we are trying to implement in the first place. The above code is,
 
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
 ---
 instead, a _definition_ of the effect P is to have.
 
@@ -144,9 +138,6 @@ solved using P and V as follows.
       loop forever
          P(S)
          CS
-
-_Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
----
          V(S)
          NCS
     
@@ -154,7 +145,11 @@ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.
 The only solution we have seen for an arbitrary number of processes is the one
 just before 2.3.4 with P(S) implemented via test and set.
 
-**Note**: Peterson's solution requires each process to know its process number; the TAS soluton does not. Moreover the definition of P and V does not permit use of the process number. Thus, strictly speaking Peterson did not provide an implementation of P and V. He did, however, solve the critical section problem.
+**Note**: Peterson's solution requires each process to know its process num
+ _Contents generated from: http://cs.nyu.edu/~gottlieb/courses/os202/class-notes.html_
+
+---
+ber; the TAS soluton does not. Moreover the definition of P and V does not permit use of the process number. Thus, strictly speaking Peterson did not provide an implementation of P and V. He did, however, solve the critical section problem.
 
 </textarea>
     <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js">
