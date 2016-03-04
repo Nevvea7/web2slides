@@ -28,7 +28,7 @@ def main():
 	index_html.write('## Lecture Notes for OS202\n\n')
 	# index_html.write('\n_Contents generated from: ' + ALLAN_NOTES_LINK + '_\n\n')
 	line = 0
-	for i in range(lecture_no):
+	for i in range(lecture_no + 1):
 		if (line >= 18) :
 			newPage(index_html)
 			line = 0
@@ -83,6 +83,8 @@ def divideToLectures(md):
 			f.write(l)
 			lines += 1
 	printEndings(f)
+	lecture_titles.append(lecture_title)
+	lecture_title = ""
 	f.close()
 	return [lecture_no, lecture_titles]
 
