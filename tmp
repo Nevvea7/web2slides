@@ -4782,7 +4782,10 @@ Considerations in choosing a victim
 
 Start Lecture #13
 
-**Remark**: Solutions to chapter 2 homework problems are on nyu classes.
+**Remarks**
+
+  1. Solutions to chapter 2 homework problems are on nyu classes.
+  2. Answers to the practice midterm are on the web.
 
 #### ** (Non-Demand) Paging
 
@@ -4802,7 +4805,7 @@ memory and the potentially large external fragmentation that it causes..
   * Place each page in a frame. Since all pages and all frames are the same size everything fits perfectly and there is no external fragmentation.
   * Note that the program is **not** contiguous in physical memory. For example, in the diagram page 1 comes **after** page page 2 in physical memory. How can this possible work?
   * We need to find an arbitrary **vritual** address in **physical** memory.
-  * The key is that we maintain a table (called the **page table**) having an entry for each page. The **page table entry** or PTE for page p contains the number of the frame f that contains page p.
+  * The key is that the OS maintains a table (called the **page table**) having an entry for each page. The **page table entry** or PTE for page p contains the number of the frame f that contains page p.
 ![paging](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/paging.png)  
 
 ##### Virtual to Physical Address Translation
@@ -4833,6 +4836,8 @@ What is the physical address (PA) corresponding to the virtual address (VA) =
 Properties of (non-demand) paging (without segmentation).
 
   * The entire process must be memory resident to run.
+  * The physical address is **not** continuous, i.e., the memory image of the program consists of several pieces. 
+  * The virtual address space remains contiguous.
   * No holes, i.e., no external fragmentation.
   * If there are 500 frames available and the page size is 4KB, then any job requiring ≤ 2MB will fit, even if the available frames are scattered over memory.
   * Hence (non-demand) paging is useful; indeed, it was used (but no longer).
@@ -4842,7 +4847,6 @@ Properties of (non-demand) paging (without segmentation).
   * The _replacement_ question remains.
   * Since page boundaries occur at random points in the program and can change from run to run (the page size can change with no effect on the program--other than performance), pages are not appropriate units of memory to use for protection and sharing. Segmentation, which is discussed later, is sometimes more appropriate for protection and sharing.
   * However, most current OSes do not have segmentation so they use pages for protection and sharing. If all you have is a hammer, everything looks like a nail.
-  * Virtual address space remains contiguous.
   
 
 ##### Cost of Address Translation in Paging
@@ -4850,13 +4854,13 @@ Properties of (non-demand) paging (without segmentation).
 There seems to be a bunch of arithmetic and an extra memory reference (to the
 page table) required, which would make the scheme totally impractable.
 
-The arithmetic is not needed. Indeed we can divide by 1000 (the page size) or
-take mod 1000 in our heads by separating the rightmost three digits from the
-rest. That is because 1000 is 103 and we write numbers in decimal.
+The arithmetic is not needed. Indeed you and I can divide by 1000 (the page
+size) or take mod 1000 in our heads by separating the rightmost three digits
+from the rest. That is because 1000 is 103 and we write numbers in decimal.
 
 Computers use binary so designers choose the page size to be a power of two
-and again dividing and modding simple require separating the leftmost digits
-from the rightmost.
+and again dividing and and taking mods simply require separating the leftmost
+digits from the rightmost.
 
 It does seem as though each memory reference turns into 2 memory references.
 
@@ -4877,7 +4881,7 @@ Hence a subsequent access to virtual address 3881 would be translated to
 physical address 459881 without an extra memory reference. Naturally, a memory
 reference for location 459881 itself would be required.
 
-Choice of page size is discuss below.
+Choosing the page size is discuss below.
 
 **Homework:** 7\. Using the page table of Fig. 3.9, give the physical address corresponding to each of the following virtual addresses.
 
@@ -4922,9 +4926,6 @@ virtual memory included that case as well. Sadly, in my opinion, modern usage
 of the term paging and virtual memory are limited to fetch-on-demand memory
 systems, typically some form of demand paging.)
 
-![demand-paging](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/demand-
-paging.png)
-
 ### ** 3.3.1 Paging (Meaning Demand Paging)
 
 The idea is to fetch pages from disk to memory when they are referenced,hoping
@@ -4937,6 +4938,9 @@ used and the former dominates modern operating systems.
 
 Started by the Atlas system at Manchester University in the 60s (paper by
 Fortheringham).
+
+![demand-paging](http://cs.nyu.edu/~gottlieb/courses/os202/diagrams/demand-
+paging.png)
 
 Each PTE continues to contain the frame number if the page is loaded. But what
 if the page is not loaded (i.e., the page exists only on disk)?
@@ -5001,6 +5005,8 @@ right. However this solution seems to be both too slow and too big.
     * Since unused virtual memory can be huge (in address range), the page table, which is stored in **real** memory, will mostly contain unneeded PTEs.
     * This scheme worked fine when the maximum virtual address size was comparable in size with the total physical address space (e.g., the PDP-11 of the 1970s) but that is no longer the case.
   * A fix is to use multiple levels of mapping. We will see two examples below: multilevel page tables and segmentation plus paging.
+
+Start Lecture #14
 
 #### Structure of a Page Table Entry
 
@@ -5321,6 +5327,8 @@ Ans: All but the last frame are frozen once loaded so you can replace only one
 frame. This is especially bad after a phase shift in the program as now the
 program is references mostly new pages but only one frame is available to hold
 them.
+
+Start Lecture #15
 
 ### 3.4.6 Least Recently Used (LRU) PRA
 
